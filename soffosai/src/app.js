@@ -26,9 +26,8 @@ const { ServiceString } = require('./common/constants');
 //     TagGenerationService,
 //     TranscriptCorrectionService,
 // } = require('./core/services');
-const os = require('os');
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.SOFFOSAI_API_KEY;
 
 module.exports = {
     apiKey,

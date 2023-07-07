@@ -8,17 +8,17 @@ class AmbiguityDetectionIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = ["sentence_split", "sentence_overlap"];
     this.input_structure = {
-      "text": String,
-      "sentence_split": Number,
-      "sentence_overlap": Boolean
+      "text": "string",
+      "sentence_split": "number",
+      "sentence_overlap": "boolean"
     };
     // output_fields = ["ambiguities"]
     this.output_structure = {
       "ambiguities": {
-        "text": String,
-        "span_start": Number,
-        "span_end": Number,
-        "reason": String        
+        "text": "string",
+        "span_start": "number",
+        "span_end": "number",
+        "reason": "string"       
       }
     };
   }
