@@ -18,7 +18,7 @@ const {
   LetsDiscussRetrieveIO
 } = require('./lets_discuss_io');
 const LogicalErrorDetectionIO = require('./logical_error_detection_io');
-const MicrolessonIO = require('./microlesson');
+const MicrolessonIO = require('./microlesson_io');
 const NamedEntityRecognitionIO = require('./named_entity_recognition_io');
 const ParaphraseIO = require('./paraphrase_io');
 const SimplifyIO = require('./simplify_io');
@@ -30,7 +30,7 @@ const SentimentAnalysisIO = require('./sentiment_analysis_io');
 const SummarizaionIO = require('./summarization_io');
 const TableGeneratorIO = require('./table_generator_io');
 const TagGenerationIO = require('./tag_generation_io');
-const TranscriptCorrectionIO = require('./transcript_correction');
+const TranscriptCorrectionIO = require('./transcript_correction_io');
 
 module.exports = {
   ServiceIO,
