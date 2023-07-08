@@ -6,19 +6,23 @@ const {SERVICE_IO_MAP} = require("../../common");
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 const input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
 
-
 function inspectArguments(func, ...args) {
-    const argNames = func.toString()
-      .match(/\((.*?)\)/)[1]
-      .split(',')
-      .map(arg => arg.trim());
-  
-    const arguments = {};
-    for (let i = 0; i < argNames.length; i++) {
-      arguments[argNames[i]] = args[i];
+  const parameterNames = func.toString()
+    .replace(/[/][/].*$/mg, '') // Remove single-line comments
+    .replace(/\s+/g, '') // Remove white space
+    .replace(/[/][*][^/*]*[*][/]/g, '') // Remove multi-line comments
+    .split(')')[0]
+    .split('(')[1]
+    .split(',')
+    .map((param) => param.split('=')[0]);
+
+  const converted = {};
+  for (let i = 0; i < parameterNames.length; i++) {
+    if (args[i] != null && args[i] != undefined) {
+      converted[parameterNames[i]] = args[i];
     }
-  
-    return arguments;
+  }
+  return converted;
 }
 
 
@@ -120,7 +124,7 @@ class SoffosAIService {
         for (const [key, value] of Object.entries(this._payload)) {
           if (key in inputStructure) {
             const inputType = inputStructure[key];
-            if ((typeof(value) !== inputType) && value !== inputType) {
+            if ((typeof(value) !== inputType) && value !== inputType && typeof(value) != typeof(inputType)) {
               const wrongType = value instanceof Object ? typeof value : typeof value;
               valueErrors.push(`${key} requires ${inputType} but ${wrongType} is provided.`);
             }

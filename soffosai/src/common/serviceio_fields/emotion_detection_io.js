@@ -11,12 +11,12 @@ class EmotionDetectionIO extends ServiceIO {
       "sentence_split": "number",
       "sentence_overlap": 'boolean',
       "text": "string",
-      "emotion_choices": 'array'
+      "emotion_choices": 'object'
     };
     this.output_structure = {
       "spans": [
         {
-          "detected_emotions": 'array',
+          "detected_emotions": 'object',
           "text": "string",
           "span_start": "number",
           "span_end": "number"

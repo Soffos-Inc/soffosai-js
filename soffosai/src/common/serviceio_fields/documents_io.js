@@ -36,7 +36,7 @@ class DocumentSearchIO extends ServiceIO {
     ];
     this.input_structure = {
       "query": "string",
-      "document_ids": "array",
+      "document_ids": "object",
       "top_n_keyword": "number",
       "top_n_natural_language": "number",
       "filters": "object",
