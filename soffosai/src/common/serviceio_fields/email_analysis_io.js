@@ -7,18 +7,18 @@ class EmailAnalysisIO extends ServiceIO {
     this.service = ServiceString.EMAIL_ANALYSIS;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
       "analysis": {
-        "keypoints": [String, String],
-        "topics": [String, String],
-        "sender": String,
-        "receiver": [String, String],
-        "mentions": [String, String],
-        "sentiment": String,
-        "urgency": String,
-        "dates": [String, String]
+        "keypoints": ['string', 'string'],
+        "topics": ['string', 'string'],
+        "sender": "string",
+        "receiver": ['string', 'string'],
+        "mentions": ['string', 'string'],
+        "sentiment": "string",
+        "urgency": "string",
+        "dates": ['string', 'string']
       }
     };
   }

@@ -8,26 +8,26 @@ class NamedEntityRecognitionIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = ["labels"];
     this.input_structure = {
-      "text": String,
-      "labels": Object
+      "text": "string",
+      "labels": "object"
     };
     this.output_structure = {
       "named_entities": [
         {
           "span": [
-            Number,
-            Number
+            "number",
+            "number"
           ],
-          "tag": String,
-          "text": String
+          "tag": "string",
+          "text": "string"
         },
         {
           "span": [
-            Number,
-            Number
+            "number",
+            "number"
           ],
-          "tag": String,
-          "text": String
+          "tag": "string",
+          "text": "string"
         }
       ]
     };

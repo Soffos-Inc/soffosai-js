@@ -8,24 +8,24 @@ class QuestionAndAnswerGenerationIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = ["sentence_split", "sentence_overlap"];
     this.input_structure = {
-      "text": String,
-      "sentence_split": Number,
-      "sentence_overlap": Boolean
+      "text": "string",
+      "sentence_split": "number",
+      "sentence_overlap": "boolean"
     };
     this.output_structure = {
       "qna_list": [
         {
-          "question": String,
-          "answer": String,
-          "chunk_index": Number
+          "question": "string",
+          "answer": "string",
+          "chunk_index": "number"
         },
       ],
       "chunks": [
         {
-          "text": String,
-          "span_start": Number,
-          "span_end": Number,
-          "index": Number
+          "text": "string",
+          "span_start": "number",
+          "span_end": "number",
+          "index": "number"
         },
       ]
     };

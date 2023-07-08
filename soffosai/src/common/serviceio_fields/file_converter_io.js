@@ -8,15 +8,15 @@ class FileConverterIO extends ServiceIO {
     this.required_input_fields = ["file"];
     this.optional_input_fields = ["normalize"];
     this.input_structure = {
-      "file": String,
-      "normalize": Number
+      "file": "string",
+      "normalize": "number"
     };
     this.output_structure = {
-      "text": String,
+      "text": "string",
       "tagged_elements": [
         {
-          "text": String,
-          "tag": String
+          "text": "string",
+          "tag": "string"
         },
       ]
     };

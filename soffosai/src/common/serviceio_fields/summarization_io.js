@@ -7,11 +7,11 @@ class SummarizationIO extends ServiceIO {
     this.service = ServiceString.SUMMARIZATION;
     this.required_input_fields = ["sent_length", "text"];
     this.input_structure = {
-      "sent_length": Number,
-      "text": String
+      "sent_length": "number",
+      "text": "string"
     };
     this.output_structure = {
-      "summary": String
+      "summary": "string"
     };
   }
 }

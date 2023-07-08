@@ -7,12 +7,12 @@ class ReviewTaggerIO extends ServiceIO {
     this.service = ServiceString.REVIEW_TAGGER;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
-      "object": String,
-      "action": String,
-      "fault": String
+      "object": "string",
+      "action": "string",
+      "fault": "string"
     };
   }
 }

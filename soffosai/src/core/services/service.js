@@ -120,7 +120,6 @@ class SoffosAIService {
         for (const [key, value] of Object.entries(this._payload)) {
           if (key in inputStructure) {
             const inputType = inputStructure[key];
-            console.log(inputType);
             if ((typeof(value) !== inputType) && value !== inputType) {
               const wrongType = value instanceof Object ? typeof value : typeof value;
               valueErrors.push(`${key} requires ${inputType} but ${wrongType} is provided.`);

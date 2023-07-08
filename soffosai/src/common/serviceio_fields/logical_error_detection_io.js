@@ -7,21 +7,21 @@ class LogicalErrorDetectionIO extends ServiceIO {
     this.service = ServiceString.LOGICAL_ERROR_DETECTION;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
       "logical_errors": [
         {
-          "text": String,
-          "start": Number,
-          "end": Number,
-          "explanation": String
+          "text": "string",
+          "start": "number",
+          "end": "number",
+          "explanation": "string"
         },
         {
-          "text": String,
-          "start": Number,
-          "end": Number,
-          "explanation": String
+          "text": "string",
+          "start": "number",
+          "end": "number",
+          "explanation": "string"
         }
       ]
     };

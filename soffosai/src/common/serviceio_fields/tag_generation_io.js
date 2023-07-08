@@ -8,30 +8,30 @@ class TagGenerationIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = ["types", "n"];
     this.input_structure = {
-      "text": String,
-      "types": [String, String, String], // can only take a subset of ["topic", "domain", "audience", "entity"]
-      "n": Number
+      "text": "string",
+      "types": ["string", "string", "string"], // can only take a subset of ["topic", "domain", "audience", "entity"]
+      "n": "number"
     };
     this.output_structure = {
       "tags": {
         "label1": [
           {
-            "tag": String,
-            "score": Number
+            "tag": "string",
+            "score": "number"
           },
           {
-            "tag": String,
-            "score": Number
+            "tag": "string",
+            "score": "number"
           }
         ],
         "label2": [
           {
-            "tag": String,
-            "score": Number
+            "tag": "string",
+            "score": "number"
           },
           {
-            "tag": String,
-            "score": Number
+            "tag": "string",
+            "score": "number"
           }
         ]
       }

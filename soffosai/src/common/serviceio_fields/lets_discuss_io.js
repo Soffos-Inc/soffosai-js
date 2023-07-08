@@ -7,10 +7,10 @@ class LetsDiscussCreateIO extends ServiceIO {
     this.service = ServiceString.LETS_DISCUSS_CREATE;
     this.required_input_fields = ["context"];
     this.input_structure = {
-      "context": String
+      "context": "string"
     };
     this.output_structure = {
-      "session_id": String
+      "session_id": "string"
     };
   }
 }
@@ -21,16 +21,16 @@ class LetsDiscussIO extends ServiceIO {
     this.service = ServiceString.LETS_DISCUSS;
     this.required_input_fields = ["session_id", "query"];
     this.input_structure = {
-      "session_id": String,
-      "query": String
+      "session_id": "string",
+      "query": "string"
     };
     this.output_structure = {
-      "response": String,
-      "context": String,
+      "response": "string",
+      "context": "string",
       "messages": [
         {
-          "text": String,
-          "source": String // "user" or "soffos"
+          "text": "string",
+          "source": "string" // "user" or "soffos"
         },
       ]
     };
@@ -43,28 +43,28 @@ class LetsDiscussRetrieveIO extends ServiceIO {
     this.service = ServiceString.LETS_DISCUSS_RETRIEVE;
     this.required_input_fields = ["return_messages"];
     this.input_structure = {
-      "return_messages": Boolean
+      "return_messages": 'boolean'
     };
     this.output_structure = {
       "sessions": [
         {
-          "context": String,
-          "session_id": String,
+          "context": "string",
+          "session_id": "string",
           "messages": [
             {
-              "query": String,
-              "response": String,
-              "message_id": Number
+              "query": "string",
+              "response": "string",
+              "message_id": "number"
             },
             {
-              "query": String,
-              "response": String,
-              "message_id": Number
+              "query": "string",
+              "response": "string",
+              "message_id": "number"
             },
           ]
         }
       ],
-      "session_count": Number
+      "session_count": "number"
     };
   }
 }
@@ -75,10 +75,10 @@ class LetsDiscussDeleteIO extends ServiceIO {
     this.service = ServiceString.LETS_DISCUSS_DELETE;
     this.required_input_fields = ["session_ids"];
     this.input_structure = {
-      "session_ids": Array
+      "session_ids": 'array'
     };
     this.output_structure = {
-      "success": Boolean
+      "success": 'boolean'
     };
   }
 }

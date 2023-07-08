@@ -9,14 +9,14 @@ class MicrolessonIO extends ServiceIO {
     this.input_structure = {
       "content": [
         {
-          "source": String,
-          "text": String
+          "source": "string",
+          "text": "string"
         }
       ],
-      "user": "b5601df8-6af3-4c1a-9ded-b7df4c506eab"
+      "user": "string"
     };
     this.output_structure = {
-      "microlesson": String
+      "microlesson": "string"
     };
   }
 }

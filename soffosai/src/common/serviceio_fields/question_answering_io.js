@@ -10,32 +10,32 @@ class QuestionAnsweringIO extends ServiceIO {
     this.defaults = ["document_text"];
     this.optional_input_fields = ["check_ambiguity", "check_query_type", "generic_responses"];
     this.input_structure = {
-      "question": String,
+      "question": "string",
       "document_ids": [
-        String,
-        String
+        "string",
+        "string"
       ],
-      "document_text": String, // should not be defined if document_ids field is present
-      "check_ambiguity": Boolean,
-      "check_query_type": Boolean,
-      "generic_responses": Boolean,
+      "document_text": "string", // should not be defined if document_ids field is present
+      "check_ambiguity": "boolean",
+      "check_query_type": "boolean",
+      "generic_responses": "boolean",
       "meta": {
-        "session_id": String
+        "session_id": "string"
       }
     };
     this.output_structure = {
-      "answer": String,
-      "valid_query": Boolean,
-      "no_answer": Boolean,
-      "message_id": String,
-      "context": String,
+      "answer": "string",
+      "valid_query": "boolean",
+      "no_answer": "boolean",
+      "message_id": "string",
+      "context": "string",
       "highlights": [
         {
-          "span": [Number, Number],
-          "sentence": String
+          "span": ["number", "number"],
+          "sentence": "string"
         },
       ],
-      "passages": [Object, Object]
+      "passages": ["object", "object"]
     };
   }
 }

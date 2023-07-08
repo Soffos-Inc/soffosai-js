@@ -7,10 +7,10 @@ class ParaphraseIO extends ServiceIO {
     this.service = ServiceString.PARAPHRASE;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
-      "paraphrase": String
+      "paraphrase": "string"
     };
   }
 }

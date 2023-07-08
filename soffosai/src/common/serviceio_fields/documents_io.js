@@ -10,14 +10,14 @@ class DocumentsIngestIO extends ServiceIO {
     this.defaults = ["text"];
     this.optional_input_fields = ["meta"];
     this.input_structure = {
-      "name": String,
-      "meta": Object,
-      "text": String
+      "name": "string",
+      "meta": "object",
+      "text": "string"
     };
     // output_fields = ["success", "document_id"]
     this.output_structure = {
-      "success": Boolean,
-      "document_id": String
+      "success": "boolean",
+      "document_id": "string"
     };
     this.primary_output_field = "document_id";
   }
@@ -35,30 +35,30 @@ class DocumentSearchIO extends ServiceIO {
       "top_n_natural_language", "date_from", "date_until"
     ];
     this.input_structure = {
-      "query": String,
-      "document_ids": Array,
-      "top_n_keyword": Number,
-      "top_n_natural_language": Number,
-      "filters": Object,
-      "date_from": String,
-      "date_until": String
+      "query": "string",
+      "document_ids": "array",
+      "top_n_keyword": "number",
+      "top_n_natural_language": "number",
+      "filters": "object",
+      "date_from": "string",
+      "date_until": "string"
     };
     // output_fields = ["passages"]
     this.output_structure = {
       "passages": [{
-        "content": String,
-        "document_id": String,
-        "created_at": String,
-        "name": String,
+        "content": "string",
+        "document_id": "string",
+        "created_at": "string",
+        "name": "string",
         "scores": [
           {
-            "keyword": Number,
-            "semantic": Number
+            "keyword": "number",
+            "semantic": "number"
           },
         ],
-        "meta": Object
+        "meta": "object"
       }],
-      "text": String
+      "text": "string"
     };
   }
 }
@@ -69,10 +69,10 @@ class DocumentDeleteIO extends ServiceIO {
     this.service = ServiceString.DOCUMENTS_DELETE;
     this.required_input_fields = ["document_ids"];
     this.input_structure = {
-      "document_ids": [String, String]
+      "document_ids": ["string", "string"]
     };
     this.output_structure = {
-      "success": Boolean
+      "success": "boolean"
     };
   }
 }

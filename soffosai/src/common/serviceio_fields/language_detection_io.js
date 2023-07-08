@@ -9,10 +9,10 @@ class LanguageDetectionIO extends ServiceIO {
     this.service = ServiceString.LANGUAGE_DETECTION;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
-      "language": String
+      "language": "string"
     };
   }
 }

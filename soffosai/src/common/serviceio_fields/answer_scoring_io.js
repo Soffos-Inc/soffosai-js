@@ -8,15 +8,15 @@ class AnswerScoringIO extends ServiceIO {
     this.required_input_fields = ["context", "question", "user_answer"];
     this.optional_input_fields = ["answer"];
     this.input_structure = {
-      "context": String,
-      "question": String,
-      "answer": String,
-      "user_answer": String
+      "context": "string",
+      "question": "string",
+      "answer": "string",
+      "user_answer": "string"
     };
 
     this.output_structure = {
-      "score": Number,
-      "reasoning": String
+      "score": "number",
+      "reasoning": "string"
     };
   }
 }

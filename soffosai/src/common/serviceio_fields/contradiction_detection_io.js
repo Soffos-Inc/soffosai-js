@@ -8,18 +8,18 @@ class ContradictionDetectionIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = [];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     // this.output_fields = ["contradictions"];
     this.output_structure = {
       "contradictions": [
         {
-          "contradiction": String,
+          "contradiction": "string",
           "sentences": [
             {
-              "text": String,
-              "span_start": Number,
-              "span_end": Number
+              "text": "string",
+              "span_start": "number",
+              "span_end": "number"
             },
           ]
         },

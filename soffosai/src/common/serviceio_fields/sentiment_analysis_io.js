@@ -8,27 +8,27 @@ class SentimentAnalysisIO extends ServiceIO {
     this.required_input_fields = ["text"];
     this.optional_input_fields = ["sentence_split", "sentence_overlap"];
     this.input_structure = {
-      "text": String,
-      "sentence_split": Number,
-      "sentence_overlap": Boolean
+      "text": "string",
+      "sentence_split": "number",
+      "sentence_overlap": "boolean"
     };
     this.output_structure = {
       "sentiment_breakdown": [
         {
-          "text": String,
-          "start": Number,
-          "end": Number,
+          "text": "string",
+          "start": "number",
+          "end": "number",
           "sentiment": {
-            "negative": Number,
-            "neutral": Number,
-            "positive": Number
+            "negative": "number",
+            "neutral": "number",
+            "positive": "number"
           }
         }
       ],
       "sentiment_overall": {
-        "negative": Number,
-        "neutral": Number,
-        "positive": Number
+        "negative": "number",
+        "neutral": "number",
+        "positive": "number"
       }
     };
   }

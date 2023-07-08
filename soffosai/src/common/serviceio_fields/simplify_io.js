@@ -7,10 +7,10 @@ class SimplifyIO extends ServiceIO {
     this.service = ServiceString.SIMPLIFY;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
-      "simplify": String
+      "simplify": "string"
     };
   }
 }

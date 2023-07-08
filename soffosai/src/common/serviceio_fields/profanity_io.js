@@ -7,18 +7,18 @@ class ProfanityIO extends ServiceIO {
     this.service = ServiceString.PROFANITY;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
       "profanities": [
         {
-          "text": String,
-          "span_start": Number,
-          "span_end": Number
+          "text": "string",
+          "span_start": "number",
+          "span_end": "number"
         }
       ],
-      "offensive_probability": Number,
-      "offensive_prediction": Boolean
+      "offensive_probability": "number",
+      "offensive_prediction": "boolean"
     };
   }
 }

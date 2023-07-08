@@ -7,10 +7,10 @@ class TranscriptCorrectionIO extends ServiceIO {
     this.service = ServiceString.TRANSCRIPTION_CORRECTION;
     this.required_input_fields = ["text"];
     this.input_structure = {
-      "text": String
+      "text": "string"
     };
     this.output_structure = {
-      "correction": String
+      "correction": "string"
     };
   }
 }

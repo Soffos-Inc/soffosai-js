@@ -7,15 +7,15 @@ class TableGeneratorIO extends ServiceIO {
     this.service = ServiceString.TABLE_GENERATOR;
     this.required_input_fields = ["table_format", "text"];
     this.input_structure = {
-      "table_format": String, // markdown or CSV
-      "text": String
+      "table_format": "string", // markdown or CSV
+      "text": "string"
     };
     this.output_structure = {
       "tables": [
         {
-          "title": String,
-          "table": String,
-          "note": String
+          "title": "string",
+          "table": "string",
+          "note": "string"
         }
       ]
     };
