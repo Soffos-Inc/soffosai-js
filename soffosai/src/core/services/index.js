@@ -1,9 +1,9 @@
-const AmbiguityDetectionService = require('./ambiguity_detection');
-const AnswerScoringService = require('./answer_scoring');
-const ContradictionDetectionService = require('./contradiction_detection');
-const {DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService} = require('./documents');
+import AmbiguityDetectionService from './ambiguity_detection.js';
+import AnswerScoringService from './answer_scoring.js';
+import ContradictionDetectionService from './contradiction_detection.js';
+import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService } from './documents.js';
 
-module.exports = {
+export {
     AmbiguityDetectionService,
     AnswerScoringService,
     ContradictionDetectionService,

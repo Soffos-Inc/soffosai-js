@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class ProfanityIO extends ServiceIO {
   constructor() {
@@ -23,4 +23,4 @@ class ProfanityIO extends ServiceIO {
   }
 }
 
-module.exports = ProfanityIO;
+export default ProfanityIO;

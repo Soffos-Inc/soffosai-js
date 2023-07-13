@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class TagGenerationIO extends ServiceIO {
   constructor() {
@@ -39,4 +39,4 @@ class TagGenerationIO extends ServiceIO {
   }
 }
 
-module.exports = TagGenerationIO;
+export default TagGenerationIO;

@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class SimplifyIO extends ServiceIO {
   constructor() {
@@ -15,4 +15,4 @@ class SimplifyIO extends ServiceIO {
   }
 }
 
-module.exports = SimplifyIO;
+export default SimplifyIO;

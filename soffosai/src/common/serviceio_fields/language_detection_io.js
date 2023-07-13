@@ -1,7 +1,5 @@
-// common/serviceio_fields/language_detection_io.js
-
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class LanguageDetectionIO extends ServiceIO {
   constructor() {
@@ -17,4 +15,4 @@ class LanguageDetectionIO extends ServiceIO {
   }
 }
 
-module.exports = LanguageDetectionIO;
+export default LanguageDetectionIO;

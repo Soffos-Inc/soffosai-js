@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class SummarizationIO extends ServiceIO {
   constructor() {
@@ -16,4 +16,4 @@ class SummarizationIO extends ServiceIO {
   }
 }
 
-module.exports = SummarizationIO;
+export default SummarizationIO;

@@ -1,7 +1,7 @@
-const { SOFFOS_SERVICE_URL, SERVICES_LIST, ServiceString, FORM_DATA_REQUIRED } = require('./constants');
-const {SERVICE_IO_MAP} = require('./service_io_map');
+import { SOFFOS_SERVICE_URL, SERVICES_LIST, ServiceString, FORM_DATA_REQUIRED } from './constants.js';
+import SERVICE_IO_MAP from './service_io_map.js';
 
-module.exports = {
+export {
     SOFFOS_SERVICE_URL,
     SERVICES_LIST,
     ServiceString,

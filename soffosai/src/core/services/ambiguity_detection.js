@@ -1,5 +1,5 @@
-const { SoffosAIService, inspectArguments } = require('./service');
-const { ServiceString } = require('../../common/constants');
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
 
 
 class AmbiguityDetectionService extends SoffosAIService {
@@ -22,4 +22,4 @@ class AmbiguityDetectionService extends SoffosAIService {
     }
 }
 
-module.exports = AmbiguityDetectionService
+export default AmbiguityDetectionService;

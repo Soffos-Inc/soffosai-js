@@ -1,5 +1,5 @@
-const { SoffosAIService, inspectArguments } = require('./service');
-const { ServiceString } = require('../../common/constants');
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
 
 
 class ContradictionDetectionService extends SoffosAIService {
@@ -23,4 +23,4 @@ class ContradictionDetectionService extends SoffosAIService {
     }
 }
 
-module.exports = ContradictionDetectionService
+export default ContradictionDetectionService

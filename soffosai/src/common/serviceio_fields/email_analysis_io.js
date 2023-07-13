@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class EmailAnalysisIO extends ServiceIO {
   constructor() {
@@ -24,4 +24,4 @@ class EmailAnalysisIO extends ServiceIO {
   }
 }
 
-module.exports = EmailAnalysisIO;
+export default EmailAnalysisIO;

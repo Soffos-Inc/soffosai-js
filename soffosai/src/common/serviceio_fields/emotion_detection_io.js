@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class EmotionDetectionIO extends ServiceIO {
   constructor() {
@@ -26,4 +26,4 @@ class EmotionDetectionIO extends ServiceIO {
   }
 }
 
-module.exports = EmotionDetectionIO;
+export default EmotionDetectionIO;

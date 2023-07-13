@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class MicrolessonIO extends ServiceIO {
   constructor() {
@@ -21,4 +21,4 @@ class MicrolessonIO extends ServiceIO {
   }
 }
 
-module.exports = MicrolessonIO;
+export default MicrolessonIO;

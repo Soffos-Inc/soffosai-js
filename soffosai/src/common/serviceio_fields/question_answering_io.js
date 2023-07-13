@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class QuestionAnsweringIO extends ServiceIO {
   constructor() {
@@ -40,4 +40,4 @@ class QuestionAnsweringIO extends ServiceIO {
   }
 }
 
-module.exports = QuestionAnsweringIO;
+export default QuestionAnsweringIO;

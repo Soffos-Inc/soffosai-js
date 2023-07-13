@@ -1,5 +1,5 @@
-const { SoffosAIService, inspectArguments } = require('./service');
-const { ServiceString } = require('../../common/constants');
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
 
 
 class DocumentsIngestService extends SoffosAIService {
@@ -77,4 +77,4 @@ class DocumentsDeleteService extends SoffosAIService {
 }
 
 
-module.exports = {DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService}
+export {DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService}

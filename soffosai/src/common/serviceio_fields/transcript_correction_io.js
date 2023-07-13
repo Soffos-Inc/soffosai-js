@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class TranscriptCorrectionIO extends ServiceIO {
   constructor() {
@@ -15,4 +15,4 @@ class TranscriptCorrectionIO extends ServiceIO {
   }
 }
 
-module.exports = TranscriptCorrectionIO;
+export default TranscriptCorrectionIO;

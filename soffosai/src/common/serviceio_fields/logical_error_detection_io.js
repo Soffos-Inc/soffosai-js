@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class LogicalErrorDetectionIO extends ServiceIO {
   constructor() {
@@ -28,4 +28,4 @@ class LogicalErrorDetectionIO extends ServiceIO {
   }
 }
 
-module.exports = LogicalErrorDetectionIO;
+export default LogicalErrorDetectionIO;

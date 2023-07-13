@@ -1,4 +1,4 @@
-const serviceioFields = require('./serviceio_fields');
+import * as serviceioFields from './serviceio_fields/index.js';
 
 const classes = Object.values(serviceioFields);
 
@@ -11,4 +11,4 @@ const SERVICE_IO_MAP = classes.reduce((map, cls) => {
   
 }, {});
 
-module.exports = {SERVICE_IO_MAP};
+export default {SERVICE_IO_MAP};

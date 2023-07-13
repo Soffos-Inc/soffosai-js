@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class TableGeneratorIO extends ServiceIO {
   constructor() {
@@ -22,4 +22,4 @@ class TableGeneratorIO extends ServiceIO {
   }
 }
 
-module.exports = TableGeneratorIO;
+export default TableGeneratorIO;

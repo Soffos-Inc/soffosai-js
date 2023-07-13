@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class LetsDiscussCreateIO extends ServiceIO {
   constructor() {
@@ -83,7 +83,7 @@ class LetsDiscussDeleteIO extends ServiceIO {
   }
 }
 
-module.exports = {
+export {
   LetsDiscussCreateIO,
   LetsDiscussIO,
   LetsDiscussRetrieveIO,

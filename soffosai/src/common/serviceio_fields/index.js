@@ -1,38 +1,29 @@
-const ServiceIO = require('./service_io');
-const AmbiguityDetectionIO = require('./ambiguity_detection_io');
-const AnswerScoringIO = require('./answer_scoring_io');
-const ContradictionDetectionIO = require('./contradiction_detection_io');
-const {
-  DocumentsIngestIO,
-  DocumentSearchIO,
-  DocumentDeleteIO
-} = require('./documents_io');
-const EmailAnalysisIO = require('./email_analysis_io');
-const EmotionDetectionIO = require('./emotion_detection_io');
-const FileConverterIO = require('./file_converter_io');
-const LanguageDetectionIO = require('./language_detection_io');
-const {
-  LetsDiscussCreateIO,
-  LetsDiscussDeleteIO,
-  LetsDiscussIO,
-  LetsDiscussRetrieveIO
-} = require('./lets_discuss_io');
-const LogicalErrorDetectionIO = require('./logical_error_detection_io');
-const MicrolessonIO = require('./microlesson_io');
-const NamedEntityRecognitionIO = require('./named_entity_recognition_io');
-const ParaphraseIO = require('./paraphrase_io');
-const SimplifyIO = require('./simplify_io');
-const ProfanityIO = require('./profanity_io');
-const QuestionAndAnswerGenerationIO = require('./qna_generation_io');
-const QuestionAnsweringIO = require('./question_answering_io');
-const ReviewTaggerIO = require('./review_tagger_io');
-const SentimentAnalysisIO = require('./sentiment_analysis_io');
-const SummarizaionIO = require('./summarization_io');
-const TableGeneratorIO = require('./table_generator_io');
-const TagGenerationIO = require('./tag_generation_io');
-const TranscriptCorrectionIO = require('./transcript_correction_io');
+import ServiceIO from './service_io.js';
+import AmbiguityDetectionIO from './ambiguity_detection_io.js';
+import AnswerScoringIO from './answer_scoring_io.js';
+import ContradictionDetectionIO from './contradiction_detection_io.js';
+import { DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO } from './documents_io.js';
+import EmailAnalysisIO from './email_analysis_io.js';
+import EmotionDetectionIO from './emotion_detection_io.js';
+import FileConverterIO from './file_converter_io.js';
+import LanguageDetectionIO from './language_detection_io.js';
+import { LetsDiscussCreateIO, LetsDiscussDeleteIO, LetsDiscussIO, LetsDiscussRetrieveIO } from './lets_discuss_io.js';
+import LogicalErrorDetectionIO from './logical_error_detection_io.js';
+import MicrolessonIO from './microlesson_io.js';
+import NamedEntityRecognitionIO from './named_entity_recognition_io.js';
+import ParaphraseIO from './paraphrase_io.js';
+import SimplifyIO from './simplify_io.js';
+import ProfanityIO from './profanity_io.js';
+import QuestionAndAnswerGenerationIO from './qna_generation_io.js';
+import QuestionAnsweringIO from './question_answering_io.js';
+import ReviewTaggerIO from './review_tagger_io.js';
+import SentimentAnalysisIO from './sentiment_analysis_io.js';
+import SummarizaionIO from './summarization_io.js';
+import TableGeneratorIO from './table_generator_io.js';
+import TagGenerationIO from './tag_generation_io.js';
+import TranscriptCorrectionIO from './transcript_correction_io.js';
 
-module.exports = {
+export {
   ServiceIO,
   AmbiguityDetectionIO,
   AnswerScoringIO,

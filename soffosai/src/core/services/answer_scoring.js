@@ -1,5 +1,5 @@
-const { SoffosAIService, inspectArguments } = require('./service');
-const { ServiceString } = require('../../common/constants');
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
 
 
 class AnswerScoringService extends SoffosAIService {
@@ -22,4 +22,4 @@ class AnswerScoringService extends SoffosAIService {
     }
 }
 
-module.exports = AnswerScoringService
+export default AnswerScoringService

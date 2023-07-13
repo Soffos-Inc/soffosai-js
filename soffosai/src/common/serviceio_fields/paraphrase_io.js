@@ -1,5 +1,5 @@
-const ServiceIO = require('./service_io');
-const { ServiceString } = require('../constants');
+import ServiceIO from './service_io.js';
+import { ServiceString } from '../constants.js';
 
 class ParaphraseIO extends ServiceIO {
   constructor() {
@@ -15,4 +15,4 @@ class ParaphraseIO extends ServiceIO {
   }
 }
 
-module.exports = ParaphraseIO;
+export default ParaphraseIO;

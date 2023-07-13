@@ -1,5 +1,3 @@
-const { ServiceString } = require('../constants');
-
 class ServiceIO {
   /*
   Defines the IO of services. The structure is specifically important to determine if
@@ -33,4 +31,4 @@ class ServiceIO {
   }
 }
 
-module.exports = ServiceIO;
+export default ServiceIO;

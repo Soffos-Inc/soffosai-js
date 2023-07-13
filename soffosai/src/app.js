@@ -1,8 +1,8 @@
 // Soffos Inc. JavaScript SDK package
 
-const { ServiceString } = require('./common/constants');
-// const {
-//     AmbiguityDetectionService, 
+import { ServiceString } from './common/constants.js';
+import {
+    AmbiguityDetectionService
 //     AnswerScoringService, 
 //     ContradictionDetectionService,
 //     DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService, DocumentsService,
@@ -26,13 +26,14 @@ const { ServiceString } = require('./common/constants');
 //     TagGenerationService,
 //     TranscriptCorrectionService,
 // } = require('./core/services');
+} from "./core/services/index.js";
 
 const apiKey = process.env.SOFFOSAI_API_KEY;
 
-module.exports = {
+export {
     apiKey,
     ServiceString,
-    // AmbiguityDetectionService, 
+    AmbiguityDetectionService, 
     // AnswerScoringService, 
     // ContradictionDetectionService,
     // DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService, DocumentsService,

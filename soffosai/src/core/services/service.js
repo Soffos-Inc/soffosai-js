@@ -1,6 +1,6 @@
-const { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } = require("../../common");
-const {apiKey} = require("../../../../soffosai")
-const {SERVICE_IO_MAP} = require("../../common");
+import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
+import { apiKey } from "../../../../soffosai/src/app.js";
+import { SERVICE_IO_MAP } from "../../common/index.js";
 
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
@@ -244,4 +244,4 @@ class SoffosAIService {
       
 }
 
-module.exports = {inspectArguments, isValidUuid, SoffosAIService}
+export {inspectArguments, isValidUuid, SoffosAIService}
