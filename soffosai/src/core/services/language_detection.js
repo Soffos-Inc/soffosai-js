@@ -1,22 +1,28 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-26
-Purpose: Easily use Language Detection Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {LanguageDetectionIO} from '../../common/serviceio_fields/index.js';
 
 
-class LanguageDetectionService(SoffosAIService):
-    '''
-    The Language Detection module detects the dominant language in the provided text.
-    '''
+class LanguageDetectionService extends SoffosAIService {
+    /*
+        The Language Detection module detects the dominant language in the provided text.
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.LANGUAGE_DETECTION
-        super().__init__(service, **kwargs)
-    
-    def __call__(self, user:str, text:str):
-        self._args_dict = inspect_arguments(self.__call__, user, text)
-        return super().__call__()
+    constructor(kwargs = {}) {
+      const service = ServiceString.LANGUAGE_DETECTION;
+      super(service, kwargs);
+      this._serviceio = new LanguageDetectionIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @returns {Promise<any>} 
+     */
+    call(user, text) {
+      this._argsDict = inspectArguments(this.call, user, text);
+      return super.call();
+    }
+}
+
+export default LanguageDetectionService

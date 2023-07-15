@@ -1,4 +1,5 @@
-const SOFFOS_SERVICE_URL = "https://dev-api.soffos.ai/service/";
+// const SOFFOS_SERVICE_URL = "https://dev-api.soffos.ai/service/";
+const SOFFOS_SERVICE_URL = "http://127.0.0.1:8000/service/";
 
 const SERVICES_LIST = [
   'ambiguity-detection',

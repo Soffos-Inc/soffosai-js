@@ -1,6 +1,9 @@
 import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
 import { apiKey } from "../../../../soffosai/src/app.js";
-import { SERVICE_IO_MAP } from "../../common/index.js";
+import axios from 'axios';
+import FormData from 'form-data'; 
+import fs from 'fs/promises';
+import { createReadStream } from 'fs';
 
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
@@ -58,7 +61,6 @@ class SoffosAIService {
       };
       this._apikey = this.headers["x-api-key"];
       this._service = service;
-      this._serviceio = SERVICE_IO_MAP[this._service];
       this._payload = {};
       this._payload_keys = Object.keys(this._payload);
       this._args_dict = {};
@@ -156,9 +158,7 @@ class SoffosAIService {
          */
         const requestData = {};
         for (const [key, value] of Object.entries(this._payload)) {
-          if (key !== "file") {
             requestData[key] = value;
-          }
         }
       
         return requestData;
@@ -186,37 +186,45 @@ class SoffosAIService {
         let response;
         const data = this.getData();
         const url = SOFFOS_SERVICE_URL + this._service + "/";
-        const headers = {
-          "x-api-key": this._apikey,
-          "content-type": "application/json",
+        let headers = {
+          "x-api-key": this._apikey
         };
       
         if (!FORM_DATA_REQUIRED.includes(this._service)) {
-          response = await fetch(url, {
-            method: "POST",
-            headers,
-            body: JSON.stringify(data),
-          });
+          headers["content-type"] = "application/json";
+          response = await axios.post(url, data,{headers: headers});
+          // response = await fetch(url, {
+          //   method: "POST",
+          //   headers,
+          //   body: JSON.stringify(data),
+          // });
         } else {
-          const filePath = this._payload.file;
-          const fileName = filePath.split("/").pop();
-          const file = await fetch(filePath).then((response) => response.blob());
           const formData = new FormData();
-          formData.append("file", file, fileName);
-      
-          Object.entries(data).forEach(([key, value]) => {
-            formData.append(key, value);
+          Object.keys(data).forEach(key=>{
+            if (key=='file'){
+              formData.append(key, createReadStream(data[key]));
+            } else {
+              formData.append(key, data[key]);
+            }
           });
+          let headers = formData.getHeaders();
+          headers["x-api-key"] = this._apikey;
+          response = await axios.post(url, formData,{headers:headers});
+          // const filePath = this._payload.file;
+          // const fileName = filePath.split("/").pop();
+          // const file = await fs.readFile(filePath);
+          
+          // formData.append("file", file, fileName);
       
-          response = await fetch(url, {
-            method: "POST",
-            headers,
-            body: formData,
-          });
+          // response = await fetch(url, {
+          //   method: "POST",
+          //   headers,
+          //   body: formData,
+          // });
         }
       
         try {
-          return await response.json();
+          return response.data;
         } catch (error) {
           return response;
         }
