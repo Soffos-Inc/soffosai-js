@@ -1,41 +1,41 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-26
-Purpose: Easily use Microlesson Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {MicrolessonIO} from '../../common/serviceio_fields/index.js';
 
 
-class MicrolessonService(SoffosAIService):
-    '''
-    Accepts a list of texts, each one labelled with its source and creates a concise microlesson 
-    including a short summary, key points, learning objectives and tasks that aim to help the 
-    learner achieve the learning objectives.
-    '''
+class MicrolessonService extends SoffosAIService {
+    /*
+        Identifies illogical statements in text and explains why they are illogical.
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.MICROLESSON
-        self.content = []
-        super().__init__(service, **kwargs)
-    
+    constructor(kwargs = {}) {
+      const service = ServiceString.MICROLESSON;
+      super(service, kwargs);
+      this._serviceio = new MicrolessonIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {Array.<string>} content
+     * @returns {Promise<any>} 
+     */
+    call(user, content=undefined) {
+      if (content != undefined){
+        this.content = content;
+      }
+      this._argsDict = inspectArguments(this.call, user, content);
+      this._argsDict['content'] = this.content;
+      return super.call();
+    }
 
-    def __call__(self, user:str, content:list=None):
-        if content:
-            self.content = content
-        self._args_dict = inspect_arguments(self.__call__, user, content)
-        self._args_dict['content'] = self.content
-        return super().__call__()
-
-
-    def add_content(self, source:str, text:str):
-        '''
-        Add content to the microlesson
-        '''
-        self.content.append(
+    add_content(source, text) {
+        this.content.push(
             {
                 "source": source,
                 "text": text
             }
-        )
+        );
+    }
+}
+
+export default MicrolessonService

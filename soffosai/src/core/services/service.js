@@ -2,7 +2,6 @@ import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
 import { apiKey } from "../../../../soffosai/src/app.js";
 import axios from 'axios';
 import FormData from 'form-data'; 
-import fs from 'fs/promises';
 import { createReadStream } from 'fs';
 
 

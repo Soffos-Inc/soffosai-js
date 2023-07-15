@@ -1,22 +1,28 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-26
-Purpose: Easily use Logical Error Detection Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {LogicalErrorDetectionIO} from '../../common/serviceio_fields/index.js';
 
 
-class LogicalErrorDetectionService(SoffosAIService):
-    '''
-    Identifies illogical statements in text and explains why they are illogical.
-    '''
+class LogicalErrorDetectionService extends SoffosAIService {
+    /*
+        Identifies illogical statements in text and explains why they are illogical.
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.LOGICAL_ERROR_DETECTION
-        super().__init__(service, **kwargs)
-    
-    def __call__(self, user:str, text:str):
-        self._args_dict = inspect_arguments(self.__call__, user, text)
-        return super().__call__()
+    constructor(kwargs = {}) {
+      const service = ServiceString.LOGICAL_ERROR_DETECTION;
+      super(service, kwargs);
+      this._serviceio = new LogicalErrorDetectionIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @returns {Promise<any>} 
+     */
+    call(user, text) {
+      this._argsDict = inspectArguments(this.call, user, text);
+      return super.call();
+    }
+}
+
+export default LogicalErrorDetectionService

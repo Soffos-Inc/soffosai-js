@@ -1,38 +1,39 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-26
-Purpose: Easily use NamedEntityRecognition Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.js';
 
 
-class NamedEntityRecognitionService(SoffosAIService):
-    '''
-    Identifies named entities in text. It supports custom labels.
-    This module is extremely versatile as the labels can be defined by the user. 
-    '''
+class NamedEntityRecognitionService extends SoffosAIService {
+    /*
+        Identifies named entities in text. It supports custom labels.
+        This module is extremely versatile as the labels can be defined by the user. 
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.NER
-        self.labels = {}
-        super().__init__(service, **kwargs)
-    
+    constructor(kwargs = {}) {
+      const service = ServiceString.NER;
+      super(service, kwargs);
+      this._serviceio = new NamedEntityRecognitionIO();
+      this.labels = {};
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @param {Object.<string, string>} labels
+     * @returns {Promise<any>} 
+     */
+    call(user, text, labels=undefined) {
+      this._argsDict = inspectArguments(this.call, user, text, labels);
+      if (!(labels == undefined) && Object.keys(this.labels).length > 0){
+        this._argsDict['labels'] = labels;
+      }
+      return super.call();
+    }
 
-    def __call__(self, user:str, text:str, labels:dict=None):
-        
-        self._args_dict = inspect_arguments(self.__call__, user, text, labels)
+    add_label(label, definition) {
+        // Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
+        this.labels[label] = definition;
+    }
+}
 
-        if not labels and len(self.labels.keys()) > 0:
-            self._args_dict['labels'] = self.labels
-
-        return super().__call__()
-
-
-    def add_label(self, label:str, definition:str):
-        '''
-        Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
-        '''
-        self.labels[label] = definition
-        
+export default NamedEntityRecognitionService
