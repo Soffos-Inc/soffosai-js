@@ -2,6 +2,12 @@ import AmbiguityDetectionService from './ambiguity_detection.js';
 import AnswerScoringService from './answer_scoring.js';
 import ContradictionDetectionService from './contradiction_detection.js';
 import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService } from './documents.js';
+import {
+    LetsDiscussCreateService,
+    LetsDiscussService,
+    LetsDiscussRetrieveService,
+    LetsDiscussDeleteService
+} from './lets_discuss.js';
 import EmailAnalysisService from './email_analysis.js';
 import EmotionDetectionService from './emotion_detection.js';
 import FileConverterService from './file_converter.js';
@@ -15,5 +21,9 @@ export {
     EmailAnalysisService,
     EmotionDetectionService,
     FileConverterService,
-    LanguageDetectionService
+    LanguageDetectionService,
+    LetsDiscussCreateService,
+    LetsDiscussService,
+    LetsDiscussRetrieveService,
+    LetsDiscussDeleteService,
 };
