@@ -26,8 +26,8 @@ import {
     SimplifyService,
     SummarizationService,
     TableGeneratorService,
-//     TagGenerationService,
-//     TranscriptCorrectionService,
+    TagGenerationService,
+    TranscriptCorrectionService,
 } from "./core/services/index.js";
 
 const apiKey = process.env.SOFFOSAI_API_KEY;
@@ -59,6 +59,6 @@ export {
     SimplifyService,
     SummarizationService,
     TableGeneratorService,
-    // TagGenerationService,
-    // TranscriptCorrectionService,
+    TagGenerationService,
+    TranscriptCorrectionService,
 };

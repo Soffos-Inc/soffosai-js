@@ -24,7 +24,8 @@ import SentimentAnalysisService from './sentiment_analysis.js';
 import SimplifyService from './simplify.js';
 import SummarizationService from './summarization.js';
 import TableGeneratorService from './table_generator.js';
-
+import TagGenerationService from './tag_generation.js';
+import TranscriptCorrectionService from './transcript_correction.js';
 
 export {
     AmbiguityDetectionService,
@@ -52,5 +53,7 @@ export {
     SentimentAnalysisService,
     SimplifyService,
     SummarizationService,
-    TableGeneratorService
+    TableGeneratorService,
+    TagGenerationService,
+    TranscriptCorrectionService
 };
