@@ -1,23 +1,28 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-27
-Purpose: Easily use Profanity Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {ProfanityIO} from '../../common/serviceio_fields/index.js';
 
 
-class ProfanityService(SoffosAIService):
-    '''
-    This module detects profanities and the level of offensiveness in a body of text.
-    '''
+class ProfanityService extends SoffosAIService {
+    /*
+        This module detects profanities and the level of offensiveness in a body of text. 
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.PROFANITY
-        super().__init__(service, **kwargs)
-    
+    constructor(kwargs = {}) {
+      const service = ServiceString.PROFANITY;
+      super(service, kwargs);
+      this._serviceio = new ProfanityIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @returns {Promise<any>} 
+     */
+    call(user, text) {
+      this._argsDict = inspectArguments(this.call, user, text);
+      return super.call();
+    }
+}
 
-    def __call__(self, user:str, text:str):
-        self._args_dict = inspect_arguments(self.__call__, user, text)
-        return super().__call__()
+export default ProfanityService

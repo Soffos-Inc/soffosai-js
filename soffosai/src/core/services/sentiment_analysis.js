@@ -1,25 +1,32 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-27
-Purpose: Easily use Sentiment Analysis Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {SentimentAnalysisIO} from '../../common/serviceio_fields/index.js';
 
 
-class SentimentAnalysisService(SoffosAIService):
-    '''
-    This module processes the text to measure whether it is negative, positive or neutral. 
-    The text is processed in segments of user-defined length and it provides scores for each 
-    segment as well as the overall score of the whole text.
-    '''
+class SentimentAnalysisService extends SoffosAIService {
+    /*
+        This module processes the text to measure whether it is negative, positive or neutral. 
+        The text is processed in segments of user-defined length and it provides scores for each 
+        segment as well as the overall score of the whole text.
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.SENTIMENT_ANALYSIS
-        super().__init__(service, **kwargs)
-    
+    constructor(kwargs = {}) {
+      const service = ServiceString.SENTIMENT_ANALYSIS;
+      super(service, kwargs);
+      this._serviceio = new SentimentAnalysisIO();
+    }
+  
+    /**
+    * @param {string} user 
+    * @param {string} text
+    * @param {number} [sentence_split=3]
+    * @param {boolean} [sentence_overlap=false]
+    * @returns {Promise<any>} 
+    */
+   call(user, text, sentence_split=4, sentence_overlap=false) {
+     this._argsDict = inspectArguments(this.call, user, text, sentence_split, sentence_overlap);
+     return super.call();
+   }
+}
 
-    def __call__(self, user:str, text:str, sentence_split:int=4, sentence_overlap:bool=False):
-        self._args_dict = inspect_arguments(self.__call__, user, text, sentence_split, sentence_overlap)
-        return super().__call__()
+export default SentimentAnalysisService

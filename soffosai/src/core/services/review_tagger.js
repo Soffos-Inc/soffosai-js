@@ -1,26 +1,31 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-27
-Purpose: Easily use Review Tagger Service
------------------------------------------------------
-'''
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {ReviewTaggerIO} from '../../common/serviceio_fields/index.js';
 
 
-class ReviewTaggerService(SoffosAIService):
-    '''
-    This module extracts key information from negative product reviews. It attempts to find 
-    the referred object, it's fault and an action/verb that is associated with it. If any 
-    of the information is not present, it returns "n/a". This is useful for organizations who 
-    want to analyze product reviews in order to identify and prioritize the most important issues.
-    '''
+class ReviewTaggerService extends SoffosAIService {
+    /*
+        This module extracts key information from negative product reviews. It attempts to find 
+        the referred object, it's fault and an action/verb that is associated with it. If any 
+        of the information is not present, it returns "n/a". This is useful for organizations who 
+        want to analyze product reviews in order to identify and prioritize the most important issues.
+    */
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.REVIEW_TAGGER
-        super().__init__(service, **kwargs)
-    
+    constructor(kwargs = {}) {
+      const service = ServiceString.REVIEW_TAGGER;
+      super(service, kwargs);
+      this._serviceio = new ReviewTaggerIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @returns {Promise<any>} 
+     */
+    call(user, text) {
+      this._argsDict = inspectArguments(this.call, user, text);
+      return super.call();
+    }
+}
 
-    def __call__(self, user:str, text:str):
-        self._args_dict = inspect_arguments(self.__call__, user, text)
-        return super().__call__()
+export default ReviewTaggerService

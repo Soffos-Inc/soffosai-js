@@ -1,29 +1,36 @@
-'''
-Copyright (c)2022 - Soffos.ai - All rights reserved
-Created at: 2023-06-27
-Purpose: Easily use Table Generator Service
------------------------------------------------------
-'''
-from typing import Union
-from .service import SoffosAIService, inspect_arguments
-from soffosai.common.constants import ServiceString
+import { SoffosAIService, inspectArguments } from './service.js';
+import { ServiceString } from '../../common/constants.js';
+import {TableGeneratorIO} from '../../common/serviceio_fields/index.js';
 
-TABLE_FORMATS = ['markdonw', 'CSV']
 
-class TableGeneratorService(SoffosAIService):
-    '''
-    The table generator module enables applications to extract numerical and statistical 
-    data from raw text in a tabular format. For use-cases where data has to be manually 
-    reviewed and cross-referenced, this module can bring enormous value.
-    '''
+const TABLE_FORMATS = ['markdown', 'CSV'];
 
-    def __init__(self,  **kwargs) -> None:
-        service = ServiceString.TABLE_GENERATOR
-        super().__init__(service, **kwargs)
-    
+class TableGeneratorService extends SoffosAIService {
+    /*
+        The table generator module enables applications to extract numerical and statistical 
+        data from raw text in a tabular format. For use-cases where data has to be manually 
+        reviewed and cross-referenced, this module can bring enormous value.
+    */
 
-    def __call__(self, user:str, text:str, table_format:str='markdown'):
-        if table_format not in TABLE_FORMATS:
-            raise ValueError(f"The argument table_format accepted values are: {TABLE_FORMATS}")
-        self._args_dict = inspect_arguments(self.__call__, user, text, table_format)
-        return super().__call__()
+    constructor(kwargs = {}) {
+      const service = ServiceString.TABLE_GENERATOR;
+      super(service, kwargs);
+      this._serviceio = new TableGeneratorIO();
+    }
+  
+    /**
+     * @param {string} user 
+     * @param {string} text
+     * @param {string} [table_format="markdown"]
+     * @returns {Promise<any>} 
+     */
+    call(user, text, table_format='markdown') {
+      if (!TABLE_FORMATS.includes(table_format)){
+        throw new Error(`${table_format} is not a supported format. Please choose from ${TABLE_FORMATS}.`)
+      }
+      this._argsDict = inspectArguments(this.call, user, text, table_format);
+      return super.call();
+    }
+}
+
+export default TableGeneratorService

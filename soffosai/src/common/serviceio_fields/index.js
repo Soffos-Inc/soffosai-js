@@ -18,7 +18,7 @@ import QuestionAndAnswerGenerationIO from './qna_generation_io.js';
 import QuestionAnsweringIO from './question_answering_io.js';
 import ReviewTaggerIO from './review_tagger_io.js';
 import SentimentAnalysisIO from './sentiment_analysis_io.js';
-import SummarizaionIO from './summarization_io.js';
+import SummarizationIO from './summarization_io.js';
 import TableGeneratorIO from './table_generator_io.js';
 import TagGenerationIO from './tag_generation_io.js';
 import TranscriptCorrectionIO from './transcript_correction_io.js';
@@ -49,7 +49,7 @@ export {
   QuestionAnsweringIO,
   ReviewTaggerIO,
   SentimentAnalysisIO,
-  SummarizaionIO,
+  SummarizationIO,
   TableGeneratorIO,
   TagGenerationIO,
   TranscriptCorrectionIO,
