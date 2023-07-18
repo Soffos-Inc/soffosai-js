@@ -192,11 +192,6 @@ class SoffosAIService {
         if (!FORM_DATA_REQUIRED.includes(this._service)) {
           headers["content-type"] = "application/json";
           response = await axios.post(url, data,{headers: headers});
-          // response = await fetch(url, {
-          //   method: "POST",
-          //   headers,
-          //   body: JSON.stringify(data),
-          // });
         } else {
           const formData = new FormData();
           Object.keys(data).forEach(key=>{
@@ -209,17 +204,6 @@ class SoffosAIService {
           let headers = formData.getHeaders();
           headers["x-api-key"] = this._apikey;
           response = await axios.post(url, formData,{headers:headers});
-          // const filePath = this._payload.file;
-          // const fileName = filePath.split("/").pop();
-          // const file = await fs.readFile(filePath);
-          
-          // formData.append("file", file, fileName);
-      
-          // response = await fetch(url, {
-          //   method: "POST",
-          //   headers,
-          //   body: formData,
-          // });
         }
       
         try {

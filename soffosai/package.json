@@ -1,12 +1,15 @@
 {
   "name": "soffosai",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "Javascript package for Soffos.ai API",
   "main": "src/app.js",
+  "types": "index.d.ts",
   "type": "module",
-  "dependencies": {"axios": "^1.4.0"},
+  "dependencies": {
+    "axios": "^1.4.0"
+  },
   "exports": {
-    "import": "./soffosai/src/app.js"
+    "import": "./src/app.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/Soffos-Inc/soffosai-js/issues"
   },
-  "homepage": "https://github.com/Soffos-Inc/soffosai-js#readme"
+  "homepage": "https://github.com/Soffos-Inc/soffosai-js#readme",
+  "devDependencies": {},
+  "keywords": [
+    "soffos",
+    "soffos.ai",
+    "AI"
+  ]
 }

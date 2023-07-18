@@ -30,6 +30,10 @@ class NamedEntityRecognitionService extends SoffosAIService {
       return super.call();
     }
 
+    /**
+     * @param {string} label 
+     * @param {string} definition 
+     */
     add_label(label, definition) {
         // Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
         this.labels[label] = definition;

@@ -16,7 +16,7 @@ class MicrolessonService extends SoffosAIService {
   
     /**
      * @param {string} user 
-     * @param {Array.<string>} content
+     * @param {Array.<object>} content
      * @returns {Promise<any>} 
      */
     call(user, content=undefined) {
