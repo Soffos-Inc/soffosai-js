@@ -3,12 +3,11 @@ import { ServiceString } from '../../common/constants.js';
 import {AnswerScoringIO} from '../../common/serviceio_fields/index.js';
 
 
+/** 
+ * This module will mark the user's answer based on the provided context, 
+ * the question and, optionally, the expected correct answer..
+*/
 class AnswerScoringService extends SoffosAIService {
-    /*
-        This module will mark the user's answer based on the provided context, 
-        the question and, optionally, the expected correct answer..
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.ANSWER_SCORING;
       super(service, kwargs);
@@ -21,7 +20,7 @@ class AnswerScoringService extends SoffosAIService {
      * @param {string} question
      * @param {string} user_answer
      * @param {string} [answer]
-     * @returns {Promise<any>}
+     * @returns {Promise<Object>}
      */
     call(user, context, question, user_answer, answer=null) {
       this._argsDict = inspectArguments(this.call, user, context, question, user_answer, answer);

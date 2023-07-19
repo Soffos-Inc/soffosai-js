@@ -3,11 +3,10 @@ import { ServiceString } from '../../common/constants.js';
 import {MicrolessonIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * Identifies illogical statements in text and explains why they are illogical.
+ */
 class MicrolessonService extends SoffosAIService {
-    /*
-        Identifies illogical statements in text and explains why they are illogical.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.MICROLESSON;
       super(service, kwargs);
@@ -17,7 +16,7 @@ class MicrolessonService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {Array.<object>} content
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, content=undefined) {
       if (content != undefined){
@@ -28,6 +27,10 @@ class MicrolessonService extends SoffosAIService {
       return super.call();
     }
 
+    /**
+     * @param {string} source 
+     * @param {string} text 
+     */
     add_content(source, text) {
         this.content.push(
             {

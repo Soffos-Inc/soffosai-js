@@ -3,13 +3,12 @@ import { ServiceString } from '../../common/constants.js';
 import {TagGenerationIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * This module can generate tags for a piece of text that can aid with content search in
+ * certain use-cases. It allows to specify a number of tags to be generated for each of 
+ * the categories "topic", "domain", "audience", "entity".
+ */
 class TagGenerationService extends SoffosAIService {
-    /*
-        This module can generate tags for a piece of text that can aid with content search in 
-        certain use-cases. It allows to specify a number of tags to be generated for each of 
-        the categories "topic", "domain", "audience", "entity".
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.TAG_GENERATION;
       super(service, kwargs);
@@ -21,7 +20,7 @@ class TagGenerationService extends SoffosAIService {
      * @param {string} text
      * @param {Array.<string>} [types=["topic"]]
      * @param {number} [n=10]
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text, types=["topic"], n=10) {
         /*

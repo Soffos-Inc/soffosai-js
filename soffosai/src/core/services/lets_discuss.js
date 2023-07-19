@@ -2,17 +2,15 @@ import { SoffosAIService, inspectArguments } from './service.js';
 import { ServiceString } from '../../common/constants.js';
 import {LetsDiscussCreateIO, LetsDiscussIO, LetsDiscussRetrieveIO, LetsDiscussDeleteIO} from '../../common/serviceio_fields/index.js';
 
-/*
-    The Let's Discuss module allows the user to have a conversation with the AI about the content 
-    provided by the user. The main difference between this module and the Question Answering module 
-    is that Let's Discuss keeps a history of the interactions.
-*/
 
+/**
+ * The Let's Discuss module allows the user to have a conversation with the AI about the content 
+ * provided by the user. The main difference between this module and the Question Answering module 
+ * is that Let's Discuss keeps a history of the interactions.
+ * 
+ * LetsDiscuss service to be used for creating a session.
+ */
 class LetsDiscussCreateService extends SoffosAIService {
-    /*
-        LetsDiscuss service to be used for creating a session only.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LETS_DISCUSS_CREATE;
       super(service, kwargs);
@@ -22,7 +20,7 @@ class LetsDiscussCreateService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {string} context
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, context) {
       this._argsDict = inspectArguments(this.call, user, context);
@@ -31,11 +29,14 @@ class LetsDiscussCreateService extends SoffosAIService {
 }
 
 
+/**
+ * The Let's Discuss module allows the user to have a conversation with the AI about the content 
+ * provided by the user. The main difference between this module and the Question Answering module 
+ * is that Let's Discuss keeps a history of the interactions.
+ * 
+ * LetsDiscuss main service, continues thread of conversation.
+ */
 class LetsDiscussService extends SoffosAIService {
-    /*
-        LetsDiscuss main service, continues thread of conversation.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LETS_DISCUSS;
       super(service, kwargs);
@@ -46,7 +47,7 @@ class LetsDiscussService extends SoffosAIService {
      * @param {string} user 
      * @param {string} session_id
      * @param {string} query
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, session_id, query) {
       this._argsDict = inspectArguments(this.call, user, session_id, query);
@@ -55,11 +56,14 @@ class LetsDiscussService extends SoffosAIService {
 }
 
 
+/**
+ * The Let's Discuss module allows the user to have a conversation with the AI about the content 
+ * provided by the user. The main difference between this module and the Question Answering module 
+ * is that Let's Discuss keeps a history of the interactions.
+ * 
+ * LetsDiscuss service to be used for retrieving sessions.
+ */
 class LetsDiscussRetrieveService extends SoffosAIService {
-    /*
-        LetsDiscuss service to be used for retrieving sessions.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LETS_DISCUSS_RETRIEVE;
       super(service, kwargs);
@@ -69,7 +73,7 @@ class LetsDiscussRetrieveService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {boolean} return_messages
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, return_messages) {
       this._argsDict = inspectArguments(this.call, user, return_messages);
@@ -78,11 +82,14 @@ class LetsDiscussRetrieveService extends SoffosAIService {
 }
 
 
+/**
+ * The Let's Discuss module allows the user to have a conversation with the AI about the content 
+ * provided by the user. The main difference between this module and the Question Answering module 
+ * is that Let's Discuss keeps a history of the interactions.
+ * 
+ * LetsDiscuss service to be used for deleting sessions.
+ */
 class LetsDiscussDeleteService extends SoffosAIService {
-    /*
-        LetsDiscuss service to be used for deleting sessions only.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LETS_DISCUSS_DELETE;
       super(service, kwargs);
@@ -92,7 +99,7 @@ class LetsDiscussDeleteService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {Array.<string>} session_ids
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, session_ids) {
       this._argsDict = inspectArguments(this.call, user, session_ids);

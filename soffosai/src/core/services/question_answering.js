@@ -3,14 +3,13 @@ import { ServiceString } from '../../common/constants.js';
 import {QuestionAnsweringIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * This module is a combination of various sub-modules that enable users to get accurate answers on 
+ * questions posed on a large amount of content. It includes basic intent recognition capabilities 
+ * to enable appropriate responses to incorrect or profane language, or typical personal questions 
+ * like "How are you?" and greetings
+ */
 class QuestionAnsweringService extends SoffosAIService {
-    /*
-        This module is a combination of various sub-modules that enable users to get accurate answers on 
-        questions posed on a large amount of content. It includes basic intent recognition capabilities 
-        to enable appropriate responses to incorrect or profane language, or typical personal questions 
-        like "How are you?" and greetings
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.QUESTION_ANSWERING;
       super(service, kwargs);
@@ -26,7 +25,7 @@ class QuestionAnsweringService extends SoffosAIService {
      * @param {string} [check_query_type=true]
      * @param {string} [generic_response=false]
      * @param {Object.<string, string>} meta
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, question, document_text=undefined, document_ids=undefined, 
         check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {

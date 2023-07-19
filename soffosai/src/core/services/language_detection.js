@@ -2,12 +2,10 @@ import { SoffosAIService, inspectArguments } from './service.js';
 import { ServiceString } from '../../common/constants.js';
 import {LanguageDetectionIO} from '../../common/serviceio_fields/index.js';
 
-
+/**
+ * The Language Detection module detects the dominant language in the provided text.
+ */
 class LanguageDetectionService extends SoffosAIService {
-    /*
-        The Language Detection module detects the dominant language in the provided text.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LANGUAGE_DETECTION;
       super(service, kwargs);
@@ -17,7 +15,7 @@ class LanguageDetectionService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {string} text
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text) {
       this._argsDict = inspectArguments(this.call, user, text);

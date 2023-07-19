@@ -5,12 +5,11 @@ import {EmotionDetectionIO} from '../../common/serviceio_fields/index.js';
 
 const _EMOTION_LIST = ["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation"];
 
+/**
+ * Detect selected emotions within the provided text. The original text is chunked to
+ * passages of a specified sentence length. Smaller chunks yield better accuracy.
+ */
 class EmotionDetectionService extends SoffosAIService {
-    /*
-        Detect selected emotions within the provided text. The original text is chunked to 
-        passages of a specified sentence length. Smaller chunks yield better accuracy.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.EMOTION_DETECTION;
       super(service, kwargs);
@@ -23,7 +22,7 @@ class EmotionDetectionService extends SoffosAIService {
      * @param {number} [sentence_split=4] 
      * @param {number} [sentence_overlap=false] 
      * @param {Array.<string>} [emotion_choices] 
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST) {
       for (let emotion of emotion_choices) {

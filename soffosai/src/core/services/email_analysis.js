@@ -2,11 +2,11 @@ import { SoffosAIService, inspectArguments } from './service.js';
 import { ServiceString } from '../../common/constants.js';
 import {EmailAnalysisIO} from '../../common/serviceio_fields/index.js';
 
-class EmailAnalysisService extends SoffosAIService {
-    /*
-        This module extracts key information from the body of an e-mail.
-    */
 
+/**
+ * This module extracts key information from the body of an e-mail.
+ */
+class EmailAnalysisService extends SoffosAIService {
     constructor(kwargs = {}) {
       const service = ServiceString.EMAIL_ANALYSIS;
       super(service, kwargs);
@@ -16,7 +16,7 @@ class EmailAnalysisService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {string} text
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text) {
       this._argsDict = inspectArguments(this.call, user, text);

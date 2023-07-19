@@ -3,12 +3,11 @@ import { ServiceString } from '../../common/constants.js';
 import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * Identifies named entities in text. It supports custom labels.
+ * This module is extremely versatile as the labels can be defined by the user.
+ */
 class NamedEntityRecognitionService extends SoffosAIService {
-    /*
-        Identifies named entities in text. It supports custom labels.
-        This module is extremely versatile as the labels can be defined by the user. 
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.NER;
       super(service, kwargs);
@@ -20,7 +19,7 @@ class NamedEntityRecognitionService extends SoffosAIService {
      * @param {string} user 
      * @param {string} text
      * @param {Object.<string, string>} labels
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>}
      */
     call(user, text, labels=undefined) {
       this._argsDict = inspectArguments(this.call, user, text, labels);
@@ -31,11 +30,11 @@ class NamedEntityRecognitionService extends SoffosAIService {
     }
 
     /**
+     * Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
      * @param {string} label 
      * @param {string} definition 
      */
     add_label(label, definition) {
-        // Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
         this.labels[label] = definition;
     }
 }

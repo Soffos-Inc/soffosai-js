@@ -8,6 +8,12 @@ import { createReadStream } from 'fs';
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 const input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
 
+/**
+ * Converts arguments to key, value pair object
+ * @param {function} func 
+ * @param  {...any} args 
+ * @returns {string}
+ */
 function inspectArguments(func, ...args) {
   const parameterNames = func.toString()
     .replace(/[/][/].*$/mg, '') // Remove single-line comments
@@ -28,11 +34,21 @@ function inspectArguments(func, ...args) {
 }
 
 
+/**
+ * given a uuid string without dashes, convert it to standard form
+ * @param {string} uuid 
+ * @returns {string}
+ */
 function formatUuid(uuid) {
   const formattedUuid = [uuid.slice(0, 8), uuid.slice(8, 12), uuid.slice(12, 16), uuid.slice(16, 20), uuid.slice(20)].join("-");
   return formattedUuid;
 }
 
+/**
+ * Checks if a string is a valid UUID string
+ * @param {string} uuidString 
+ * @returns {boolean}
+ */
 function isValidUuid(uuidString) {
   if (typeof uuidString === "function") {
     return true;
@@ -47,11 +63,19 @@ function isValidUuid(uuidString) {
   return regex.test(formattedUuid);
 }
 
+/**
+ * Checks if value is an {key:value} object also checks if not an Array.
+ * @param {any} value 
+ * @returns 
+ */
 function isObject(value) {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 
+/**
+ * Base service class for all Soffos Services
+ */
 class SoffosAIService {
     constructor(service, kwargs = {}) {
       const { apikey } = kwargs;
@@ -65,18 +89,19 @@ class SoffosAIService {
       this._args_dict = {};
     }
 
-    get input_structure() {
-        /**
-         * These are the valid fields of the src dictionary for this service. Take note that some of the fields should not exist at the same time.
-         * To view fields that cannot co-exist, access the 'choose_one' property.
-         */
+    /**
+     * These are the valid fields of the src dictionary for this service. Take note that some of the fields should not exist at the same time.
+     * To view fields that cannot co-exist, access the 'choose_one' property.
+     */
+    get_input_structure() {
         return this._serviceio.input_structure;
       }
 
+    /**
+     * Checks if the input type is allowed for the service
+     */
     validatePayload() {
-        /**
-         * Checks if the input type is allowed for the service
-         */
+        
         if (!isObject(this._payload)) {
           throw new TypeError("payload should be an object");
         }
@@ -151,10 +176,11 @@ class SoffosAIService {
         return [true, null];
     }
     
+    /**
+     * Prepare the JSON or form data input of the service
+     * Will be used when there is a special handling needed for an element of this._payload
+     */
     getData() {
-        /**
-         * Prepare the JSON or form data input of the service
-         */
         const requestData = {};
         for (const [key, value] of Object.entries(this._payload)) {
             requestData[key] = value;
@@ -163,10 +189,11 @@ class SoffosAIService {
         return requestData;
     }
 
+    /**
+     * Based on the knowledge/context, Soffos AI will now give you the data you need
+     */
     async getResponse(payload = {}) {
-        /**
-         * Based on the knowledge/context, Soffos AI will now give you the data you need
-         */
+        
         this._payload = payload;
         const [allowInput, message] = this.validatePayload();
         if ("question" in this._payload) {
@@ -213,6 +240,11 @@ class SoffosAIService {
         }
     }
     
+    /**
+     * Call the service
+     * @param {object} kwargs 
+     * @returns {object}
+     */
     call(kwargs = {}) {
         return this.getResponse({ ...this._argsDict, ...kwargs });
     }

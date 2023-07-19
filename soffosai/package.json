@@ -1,8 +1,9 @@
 {
   "name": "soffosai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Javascript package for Soffos.ai API",
   "main": "src/app.js",
+  "typings": "./index.d.ts",
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {

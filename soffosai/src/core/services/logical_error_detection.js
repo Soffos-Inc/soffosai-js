@@ -3,11 +3,10 @@ import { ServiceString } from '../../common/constants.js';
 import {LogicalErrorDetectionIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * Identifies illogical statements in text and explains why they are illogical.
+ */
 class LogicalErrorDetectionService extends SoffosAIService {
-    /*
-        Identifies illogical statements in text and explains why they are illogical.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.LOGICAL_ERROR_DETECTION;
       super(service, kwargs);
@@ -17,7 +16,7 @@ class LogicalErrorDetectionService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {string} text
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text) {
       this._argsDict = inspectArguments(this.call, user, text);

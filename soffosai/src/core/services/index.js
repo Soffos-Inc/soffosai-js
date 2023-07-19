@@ -14,7 +14,7 @@ import {
 } from './lets_discuss.js';
 import LogicalErrorDetectionService from './logical_error_detection.js';
 import MicrolessonService from './microlesson.js';
-import NamedEntityRecognitionService from './NER.js';
+import NamedEntityRecognitionService from './named_entity_recognition.js';
 import ParaphraseService from './paraphrase.js';
 import ProfanityService from './profanity.js';
 import QuestionAndAnswerGenerationService from './qna_generation.js';

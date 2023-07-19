@@ -5,13 +5,12 @@ import {TableGeneratorIO} from '../../common/serviceio_fields/index.js';
 
 const TABLE_FORMATS = ['markdown', 'CSV'];
 
+/**
+ * The table generator module enables applications to extract numerical and statistical 
+ * data from raw text in a tabular format. For use-cases where data has to be manually 
+ * reviewed and cross-referenced, this module can bring enormous value.
+ */
 class TableGeneratorService extends SoffosAIService {
-    /*
-        The table generator module enables applications to extract numerical and statistical 
-        data from raw text in a tabular format. For use-cases where data has to be manually 
-        reviewed and cross-referenced, this module can bring enormous value.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.TABLE_GENERATOR;
       super(service, kwargs);
@@ -22,7 +21,7 @@ class TableGeneratorService extends SoffosAIService {
      * @param {string} user 
      * @param {string} text
      * @param {string} [table_format="markdown"]
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, text, table_format='markdown') {
       if (!TABLE_FORMATS.includes(table_format)){

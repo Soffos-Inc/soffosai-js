@@ -3,12 +3,11 @@ import { ServiceString } from '../../common/constants.js';
 import {DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * The Documents Ingest module enables ingestion of content into Soffos.
+ * Takes in the text and gives the document_id to reference the text in Soffos database.
+ */
 class DocumentsIngestService extends SoffosAIService {
-    /*
-        The Documents Ingest module enables ingestion of content into Soffos.
-        Takes in the text and gives the document_id to reference the text in Soffos database.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.DOCUMENTS_INGEST;
       super(service, kwargs);
@@ -21,7 +20,7 @@ class DocumentsIngestService extends SoffosAIService {
      * @param {string} [text]
      * @param {object} [tagged_elements] 
      * @param {object} [meta] 
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, document_name, text=null, tagged_elements=null, meta=null) {
       this._argsDict = inspectArguments(this.call, user, document_name, text, tagged_elements, meta);
@@ -31,11 +30,10 @@ class DocumentsIngestService extends SoffosAIService {
 }
 
 
+/**
+ * The Documents module enables search of ingested contents from Soffos.
+ */
 class DocumentsSearchService extends SoffosAIService {
-    /*
-        The Documents module enables search of ingested contents from Soffos.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.DOCUMENTS_SEARCH;
       super(service, kwargs);
@@ -51,7 +49,7 @@ class DocumentsSearchService extends SoffosAIService {
      * @param {number} [top_n_natural_language] 
      * @param {string} [date_from]
      * @param {string} [date_until]
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, query=null, filters=null, document_ids=null, top_n_keywords=5,
         top_n_natural_language=5, date_from=null, date_until=null) 
@@ -73,11 +71,10 @@ class DocumentsSearchService extends SoffosAIService {
 }
 
 
+/**
+ * The Documents module enables deletion of ingested contents from Soffos.
+ */
 class DocumentsDeleteService extends SoffosAIService {
-    /*
-        The Documents module enables deletion of ingested contents from Soffos.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.DOCUMENTS_DELETE;
       super(service, kwargs);
@@ -87,7 +84,7 @@ class DocumentsDeleteService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {Array.<string>} [document_ids] 
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, document_ids) {
       this._argsDict = inspectArguments(this.call, user, document_ids);

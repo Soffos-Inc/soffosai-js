@@ -3,11 +3,10 @@ import { ServiceString } from '../../common/constants.js';
 import {FileConverterIO} from '../../common/serviceio_fields/index.js';
 
 
+/**
+ * The File Converter extracts text from various types of files.
+ */
 class FileConverterService extends SoffosAIService {
-    /*
-        The File Converter extracts text from various types of files.
-    */
-
     constructor(kwargs = {}) {
       const service = ServiceString.FILE_CONVERTER;
       super(service, kwargs);
@@ -18,7 +17,7 @@ class FileConverterService extends SoffosAIService {
      * @param {string} user 
      * @param {string} file
      * @param {number} [normalize=0] 
-     * @returns {Promise<any>} 
+     * @returns {Promise<Object>} 
      */
     call(user, file, normalize=0) {
         if ( ![ 0, 1 ].includes(normalize)){
