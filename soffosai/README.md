@@ -1,4 +1,4 @@
-# Soffosai Node JS
+# Soffosai JS
 Javascript SDK for Soffos.ai API
 
 ## API Keys
