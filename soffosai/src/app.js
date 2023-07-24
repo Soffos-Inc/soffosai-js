@@ -1,6 +1,7 @@
 // Soffos Inc. JavaScript SDK package
 
 import { ServiceString } from './common/constants.js';
+import { SoffosAIService } from './core/services/service.js';
 import {
     AmbiguityDetectionService,
     AnswerScoringService, 
@@ -35,6 +36,8 @@ const apiKey = process.env.SOFFOSAI_API_KEY;
 export {
     apiKey,
     ServiceString,
+    SoffosAIService,
+
     AmbiguityDetectionService, 
     AnswerScoringService, 
     ContradictionDetectionService,

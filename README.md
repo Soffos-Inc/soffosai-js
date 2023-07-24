@@ -2,8 +2,8 @@
 Javascript SDK for Soffos.ai API
 
 ## API Keys
-- Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
-- After loggin in, on the left panel, click [Projects](https://platform.soffos.ai/apps-list).
+- Create an account at [Soffos platform](https://platform.soffos.ai/signup) or [login](https://platform.soffos.ai/login).
+- After logging in, on the left panel, click [Projects](https://platform.soffos.ai/apps-list).
 - Create a new project.
 - Click on the key icon in the project you created and you will find the API Keys for that project.
   - An API key will automatically be provided for you on Project creation but you can still create more when your account is no longer on trial.

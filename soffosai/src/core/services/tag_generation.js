@@ -1,4 +1,5 @@
-import { SoffosAIService, inspectArguments } from './service.js';
+import { SoffosAIService } from './service.js';
+import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {TagGenerationIO} from '../../common/serviceio_fields/index.js';
 
@@ -33,11 +34,11 @@ class TagGenerationService extends SoffosAIService {
             entity: Entities such as people, places, products, etc. mentioned in the text.
         */
         for (let i = 0; i < types.length; i++) {
-            const _type = types[i];
+            let _type = types[i];
             if (!["topic", "domain", "audience", "entity"].includes(_type)) {
                 throw new Error(`${this._service} types argument's elements can only be "topic", "domain", "audience" and/or "entity".`);
             }
-            }
+        }
               
       this._argsDict = inspectArguments(this.call, user, text, types, n);
       return super.call();

@@ -1,1 +1,9 @@
 # Changelog
+## Notice:
+To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
+
+## 0.0.6
+- Pipeline feature
+
+## 0.0.5:
+- changed the target URL

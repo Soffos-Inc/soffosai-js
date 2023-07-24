@@ -1,0 +1,28 @@
+import {Node} from "./node.js";
+import {SentimentAnalysisService} from "../../app.js";
+
+/**
+ * A service configuration for SentimentAnalysisService for Pipeline use.
+ */
+class SentimentAnalysisNode extends Node {
+
+    /**
+     * @param {string} name
+     * @param {string} text
+     * @param {number} sentence_split
+     * @param {string} sentence_overlap
+     */
+    constructor(name, text, sentence_split=4, sentence_overlap=false) {
+        let service = new SentimentAnalysisService();
+        let source = {
+            name: name,
+			text: text,
+			sentence_split: sentence_split,
+			sentence_overlap: sentence_overlap
+        }
+        
+        return super(name, service, source);
+    }
+}
+
+export default SentimentAnalysisNode;

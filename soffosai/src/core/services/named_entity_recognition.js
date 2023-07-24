@@ -1,4 +1,5 @@
-import { SoffosAIService, inspectArguments } from './service.js';
+import { SoffosAIService } from './service.js';
+import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.js';
 

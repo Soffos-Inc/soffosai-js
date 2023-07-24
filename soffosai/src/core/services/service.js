@@ -8,31 +8,6 @@ import { createReadStream } from 'fs';
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 const input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
 
-/**
- * Converts arguments to key, value pair object
- * @param {function} func 
- * @param  {...any} args 
- * @returns {string}
- */
-function inspectArguments(func, ...args) {
-  const parameterNames = func.toString()
-    .replace(/[/][/].*$/mg, '') // Remove single-line comments
-    .replace(/\s+/g, '') // Remove white space
-    .replace(/[/][*][^/*]*[*][/]/g, '') // Remove multi-line comments
-    .split(')')[0]
-    .split('(')[1]
-    .split(',')
-    .map((param) => param.split('=')[0]);
-
-  const converted = {};
-  for (let i = 0; i < parameterNames.length; i++) {
-    if (args[i] != null && args[i] != undefined) {
-      converted[parameterNames[i]] = args[i];
-    }
-  }
-  return converted;
-}
-
 
 /**
  * given a uuid string without dashes, convert it to standard form
@@ -77,6 +52,10 @@ function isObject(value) {
  * Base service class for all Soffos Services
  */
 class SoffosAIService {
+  /**
+   * @param {string} service 
+   * @param {Object} kwargs 
+   */
     constructor(service, kwargs = {}) {
       const { apikey } = kwargs;
       this.headers = {
@@ -267,4 +246,4 @@ class SoffosAIService {
       
 }
 
-export {inspectArguments, isValidUuid, SoffosAIService}
+export { isValidUuid, SoffosAIService}

@@ -1,4 +1,5 @@
-import { SoffosAIService, inspectArguments } from './service.js';
+import { SoffosAIService } from './service.js';
+import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {AmbiguityDetectionIO} from '../../common/serviceio_fields/index.js';
 
@@ -15,7 +16,7 @@ class AmbiguityDetectionService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user
      * @param {string} text
      * @param {number} [sentence_split=4]
      * @param {boolean} [sentence_overlap=false]
@@ -27,4 +28,4 @@ class AmbiguityDetectionService extends SoffosAIService {
     }
 }
 
-export default AmbiguityDetectionService;
+export default AmbiguityDetectionService
