@@ -48,6 +48,13 @@ export class FileIngestPipeline extends Pipeline {
         return super([file_converter, document_ingest]);
     }
 
+    /**
+     * 
+     * @param {string} user 
+     * @param {string} file 
+     * @param {number} normalize 
+     * @returns {object}
+     */
     async call(user, file, normalize) {
         let payload = inspectArguments(this.call, user, file, normalize);
         const output = await this.run(payload);

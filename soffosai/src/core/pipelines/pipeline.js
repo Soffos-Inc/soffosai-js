@@ -26,6 +26,7 @@ class Pipeline {
         this._stages = nodes;
         this._input = {};
         this._infos = {};
+        this._use_defaults = use_defaults;
 
         let error_messages = [];
         if (!Array.isArray(nodes)) {
@@ -44,9 +45,6 @@ class Pipeline {
 
         this._outputfields = this._stages.map(stage => Object.keys(stage.service._serviceio.output_structure));
 
-        if (use_defaults) {
-            this._stages = this.setDefaults(nodes);
-          }
     }
 
     async run(user_input) {
@@ -62,6 +60,10 @@ class Pipeline {
         if ("question" in user_input) {
             user_input.message = user_input.question;
         }
+        if (this._use_defaults) {
+            this._stages = this.setDefaults(this._stages, user_input);
+        }
+
         this.validate_pipeline(user_input, this._stages);
         this._infos.user_input = user_input;
         let total_cost = 0.00;
@@ -221,14 +223,14 @@ class Pipeline {
                     }
                 }
             }
-            console.log(required_keys);
+            console.log(`required keys: ${required_keys}`);
             
             // starting from the last output, check if the required input data is available
             // if not, get it from the user_input
             // if input is defined, use its definition
-            for ( let required_key in required_keys) {
+            for ( let required_key of required_keys) {
 
-                if (stage.source[required_key]) { 
+                if (stage.source[required_key] != "default") { 
                     stage_source[required_key] = stage.source[required_key];
                     continue;
                 }
@@ -252,6 +254,13 @@ class Pipeline {
                         };
                         found_input = true;
                     }
+                    if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
+                        stage_source.document_text = {
+                            source: stage_for_output.name,
+                            field: "text"
+                        };
+                        found_input = true;
+                    }
                     if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
                         stage_source.document_ids = {
                             source: stage_for_output.name,
@@ -260,17 +269,17 @@ class Pipeline {
                         };
                         found_input = true;
                     }
+                }
 
-                    if (!found_input) {
-                        if (required_key in user_input) {
-                            stage_source[required_key] = user_input[required_key];
-                            stage_source[required_key] = {
-                                source: "user_input",
-                                field: required_key
-                            };
-                        } else {
-                            throw new ReferenceError(`Please add ${required_key} to user_input. The previous Nodes' outputs do not provide this data.`);
-                        }
+                if (!found_input) {
+                    if (required_key in user_input) {
+                        stage_source[required_key] = user_input[required_key];
+                        stage_source[required_key] = {
+                            source: "user_input",
+                            field: required_key
+                        };
+                    } else {
+                        throw new ReferenceError(`Please add ${required_key} to user_input. The previous Nodes' outputs do not provide this data.`);
                     }
                 }
             }

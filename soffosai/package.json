@@ -1,6 +1,6 @@
 {
   "name": "soffosai",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Javascript package for Soffos.ai API",
   "main": "src/app.js",
   "typings": "./index.d.ts",
@@ -10,7 +10,12 @@
     "axios": "^1.4.0"
   },
   "exports": {
-    "import": "./src/app.js"
+    ".": {
+      "import": "./src/app.js",
+      "require": "./src/app.js"
+    },
+    "./nodes": "./src/core/nodes/index.js",
+    "./pipelines": "./src/core/pipelines/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
