@@ -2,6 +2,12 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.0.8
+- additional JSDoc and type hinting
+
+## 0.0.7
+- import shortcuts
+
 ## 0.0.6
 - Pipeline feature
 

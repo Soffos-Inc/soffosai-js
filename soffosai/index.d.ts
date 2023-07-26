@@ -12,12 +12,12 @@ declare module 'soffosai' {
     }
 
     /** 
-     * This module will mark the user's answer based on the provided context, 
+     * This module will provide the user an answer based on the provided context, 
      * the question and, optionally, the expected correct answer..
     */
     export class AnswerScoringService {
         constructor(kwargs?: {});
-        call(user: string, context:string, question:string, user_answer:string, answer:string=null): Promise<Object>;
+        call(user: string, context:string, question:string, user_answer:string, answer?:string): Promise<Object>;
     }
 
     /**
@@ -36,7 +36,7 @@ declare module 'soffosai' {
      */
     export class DocumentsIngestService {
         constructor(kwargs?: {});
-        call(user: string, document_name:string, text:string=null, tagged_elements:Array.<string>=null, meta:Object<string,string>=null): Promise<Object>;
+        call(user: string, document_name:string, text?:string, tagged_elements?:Array<string>, meta?:object<string,string>): Promise<Object>;
     }
 
     /**
