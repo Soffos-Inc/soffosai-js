@@ -15,11 +15,10 @@ class QuestionAndAnswerGenerationNode extends Node {
     constructor(name, text, sentence_split=3, sentence_overlap=false) {
         let service = new QuestionAndAnswerGenerationService();
         let source = {
-            name: name,
 			text: text,
 			sentence_split: sentence_split,
 			sentence_overlap: sentence_overlap
-        }
+        };
         
         return super(name, service, source);
     }

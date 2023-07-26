@@ -7,7 +7,7 @@ class ServiceIO {
   constructor() {
     this.service = null;
     this.required_input_fields = [];
-    this.require_one_of_choice = [];
+    this.require_one_of_choices = [];
     this.defaults = [];
     this.input_structure = {};
     this.optional_input_fields = [];

@@ -14,10 +14,9 @@ class SummarizationNode extends Node {
     constructor(name, text, sent_length) {
         let service = new SummarizationService();
         let source = {
-            name: name,
 			text: text,
 			sent_length: sent_length
-        }
+        };
         
         return super(name, service, source);
     }

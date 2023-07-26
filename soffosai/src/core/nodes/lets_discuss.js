@@ -13,9 +13,8 @@ class LetsDiscussCreateNode extends Node {
     constructor(name, context) {
         let service = new LetsDiscussCreateService();
         let source = {
-            name: name,
 			context: context
-        }
+        };
         return super(name, service, source);
     }
 }
@@ -35,10 +34,9 @@ class LetsDiscussCreateNode extends Node {
     constructor(name, session_id, query) {
         let service = new LetsDiscussService();
         let source = {
-            name: name,
 			session_id: session_id,
 			query: query
-        }
+        };
         return super(name, service, source);
     }
 }
@@ -56,9 +54,8 @@ class LetsDiscussCreateNode extends Node {
     constructor(name, return_messages=true) {
         let service = new LetsDiscussRetrieveService();
         let source = {
-            name: name,
 			return_messages: return_messages
-        }
+        };
         return super(name, service, source);
     }
 }
@@ -76,9 +73,8 @@ class LetsDiscussCreateNode extends Node {
     constructor(name, session_ids) {
         let service = new LetsDiscussDeleteService();
         let source = {
-            name: name,
 			session_ids: session_ids
-        }
+        };
         return super(name, service, source);
     }
 }

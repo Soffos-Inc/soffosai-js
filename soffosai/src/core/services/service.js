@@ -3,7 +3,7 @@ import { apiKey } from "../../../../soffosai/src/app.js";
 import axios from 'axios';
 import FormData from 'form-data'; 
 import { createReadStream } from 'fs';
-
+import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.js"
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 const input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
@@ -38,14 +38,14 @@ function isValidUuid(uuidString) {
   return regex.test(formattedUuid);
 }
 
-/**
- * Checks if value is an {key:value} object also checks if not an Array.
- * @param {any} value 
- * @returns 
- */
-function isObject(value) {
-    return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
+// /**
+//  * Checks if value is an {key:value} object also checks if not an Array.
+//  * @param {any} value 
+//  * @returns 
+//  */
+// function isObject(value) {
+//     return typeof value === 'object' && value !== null && !Array.isArray(value);
+// }
 
 
 /**
@@ -81,7 +81,7 @@ class SoffosAIService {
      */
     validatePayload() {
         
-        if (!isObject(this._payload)) {
+        if (!isDictObject(this._payload)) {
           throw new TypeError("payload should be an object");
         }
       
@@ -95,7 +95,9 @@ class SoffosAIService {
           const missingRequirements = this._serviceio.required_input_fields.filter(
             (required) => !(required in this._payload)
           );
+
           if (missingRequirements.length > 0) {
+            
             return [
               false,
               `${this._service}: Please provide ${missingRequirements} on your payload. ${visit_docs_message}. ${input_structure_message}`,
@@ -103,9 +105,9 @@ class SoffosAIService {
           }
         }
       
-        if (this._serviceio.require_one_of_choice.length > 0) {
+        if (this._serviceio.require_one_of_choices.length > 0) {
           const groupErrors = [];
-          for (const group of this._serviceio.require_one_of_choice) {
+          for (const group of this._serviceio.require_one_of_choices) {
             const foundChoices = group.filter((choice) => choice in this._payload);
             if (foundChoices.length === 0) {
               groupErrors.push(
@@ -128,8 +130,9 @@ class SoffosAIService {
         const valueErrors = [];
         for (const [key, value] of Object.entries(this._payload)) {
           if (key in inputStructure) {
-            const inputType = inputStructure[key];
-            if ((typeof(value) !== inputType) && value !== inputType && typeof(value) != typeof(inputType)) {
+            const serviceioType = get_serviceio_datatype(inputStructure[key]);
+            const inputType = get_userinput_datatype(value);
+            if (inputType !== serviceioType) {
               const wrongType = value instanceof Object ? typeof value : typeof value;
               valueErrors.push(`${key} requires ${inputType} but ${wrongType} is provided.`);
             }

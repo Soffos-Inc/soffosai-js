@@ -15,9 +15,8 @@ class DocumentsIngestNode extends Node {
     constructor(name, document_name, text=null, tagged_elements=null, meta=null) {
         let service = new DocumentsIngestService();
         let source = {
-            name: name,
-            document_name: document_name,
-        }
+            name: document_name, // special handling. document ingest needs "name" as document_name
+        };
         if (text) source.text = text;
         if (tagged_elements)source.tagged_elements = tagged_elements;
         if (meta) source.meta = meta;
@@ -45,7 +44,7 @@ class DocumentsSearchNode extends Node {
         top_n_natural_language=5, date_from=null, date_until=null) 
     {
         let service = new DocumentsSearchService();
-        let source = { name: name }
+        let source = {};
         if(query) source.query = query;
         if(filters) source.filters = filters;
         if(document_ids) source.document_ids = document_ids;
@@ -70,7 +69,6 @@ class DocumentsSearchNode extends Node {
     constructor(name, document_ids) {
         let service = new DocumentsDeleteService();
         let source = {
-            name: name,
             document_ids: document_ids
         }
         return super(name, service, source);

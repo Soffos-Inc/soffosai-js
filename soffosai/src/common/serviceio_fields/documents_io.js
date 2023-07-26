@@ -6,7 +6,7 @@ class DocumentsIngestIO extends ServiceIO {
     super();
     this.service = ServiceString.DOCUMENTS_INGEST;
     this.required_input_fields = ["name"];
-    this.require_one_of_choice = [["text", "tagged_elements"]];
+    this.require_one_of_choices = [["text", "tagged_elements"]];
     this.defaults = ["text"];
     this.optional_input_fields = ["meta"];
     this.input_structure = {
@@ -28,7 +28,7 @@ class DocumentSearchIO extends ServiceIO {
     super();
     this.service = ServiceString.DOCUMENTS_SEARCH;
     this.required_input_fields = [];
-    this.require_one_of_choice = [["document_ids", "query", "filters"]];
+    this.require_one_of_choices = [["document_ids", "query", "filters"]];
     this.defaults = ["query"];
     this.optional_input_fields = [
       "query", "filters", "document_ids", "top_n_keywords", 
@@ -36,8 +36,8 @@ class DocumentSearchIO extends ServiceIO {
     ];
     this.input_structure = {
       "query": "string",
-      "document_ids": "object",
-      "top_n_keyword": "number",
+      "document_ids": "array",
+      "top_n_keywords": "number",
       "top_n_natural_language": "number",
       "filters": "object",
       "date_from": "string",

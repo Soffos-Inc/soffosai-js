@@ -13,7 +13,6 @@ class ContradictionDetectionNode extends Node{
     constructor(name, text) {
         let service = new ContradictionDetectionService();
         let source = {
-            name: name,
             text: text
         }
         return super(name, service, source);

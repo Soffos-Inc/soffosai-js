@@ -13,9 +13,8 @@ class ParaphraseNode extends Node {
     constructor(name, text) {
         let service = new ParaphraseService();
         let source = {
-            name: name,
 			text: text
-        }
+        };
         
         return super(name, service, source);
     }

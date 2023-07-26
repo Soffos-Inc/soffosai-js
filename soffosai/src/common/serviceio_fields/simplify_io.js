@@ -6,6 +6,7 @@ class SimplifyIO extends ServiceIO {
     super();
     this.service = ServiceString.SIMPLIFY;
     this.required_input_fields = ["text"];
+    this.require_one_of_choices = [];
     this.input_structure = {
       "text": "string"
     };

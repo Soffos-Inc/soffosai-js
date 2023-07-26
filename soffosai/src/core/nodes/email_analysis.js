@@ -13,9 +13,8 @@ class EmailAnalysisNode extends Node {
     constructor(name, text) {
         let service = new EmailAnalysisService();
         let source = {
-            name: name,
             text: text
-        }
+        };
         return super(name, service, source);
     }
 }

@@ -14,10 +14,9 @@ class TableGeneratorNode extends Node {
     constructor(name, text, table_format='markdown') {
         let service = new TableGeneratorService();
         let source = {
-            name: name,
 			text: text,
 			table_format: table_format
-        }
+        };
         
         return super(name, service, source);
     }

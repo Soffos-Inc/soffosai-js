@@ -14,9 +14,8 @@ class NamedEntityRecognitionNode extends Node {
     constructor(name, text, labels=undefined) {
         let service = new NamedEntityRecognitionService();
         let source = {
-            name: name,
 			text: text
-        }
+        };
         if (labels) source.labels = labels;
         return super(name, service, source);
     }

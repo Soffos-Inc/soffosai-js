@@ -15,11 +15,10 @@ class TagGenerationNode extends Node {
     constructor(name, text, types=["topic"], n=10) {
         let service = new TagGenerationService();
         let source = {
-            name: name,
 			text: text,
 			types: types,
 			n: n
-        }
+        };
         
         return super(name, service, source);
     }

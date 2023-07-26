@@ -13,9 +13,8 @@ class LanguageDetectionNode extends Node {
     constructor(name, text) {
         let service = new LanguageDetectionService();
         let source = {
-            name: name,
 			text: text
-        }
+        };
         return super(name, service, source);
     }
 }

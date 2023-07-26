@@ -13,9 +13,8 @@ class MicrolessonNode extends Node {
     constructor(name, content) {
         let service = new MicrolessonService();
         let source = {
-            name: name,
 			content: content
-        }
+        };
         return super(name, service, source);
     }
 }

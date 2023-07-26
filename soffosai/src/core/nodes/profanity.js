@@ -13,9 +13,8 @@ class ProfanityNode extends Node {
     constructor(name, text) {
         let service = new ProfanityService();
         let source = {
-            name: name,
 			text: text
-        }
+        };
         
         return super(name, service, source);
     }

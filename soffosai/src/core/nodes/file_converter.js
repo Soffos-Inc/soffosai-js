@@ -14,10 +14,9 @@ class FileConverterNode extends Node {
     constructor(name, file, normalize=0) {
         let service = new FileConverterService();
         let source = {
-            name: name,
 			file: file,
 			normalize: normalize
-        }
+        };
         return super(name, service, source);
     }
 }

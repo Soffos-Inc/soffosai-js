@@ -1,4 +1,5 @@
-# Soffosai Node JS
+# Soffosai Node JS - Alpha
+-Note that this package is under development and is not production ready.
 Javascript SDK for Soffos.ai API
 
 ## API Keys

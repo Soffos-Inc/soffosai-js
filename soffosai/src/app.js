@@ -2,6 +2,7 @@
 
 import { ServiceString } from './common/constants.js';
 import { SoffosAIService } from './core/services/service.js';
+import { inspectArguments } from './core/services/index.js';
 import {
     AmbiguityDetectionService,
     AnswerScoringService, 
@@ -64,4 +65,6 @@ export {
     TableGeneratorService,
     TagGenerationService,
     TranscriptCorrectionService,
+
+    inspectArguments
 };

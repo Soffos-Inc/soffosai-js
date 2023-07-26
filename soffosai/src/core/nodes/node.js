@@ -21,7 +21,7 @@ class Node {
         }
         
         if (!("user" in this.source)) {
-            this.source["user"] = this.source["name"];
+            this.source["user"] = this.name;
         }
         return this.service.getResponse(this.source);
     }

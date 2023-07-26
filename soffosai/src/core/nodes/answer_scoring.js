@@ -15,7 +15,6 @@ class AnswerScoringNode extends Node{
     constructor(name, context, question, user_answer, answer=null) {
         let service = new AnswerScoringService();
         let source = {
-            name: name,
             context: context,
             question: question,
             user_answer: user_answer
