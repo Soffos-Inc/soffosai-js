@@ -241,7 +241,6 @@ class Pipeline {
                     }
                 }
             }
-            console.log(`required keys: ${required_keys}`);
             
             // starting from the last output, check if the required input data is available
             // if not, get it from the user_input
