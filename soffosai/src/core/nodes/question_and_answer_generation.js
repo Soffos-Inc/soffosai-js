@@ -9,8 +9,8 @@ class QuestionAndAnswerGenerationNode extends Node {
     /**
      * @param {string} name
      * @param {string} text
-     * @param {number} sentence_split
-     * @param {string} sentence_overlap
+     * @param {number} [sentence_split=3]
+     * @param {string} [sentence_overlap=false]
      */
     constructor(name, text, sentence_split=3, sentence_overlap=false) {
         let service = new QuestionAndAnswerGenerationService();

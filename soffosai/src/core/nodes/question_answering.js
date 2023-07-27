@@ -10,11 +10,11 @@ class QuestionAnsweringNode extends Node {
      * @param {string} name
      * @param {string} question
      * @param {string} document_text
-     * @param {string} document_ids
-     * @param {string} check_ambiguity
-     * @param {string} check_query_type
-     * @param {string} generic_response
-     * @param {string} meta
+     * @param {string[]} document_ids
+     * @param {boolean} check_ambiguity
+     * @param {boolean} check_query_type
+     * @param {boolean} generic_response
+     * @param {object} meta
      */
     constructor(name, question, document_text=undefined, document_ids=undefined, 
         check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {

@@ -9,7 +9,7 @@ class TableGeneratorNode extends Node {
     /**
      * @param {string} name
      * @param {string} text
-     * @param {string} table_format
+     * @param {string} [table_format='markdown']
      */
     constructor(name, text, table_format='markdown') {
         let service = new TableGeneratorService();

@@ -8,7 +8,7 @@ declare module 'soffosai' {
      */
     export class AmbiguityDetectionService {
         constructor(kwargs?: {});
-        call(user: string, text: string, sentence_split?: number, sentence_overlap?: boolean): Promise<Object>;
+        call(user: string, text: string, sentence_split?: number, sentence_overlap?: boolean): Promise<object>;
     }
 
     /** 
@@ -17,7 +17,7 @@ declare module 'soffosai' {
     */
     export class AnswerScoringService {
         constructor(kwargs?: {});
-        call(user: string, context:string, question:string, user_answer:string, answer?:string): Promise<Object>;
+        call(user: string, context:string, question:string, user_answer:string, answer?:string): Promise<object>;
     }
 
     /**
@@ -27,7 +27,7 @@ declare module 'soffosai' {
      */
     export class ContradictionDetectionService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -36,7 +36,7 @@ declare module 'soffosai' {
      */
     export class DocumentsIngestService {
         constructor(kwargs?: {});
-        call(user: string, document_name:string, text?:string, tagged_elements?:Array<string>, meta?:object<string,string>): Promise<Object>;
+        call(user: string, document_name:string, text?:string, tagged_elements?:Array<string>, meta?:object): Promise<object>;
     }
 
     /**
@@ -44,8 +44,8 @@ declare module 'soffosai' {
      */
     export class DocumentsSearchService {
         constructor(kwargs?: {});
-        call(user: string, query:object=null, filters:object=null, document_ids:Array.<string>=null, top_n_keywords:number=5,
-            top_n_natural_language:number=5, date_from:string=null, date_until:string=null): Promise<Object>;
+        call(user: string, query?:object, filters?:object, document_ids?:Array<string>, top_n_keywords?:number,
+            top_n_natural_language?:number, date_from?:string, date_until?:string): Promise<object>;
     }
 
     /**
@@ -53,7 +53,7 @@ declare module 'soffosai' {
      */
     export class DocumentsDeleteService {
         constructor(kwargs?: {});
-        call(user: string, text: string, document_ids:Array.<string>): Promise<Object>;
+        call(user: string, text: string, document_ids:Array<string>): Promise<object>;
     }
 
     /**
@@ -61,7 +61,7 @@ declare module 'soffosai' {
      */
      export class EmailAnalysisService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -70,7 +70,7 @@ declare module 'soffosai' {
      */
     export class EmotionDetectionService {
         constructor(kwargs?: {});
-        call(user: string, text:string, sentence_split:number=4, sentence_overlap:boolean=false, emotion_choices=["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation"]): Promise<Object>;
+        call(user: string, text:string, sentence_split?:number, sentence_overlap?:boolean, emotion_choices?:string[]): Promise<object>;
     }
 
     /**
@@ -78,7 +78,7 @@ declare module 'soffosai' {
      */
     export class FileConverterService {
         constructor(kwargs?: {});
-        call(user: string, file:string, normalize:number=0||1): Promise<Object>;
+        call(user: string, file:string, normalize?:number): Promise<object>;
     }
 
     /**
@@ -86,7 +86,7 @@ declare module 'soffosai' {
      */
     export class LanguageDetectionService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -98,7 +98,7 @@ declare module 'soffosai' {
      */
     export class LetsDiscussCreateService {
         constructor(kwargs?: {});
-        call(user: string, context: string): Promise<Object>;
+        call(user: string, context: string): Promise<object>;
     }
 
     /**
@@ -110,7 +110,7 @@ declare module 'soffosai' {
      */
     export class LetsDiscussService {
         constructor(kwargs?: {});
-        call(user: string, session_id:str, query:str): Promise<Object>;
+        call(user: string, session_id:string, query:string): Promise<object>;
     }
 
     /**
@@ -122,7 +122,7 @@ declare module 'soffosai' {
      */
     export class LetsDiscussRetrieveService {
         constructor(kwargs?: {});
-        call(user: string, return_messages:boolean): Promise<Object>;
+        call(user: string, return_messages:boolean): Promise<object>;
     }
 
     /**
@@ -134,7 +134,7 @@ declare module 'soffosai' {
      */
     export class LetsDiscussDeleteService {
         constructor(kwargs?: {});
-        call(user: string, session_ids: string[]): Promise<Object>;
+        call(user: string, session_ids: string[]): Promise<object>;
     }
 
     /**
@@ -142,7 +142,7 @@ declare module 'soffosai' {
      */
     export class LogicalErrorDetectionService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -150,7 +150,7 @@ declare module 'soffosai' {
      */
     export class MicrolessonService {
         constructor(kwargs?: {});
-        call(user: string, content: object[]): Promise<Object>;
+        call(user: string, content: object[]): Promise<object>;
         add_content(source: string, context: string): null;
     }
 
@@ -160,7 +160,7 @@ declare module 'soffosai' {
      */
     export class NamedEntityRecognitionService {
         constructor(kwargs?: {});
-        call(user: string, text: string, labels:Object.<string, string>=undefined): Promise<Object>;
+        call(user: string, text: string, labels:object): Promise<object>;
         add_label(label:string, definition:string): null;
     }
 
@@ -171,7 +171,7 @@ declare module 'soffosai' {
      */
     export class ParaphraseService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -179,7 +179,7 @@ declare module 'soffosai' {
      */
     export class ProfanityService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -192,7 +192,7 @@ declare module 'soffosai' {
      */
     export class QuestionAndAnswerGenerationService {
         constructor(kwargs?: {});
-        call(user: string, text: string, sentence_split:number=3, sentence_overlap:boolean=false): Promise<Object>;
+        call(user: string, text: string, sentence_split?:number, sentence_overlap?:boolean): Promise<object>;
     }
 
     /**
@@ -203,8 +203,8 @@ declare module 'soffosai' {
      */
     export class QuestionAnsweringService {
         constructor(kwargs?: {});
-        call(user: string, question:string, document_text:string=undefined, document_ids:string[]=undefined, 
-            check_ambiguity:boolean=true, check_query_type:boolean=true, generic_response:boolean=false, meta:Object.<string, string>=undefined): Promise<Object>;
+        call(user: string, question:string, document_text?:string, document_ids?:string[], 
+            check_ambiguity?:boolean, check_query_type?:boolean, generic_response?:boolean, meta?:object): Promise<object>;
     }
 
     /**
@@ -215,7 +215,7 @@ declare module 'soffosai' {
      */
     export class ReviewTaggerService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -225,7 +225,7 @@ declare module 'soffosai' {
      */
     export class SentimentAnalysisService {
         constructor(kwargs?: {});
-        call(user: string, text: string, sentence_split:number=4, sentence_overlap:boolean=false): Promise<Object>;
+        call(user: string, text: string, sentence_split?:number, sentence_overlap?:boolean): Promise<object>;
     }
 
     /**
@@ -235,7 +235,7 @@ declare module 'soffosai' {
      */
     export class SimplifyService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
     }
 
     /**
@@ -248,7 +248,7 @@ declare module 'soffosai' {
      */
     export class SummarizationService {
         constructor(kwargs?: {});
-        call(user: string, text: string, sent_length:number): Promise<Object>;
+        call(user: string, text: string, sent_length:number): Promise<object>;
     }
 
     /**
@@ -258,7 +258,7 @@ declare module 'soffosai' {
      */
     export class TableGeneratorService {
         constructor(kwargs?: {});
-        call(user: string, text: string, table_format:string='markdown'||'CSV'): Promise<Object>;
+        call(user: string, text: string, table_format?:string): Promise<object>;
     }
 
     /**
@@ -268,7 +268,7 @@ declare module 'soffosai' {
      */
     export class TagGenerationService {
         constructor(kwargs?: {});
-        call(user: string, text: string, types:string[]=["topic"], n:number=10): Promise<Object>;
+        call(user: string, text: string, types?:string[], n?:number): Promise<object>;
     }
 
     /**
@@ -279,7 +279,372 @@ declare module 'soffosai' {
      */
     export class TranscriptCorrectionService {
         constructor(kwargs?: {});
-        call(user: string, text: string): Promise<Object>;
+        call(user: string, text: string): Promise<object>;
+    }
+}
+
+declare module "soffosai/nodes" {
+        
+    /**
+     * A service configuration for Ambiguity Detection Service for Pipeline use.
+     */
+     export class AmbiguityDetectionNode{
+        /**
+         * @param {string} name 
+         * @param {string} text 
+         * @param {number} [sentence_split = 4]
+         * @param {boolean} [sentence_overlap = false]
+         */
+        constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:boolean);
+    }
+    
+    /**
+     * A service configuration for Answer Scoring Service for Pipeline use.
+     */
+    export class AnswerScoringNode{
+        /**
+         * @param {string} name 
+         * @param {string} context
+         * @param {string} question
+         * @param {string} user_answer
+         * @param {string} [answer=null]
+         */
+        constructor(name:string, context:string, question:string, user_answer:string, answer?:string);
+    }
+    
+    /**
+     * A service configuration for Ambiguity Detection Service for Pipeline use.
+     */
+    export class ContradictionDetectionNode{
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for Documents Ingest Service for Pipeline use.
+     */
+    export class DocumentsIngestNode {
+        /**
+         * @param {string} name
+         * @param {string} document_name
+         * @param {string} [text=null]
+         * @param {object} [tagged_elements=null] 
+         * @param {object} [meta=null] 
+         */
+        constructor(name:string, document_name:string, text?:string, tagged_elements?:object, meta?:object);
+    }
+    
+    /**
+     * A service configuration for EmailAnalysisService for Pipeline use.
+     */
+    export class EmailAnalysisNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for EmotionDetectionService for Pipeline use.
+     */
+    export class EmotionDetectionNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {number} sentence_split
+         * @param {boolean} sentence_overlap
+         * @param {string[]} [emotion_choices = ["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation"]]
+         */
+        constructor(name:string, text:string, sentence_split:number, sentence_overlap:boolean, emotion_choices?:string[]);
+    }
+    
+    /**
+     * A service configuration for FileConverterService for Pipeline use.
+     */
+    export class FileConverterNode {
+        /**
+         * @param {string} name
+         * @param {string} file
+         * @param {number} normalize
+         */
+        constructor(name:string, file:string, normalize:number);
+    }
+    
+    /**
+     * A service configuration for LanguageDetectionService for Pipeline use.
+     */
+    export class LanguageDetectionNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for LetsDiscussCreateService for Pipeline use.
+     */
+    export class LetsDiscussCreateNode {
+        /**
+         * @param {string} name
+         * @param {string} context
+         */
+        constructor(name:string, context:string);
+    }
+    
+    /**
+     * A service configuration for LogicalErrorDetectionService for Pipeline use.
+     */
+    export class LogicalErrorDetectionNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for MicrolessonService for Pipeline use.
+     */
+    export class MicrolessonNode {
+        /**
+         * @param {string} name
+         * @param {object[]} content
+         */
+        constructor(name:string, content:object[]);
+    }
+    
+    /**
+     * A service configuration for NamedEntityRecognitionService for Pipeline use.
+     */
+    export class NamedEntityRecognitionNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {object} labels
+         */
+        constructor(name:string, text:string, labels:any);
+    }
+    
+    /**
+     * A service configuration for ParaphraseService for Pipeline use.
+     */
+    export class ParaphraseNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for ProfanityService for Pipeline use.
+     */
+    export class ProfanityNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for QuestionAndAnswerGenerationService for Pipeline use.
+     */
+    export class QuestionAndAnswerGenerationNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {number} [sentence_split=3]
+         * @param {string} [sentence_overlap=false]
+         */
+        constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:string);
+    }
+    
+    /**
+     * A service configuration for QuestionAnsweringService for Pipeline use.
+     */
+    export class QuestionAnsweringNode {
+        /**
+         * @param {string} name
+         * @param {string} question
+         * @param {string} document_text
+         * @param {string[]} document_ids
+         * @param {boolean} check_ambiguity
+         * @param {boolean} check_query_type
+         * @param {boolean} generic_response
+         * @param {object} meta
+         */
+        constructor(name: string, question: string, document_text?: string, document_ids?: string[], 
+            check_ambiguity?:boolean, check_query_type?:boolean, generic_response?:boolean, meta?:object);
+    }
+    
+    /**
+     * A service configuration for ReviewTaggerService for Pipeline use.
+     */
+    export class ReviewTaggerNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for SentimentAnalysisService for Pipeline use.
+     */
+    export class SentimentAnalysisNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {number} [sentence_split=4]
+         * @param {string} [sentence_overlap=false]
+         */
+        constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:string);
+    }
+    
+    /**
+     * A service configuration for SimplifyService for Pipeline use.
+     */
+    export class SimplifyNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+    
+    /**
+     * A service configuration for SummarizationService for Pipeline use.
+     */
+    export class SummarizationNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {number} sent_length
+         */
+        constructor(name:string, text:string, sent_length:number);
+    }
+    
+    /**
+     * A service configuration for TableGeneratorService for Pipeline use.
+     */
+    export class TableGeneratorNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {string} [table_format='markdown']
+         */
+        constructor(name:string, text:string, table_format:string);
+    }
+    
+    /**
+     * A service configuration for TagGenerationService for Pipeline use.
+     */
+    export class TagGenerationNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         * @param {Array.<?>} [types=["topic"]]
+         * @param {number} n
+         */
+        constructor(name:string, text:string, types:Array.<?>, n:number);
+    }
+    
+    /**
+     * A service configuration for TranscriptCorrectionService for Pipeline use.
+     */
+    export class TranscriptCorrectionNode {
+        /**
+         * @param {string} name
+         * @param {string} text
+         */
+        constructor(name:string, text:string);
+    }
+}
+
+
+declare module "soffosai/pipelines" {
+    /**
+     * A controller for consuming multiple Services called stages.
+     * It validates all inputs of all stages before sending the first Soffos API request to ensure
+     * that the Pipeline will not waste credits.
+     * 
+     * ** use_defaults=True means that stages will take input from the previous stages' 
+     * output of the same field name prioritizing the latest stage's output. 
+     * If the previous stages does not have it, it will take from the
+     * pipeline's user_input.  Also, the stages will only be supplied with the required fields + default
+     * of the require_one_of_choices fields.
+     */
+    export class Pipeline {
+        /**
+         * @param {object[]} nodes 
+         * @param {boolean} [use_defaults=false] 
+         * @param {Object} [kwargs={}]
+         */
+        constructor (nodes:object, use_defaults?:boolean, kwargs?:object);
+
+        /**
+         * Run the Pipeline
+         * @param {object} user_input 
+         * @returns {Promise}
+         */
+        async run(user_input:object): Promise<object>;
+
+        /**
+         * Validates the Pipeline construction vs the user_input before sending the first API call
+         * Throws errors when not valid.
+         * @param {object} user_input 
+         * @param {Node} stages 
+         * @returns {boolean}
+         */
+        validate_pipeline(user_input:object, stages:Node[]): boolean;
+
+        /**
+         * Adds a node at the end of the node list/stages.
+         * @param {Node} node 
+         */
+        add_node(node:Node): null;
+
+        /**
+         * 
+         * @param {Node[]} stages
+         * @param {object} user_input
+         * @returns {Node[]}
+         */
+        setDefaults(stages:Node[], user_input:object): Node[];
+    }
+
+    /**
+     * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
+     */
+    export class AskADocumentPipeline{
+        /**
+         * Call the pipeline
+         * @param {string} user 
+         * @param {string[]} doc_ids 
+         * @param {string} question 
+         * @returns {object}
+         */
+        async call(user:string, doc_ids:string[], question:string): object;
+    }
+
+    /**
+     * Given a file path, upload the file to Soffos and get its reference document_id.
+     */
+    export class FileIngestPipeline{
+        /**
+         * 
+         * @param {string} user 
+         * @param {string} file 
+         * @param {number} normalize 
+         * @returns {object}
+         */
+        async call(user:string, file:string, normalize:number): object;
     }
 }
 

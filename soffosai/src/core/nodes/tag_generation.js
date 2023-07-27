@@ -9,7 +9,7 @@ class TagGenerationNode extends Node {
     /**
      * @param {string} name
      * @param {string} text
-     * @param {Array.<?>} types
+     * @param {Array.<?>} [types=["topic"]]
      * @param {number} n
      */
     constructor(name, text, types=["topic"], n=10) {

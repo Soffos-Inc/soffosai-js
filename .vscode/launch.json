@@ -12,6 +12,12 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\test_pipe.mjs"
+        },
+        {
+            "type": "python",
+            "request": "launch",
+            "name": "Launch PyProgram",
+            "program": "${workspaceFolder}\\coding_helper\\nodes_to_ts_declaration.py"
         }
     ]
 }

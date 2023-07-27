@@ -35,10 +35,11 @@ export class AskADocumentPipeline extends Pipeline {
     }
 
     /**
-     * 
+     * Call the pipeline
      * @param {string} user 
      * @param {Array.<string>} doc_ids 
      * @param {string} question 
+     * @returns {object}
      */
     async call(user, doc_ids, question) {
         let payload = inspectArguments(this.call, user, doc_ids, question);

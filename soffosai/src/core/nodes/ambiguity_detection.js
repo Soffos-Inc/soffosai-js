@@ -9,8 +9,8 @@ class AmbiguityDetectionNode extends Node{
     /**
      * @param {string} name 
      * @param {string} text 
-     * @param {number} [sentence_split = 4] 
-     * @param {boolean} [sentence_overlap = false] 
+     * @param {number} [sentence_split = 4]
+     * @param {boolean} [sentence_overlap = false]
      */
     constructor(name, text, sentence_split=4, sentence_overlap=false) {
         let service = new AmbiguityDetectionService();

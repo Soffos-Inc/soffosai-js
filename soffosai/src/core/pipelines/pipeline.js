@@ -18,10 +18,10 @@ import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.js";
 class Pipeline {
     /**
      * @param {Array.<object>} nodes 
-     * @param {boolean} use_defaults 
-     * @param {Object} [kwargs={}]
+     * @param {boolean} [ use_defaults=false ]
+     * @param {Object} [ kwargs={} ]
      */
-    constructor (nodes, use_defaults, kwargs={}) {
+    constructor (nodes, use_defaults=false, kwargs={}) {
         this.apiKey = apiKey;
         this._stages = nodes;
         this._input = {};
@@ -47,6 +47,11 @@ class Pipeline {
 
     }
 
+    /**
+     * Run the Pipeline
+     * @param {object} user_input 
+     * @returns 
+     */
     async run(user_input) {
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
@@ -108,6 +113,13 @@ class Pipeline {
     }
 
 
+    /**
+     * Validates the Pipeline construction vs the user_input before sending the first API call.
+     * Throws errors when not valid.
+     * @param {object} user_input 
+     * @param {Node} stages 
+     * @returns 
+     */
     validate_pipeline(user_input, stages) {
         /*
         Before running the first service, the Pipeline will validate all nodes if they will all be
@@ -207,6 +219,12 @@ class Pipeline {
         }
     }
 
+    /**
+     * 
+     * @param {Node[]} stages
+     * @param {object} user_input
+     * @returns 
+     */
     setDefaults(stages, user_input) {
         let defaulted_stages = [];
 
