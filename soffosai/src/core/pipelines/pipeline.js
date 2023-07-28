@@ -27,6 +27,7 @@ class Pipeline {
         this._input = {};
         this._infos = {};
         this._use_defaults = use_defaults;
+        this._termination_codes = [];
 
         let error_messages = [];
         if (!Array.isArray(nodes)) {

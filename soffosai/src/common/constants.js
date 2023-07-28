@@ -1,4 +1,4 @@
-const SOFFOS_SERVICE_URL = "https://dev-api.soffos.ai/service/";
+const SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 
 
 const SERVICES_LIST = [
