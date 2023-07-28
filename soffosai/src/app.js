@@ -3,6 +3,7 @@
 import { ServiceString } from './common/constants.js';
 import { SoffosAIService } from './core/services/service.js';
 import { inspectArguments } from './core/services/index.js';
+import { Pipeline as SoffosPipeline } from './core/pipelines/index.js';
 import {
     AmbiguityDetectionService,
     AnswerScoringService, 
@@ -33,6 +34,11 @@ import {
 } from "./core/services/index.js";
 
 const apiKey = process.env.SOFFOSAI_API_KEY;
+
+import * as SoffosServices from "./core/services/index.js";
+import * as SoffosNodes from "./core/nodes/index.js";
+import * as SoffosPipelines from "./core/pipelines/index.js";
+
 
 export {
     apiKey,
@@ -66,5 +72,9 @@ export {
     TagGenerationService,
     TranscriptCorrectionService,
 
-    inspectArguments
+    inspectArguments,
+    SoffosPipeline,
+    SoffosServices,
+    SoffosNodes,
+    SoffosPipelines
 };

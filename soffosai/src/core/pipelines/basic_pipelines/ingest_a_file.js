@@ -50,12 +50,12 @@ export class FileIngestPipeline extends Pipeline {
 
     /**
      * 
-     * @param {string} user 
-     * @param {string} file 
-     * @param {number} normalize 
+     * @param {string} user
+     * @param {string} file
+     * @param {number} [normalize=0]
      * @returns {object}
      */
-    async call(user, file, normalize) {
+    async call(user, file, normalize=0) {
         let payload = inspectArguments(this.call, user, file, normalize);
         const output = await this.run(payload);
         let data = {
