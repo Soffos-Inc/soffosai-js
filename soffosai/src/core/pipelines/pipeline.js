@@ -27,6 +27,7 @@ class Pipeline {
         this._input = {};
         this._infos = {};
         this._use_defaults = use_defaults;
+        this._execution_codes = [];
         this._termination_codes = [];
 
         let error_messages = [];
@@ -51,9 +52,10 @@ class Pipeline {
     /**
      * Run the Pipeline
      * @param {object} user_input 
+     * @param {string} [execution_code=null]
      * @returns 
      */
-    async run(user_input) {
+    async run(user_input, execution_code=null) {
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -70,11 +72,38 @@ class Pipeline {
             this._stages = this.setDefaults(this._stages, user_input);
         }
 
+        if (execution_code != null) {
+            execution_code = this.apiKey + execution_code;
+            if (this._execution_codes.includes(execution_code)) {
+                return {"error": "You are still using this execution code in a current pipeline run."}
+            } else {
+                this._execution_codes.push(execution_code);
+            }
+        }
+
         this.validate_pipeline(user_input, this._stages);
         this._infos.user_input = user_input;
         let total_cost = 0.00;
         // Execute per stage:
         for (let i = 0; i < this._stages.length; i++) {
+            // Before running the node, check if a termination request is present:
+            if (this._termination_codes.includes(execution_code)) {
+                // remove the execution code from both termination codes and execution codes
+                let index_from_execution = this._execution_codes.indexOf(execution_code);
+                if (index_from_execution > -1 ) {
+                    this._execution_codes.splice(index_from_execution, 1);
+                }
+                let index_from_termination = this._termination_codes.indexOf(execution_code);
+                if (index_from_termination > -1) {
+                    this._termination_codes.splice(index_from_termination, 1);
+                }
+
+                // return values that are ready:
+                this._infos.total_call_cost = total_cost;
+                this._infos.warning = "This Soffos Pipeline run is prematurely terminated."
+                return this._infos;
+            }
+
             let node = this._stages[i];
             console.log(`Running ${node.service._service}`);
             let temp_src = node.source;
@@ -110,6 +139,13 @@ class Pipeline {
             total_cost += response.cost.total_cost;
         }
         this._infos.total_call_cost = total_cost;
+
+        // remove the execution code from the execution_codes in effect Array.
+        const exec_code_index = this._execution_codes.indexOf(execution_code);
+        if (exec_code_index > -1){
+            this._execution_codes.splice(exec_code_index,1);
+        }
+        
         return this._infos
     }
 
@@ -305,6 +341,15 @@ class Pipeline {
             defaulted_stages.push(defaulted_stage);
         }
         return defaulted_stages;
+    }
+
+    /**
+     * Discontinue the execution of remaining nodes in the pipeline run
+     * @param {string} termination_code 
+     */
+    async terminate(termination_code) {
+        this._termination_codes.push(this.apiKey + termination_code);
+        return {"message": `Request to terminate job "${termination_code}" received.`}
     }
 }
 

@@ -2,7 +2,9 @@
   "name": "soffosai",
   "version": "0.0.8",
   "description": "Javascript package for Soffos.ai API",
-  "main": "src/app.js",
+  "main": "./dist/app.js",
+  "module": "./src/app.js",
+  "jsnext:main": "./src/app.js",
   "typings": "./index.d.ts",
   "types": "index.d.ts",
   "type": "module",
@@ -12,14 +14,15 @@
   "exports": {
     ".": {
       "import": "./src/app.js",
-      "require": "./src/app.js"
+      "require": "./dist/app.js"
     },
     "./nodes": "./src/core/nodes/index.js",
     "./pipelines": "./src/core/pipelines/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "transpile": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -31,7 +34,11 @@
     "url": "https://github.com/Soffos-Inc/soffosai-js/issues"
   },
   "homepage": "https://github.com/Soffos-Inc/soffosai-js#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9"
+  },
   "keywords": [
     "soffos",
     "soffos.ai",

@@ -2,6 +2,8 @@ import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
 import { apiKey } from "../../../../soffosai/src/app.js";
 import axios from 'axios';
 import FormData from 'form-data'; 
+// import axios from "./../../../node_modules/axios/lib/axios.js";
+// import FormData from "./../../../node_modules/form-data/lib/form_data"; 
 import { createReadStream } from 'fs';
 import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.js"
 

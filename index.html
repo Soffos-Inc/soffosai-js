@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+
+<script type="module">
+    import {SoffosPipelines} from "./soffosai/src/app.js";
+
+    let pipe = new SoffosPipelines.FileIngestPipeline();
+
+    document.getElementById("start").addEventListener("click", async function() {
+        let result = await pipe.call("client_id2", "matrix_file.pdf", '123456'); // Starts the run() method
+        console.log(JSON.stringify(result, null, 2));
+    });
+
+    document.getElementById("stop").addEventListener("click", async function() {
+      let termination_code = await pipe.terminate("123456"); // Stops the loop 
+      console.log(termination_code); // Prints termination code
+    });
+</script>
+
+</body>
+</html>
