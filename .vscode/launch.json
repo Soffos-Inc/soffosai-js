@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\test_pipe.mjs"
+            "program": "${workspaceFolder}\\test.mjs"
         },
         {
             "type": "python",

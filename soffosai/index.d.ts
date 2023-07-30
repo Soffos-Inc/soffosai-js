@@ -308,7 +308,7 @@ declare module 'soffosai' {
          * @param {object} user_input 
          * @returns {Promise}
          */
-        async run(user_input:object): Promise<object>;
+        run(user_input:object): Promise<object>;
 
         /**
          * Validates the Pipeline construction vs the user_input before sending the first API call
@@ -939,7 +939,7 @@ declare module 'soffosai' {
              * @param {object} user_input 
              * @returns {Promise}
              */
-            async run(user_input:object): Promise<object>;
+            run(user_input:object): Promise<object>;
 
             /**
              * Validates the Pipeline construction vs the user_input before sending the first API call
@@ -976,7 +976,7 @@ declare module 'soffosai' {
              * @param {string} question 
              * @returns {object}
              */
-            async call(user:string, doc_ids:string[], question:string): object;
+            call(user:string, doc_ids:string[], question:string): object;
         }
 
         /**
@@ -990,7 +990,7 @@ declare module 'soffosai' {
              * @param {number} [normalize=0]
              * @returns {object}
              */
-            async call(user:string, file:string, normalize?:number): object;
+            call(user:string, file:string, normalize?:number): object;
         }
     }
 }

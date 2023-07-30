@@ -24,9 +24,9 @@ class FileConverterService extends SoffosAIService {
             throw new Error(`${this._service}: normalize can only accept a value of 0 or 1;`);
         }
 
-        if (!(file instanceof File)) {
-            throw new TypeError(`Please provide a file`)
-        }
+        // if (!(file instanceof File)) {
+        //     throw new TypeError(`Please provide a file`)
+        // }
 
         this._argsDict = {
           user: user,
