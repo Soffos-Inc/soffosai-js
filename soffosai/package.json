@@ -1,6 +1,6 @@
 {
   "name": "soffosai",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "description": "Javascript package for Soffos.ai API",
   "main": "./dist/app.js",
   "module": "./src/app.js",
@@ -8,9 +8,6 @@
   "typings": "./index.d.ts",
   "types": "index.d.ts",
   "type": "module",
-  "dependencies": {
-    "axios": "^1.4.0"
-  },
   "exports": {
     ".": {
       "import": "./src/app.js",

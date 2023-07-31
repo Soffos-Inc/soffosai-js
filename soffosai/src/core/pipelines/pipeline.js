@@ -56,7 +56,7 @@ class Pipeline {
      * @param {string} [execution_code=null]
      * @returns 
      */
-    async run(user_input, execution_code=null) {
+    async run(user_input) {
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -76,8 +76,8 @@ class Pipeline {
         } else {
             stages = this._stages;
         }
-
-        if (execution_code != null) {
+        let execution_code = user_input.execution_code;
+        if (execution_code != null && execution_code != undefined) {
             execution_code = this.apiKey + execution_code;
             if (this._execution_codes.includes(execution_code)) {
                 return {"error": "You are still using this execution code in a current pipeline run."}

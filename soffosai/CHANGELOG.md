@@ -2,8 +2,10 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.1.1
+- bugfixes
 
-## 0.0.10
+## 0.1.0
 - file parameter will now accept File instead of file path.
 - sample page
 

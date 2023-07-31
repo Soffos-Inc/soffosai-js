@@ -61,7 +61,7 @@ export class FileIngestPipeline extends Pipeline {
      * @returns {object}
      */
     async call(user, file, normalize=0, execution_code=null) {
-        let payload = inspectArguments(this.call, user, file, normalize);
-        return await this.run(payload, execution_code);
+        let payload = inspectArguments(this.call, user, file, normalize, execution_code);
+        return await this.run(payload);
     }
 }

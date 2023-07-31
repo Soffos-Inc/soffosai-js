@@ -43,7 +43,7 @@ export class AskADocumentPipeline extends Pipeline {
      * @returns {object}
      */
     async call(user, doc_ids, question, execution_code=null) {
-        let payload = inspectArguments(this.call, user, doc_ids, question);
-        return await this.run(payload, execution_code);
+        let payload = inspectArguments(this.call, user, doc_ids, question, execution_code);
+        return await this.run(payload);
     }
 }
