@@ -2,10 +2,17 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+
+## 0.0.10
+- file parameter will now accept File instead of file path.
+- sample page
+
 ## 0.0.9
-- SoffosServices, SoffosNodes, SoffosPipelines namespace
-- bugfixes
+- SoffosServices, SoffosNodes, SoffosPipelines namespaces
+- TypeScript Support
+- Pipeline.terminate()
 - TypeScript support
+- bugfixes
 
 ## 0.0.8
 - additional JSDoc and type hinting

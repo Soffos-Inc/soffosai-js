@@ -1,8 +1,6 @@
 import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
 import { apiKey } from "../../../../soffosai/src/app.js";
-import axios from 'axios';
-import FormData from 'form-data'; 
-import { createReadStream } from 'fs';
+// import FormData from 'form-data'; 
 import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.js"
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
@@ -38,15 +36,6 @@ function isValidUuid(uuidString) {
   return regex.test(formattedUuid);
 }
 
-// /**
-//  * Checks if value is an {key:value} object also checks if not an Array.
-//  * @param {any} value 
-//  * @returns 
-//  */
-// function isObject(value) {
-//     return typeof value === 'object' && value !== null && !Array.isArray(value);
-// }
-
 
 /**
  * Base service class for all Soffos Services
@@ -57,7 +46,7 @@ class SoffosAIService {
    * @param {Object} kwargs 
    */
     constructor(service, kwargs = {}) {
-      const { apikey } = kwargs;
+      const apikey = kwargs.apiKey;
       this.headers = {
         "x-api-key": apikey || apiKey,
       };
@@ -129,7 +118,7 @@ class SoffosAIService {
         const inputStructure = this._serviceio.input_structure;
         const valueErrors = [];
         for (const [key, value] of Object.entries(this._payload)) {
-          if (key in inputStructure) {
+          if (key in inputStructure && key != 'file') {
             const serviceioType = get_serviceio_datatype(inputStructure[key]);
             const inputType = get_userinput_datatype(value);
             if (inputType !== serviceioType) {
@@ -175,7 +164,10 @@ class SoffosAIService {
      * Based on the knowledge/context, Soffos AI will now give you the data you need
      */
     async getResponse(payload = {}) {
-        
+        // the apiKey can also be a part of the payload.  This is usefull when defining apiKey in the pipeline.
+        if ("apiKey" in payload) {
+          this._apikey = payload.apiKey;
+        }
         this._payload = payload;
         const [allowInput, message] = this.validatePayload();
         if ("question" in this._payload) {
@@ -192,34 +184,61 @@ class SoffosAIService {
         }
       
         let response;
+        let response_data;
         const data = this.getData();
         const url = SOFFOS_SERVICE_URL + this._service + "/";
-        let headers = {
-          "x-api-key": this._apikey
-        };
+        let headers
       
         if (!FORM_DATA_REQUIRED.includes(this._service)) {
-          headers["content-type"] = "application/json";
-          response = await axios.post(url, data,{headers: headers});
+          headers = {
+            "content-type": "application/json",
+            "x-api-key": this._apikey
+          };
+          // response = await axios.post(url, data,{headers: headers});
+          try {
+            response = await fetch(
+              url, 
+              {
+                headers: headers,
+                method: 'POST',
+                body: JSON.stringify(data)
+              }
+            );
+          } catch (error){
+            return {
+              error: error,
+              response: response
+            }
+          }
+          
         } else {
           const formData = new FormData();
           Object.keys(data).forEach(key=>{
-            if (key=='file'){
-              formData.append(key, createReadStream(data[key]));
-            } else {
-              formData.append(key, data[key]);
-            }
-          });
-          let headers = formData.getHeaders();
+            formData.append(key, data[key]);
+          })
+          // let headers = formData.getHeaders();
+          headers = {};
           headers["x-api-key"] = this._apikey;
-          response = await axios.post(url, formData,{headers:headers});
+          try {
+            response = await fetch(
+              url,
+              {
+                headers: headers,
+                method: 'POST',
+                body: formData
+              }
+            );
+          } catch (error) {
+            return {
+              error: error,
+              response: response
+            }
+          }
         }
-      
-        try {
-          return response.data;
-        } catch (error) {
-          return response;
-        }
+
+        response_data = await response.json();
+        return response_data;
+
     }
     
     /**

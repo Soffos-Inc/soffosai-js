@@ -20,7 +20,7 @@ function getContent(value) {
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
  */
 export class AskADocumentPipeline extends Pipeline {
-    constructor(){
+    constructor(kwargs={}){
         let d_node = new DocumentsSearchNode(
                 "search", null, null, {source: "user_input", field: "doc_ids"}
             );
@@ -31,7 +31,7 @@ export class AskADocumentPipeline extends Pipeline {
             );
                 
         let nodes = [d_node, qa_node];
-        return super(nodes);
+        return super(nodes, false, kwargs);
     }
 
     /**
@@ -39,10 +39,11 @@ export class AskADocumentPipeline extends Pipeline {
      * @param {string} user 
      * @param {Array.<string>} doc_ids 
      * @param {string} question 
+     * @param {string} [execution_code=null]
      * @returns {object}
      */
-    async call(user, doc_ids, question) {
+    async call(user, doc_ids, question, execution_code=null) {
         let payload = inspectArguments(this.call, user, doc_ids, question);
-        return await this.run(payload)
+        return await this.run(payload, execution_code);
     }
 }

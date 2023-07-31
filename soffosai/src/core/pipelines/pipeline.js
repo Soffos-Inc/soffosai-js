@@ -22,11 +22,13 @@ class Pipeline {
      * @param {Object} [ kwargs={} ]
      */
     constructor (nodes, use_defaults=false, kwargs={}) {
-        this.apiKey = apiKey;
+        const api_key = kwargs.apiKey;
+        this.apiKey = apiKey || api_key;
         this._stages = nodes;
         this._input = {};
         this._infos = {};
         this._use_defaults = use_defaults;
+        this._execution_codes = [];
         this._termination_codes = [];
 
         let error_messages = [];
@@ -51,9 +53,10 @@ class Pipeline {
     /**
      * Run the Pipeline
      * @param {object} user_input 
+     * @param {string} [execution_code=null]
      * @returns 
      */
-    async run(user_input) {
+    async run(user_input, execution_code=null) {
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -66,22 +69,54 @@ class Pipeline {
         if ("question" in user_input) {
             user_input.message = user_input.question;
         }
+
+        let stages;
         if (this._use_defaults) {
-            this._stages = this.setDefaults(this._stages, user_input);
+            stages = this.setDefaults(this._stages, user_input);
+        } else {
+            stages = this._stages;
         }
 
-        this.validate_pipeline(user_input, this._stages);
-        this._infos.user_input = user_input;
+        if (execution_code != null) {
+            execution_code = this.apiKey + execution_code;
+            if (this._execution_codes.includes(execution_code)) {
+                return {"error": "You are still using this execution code in a current pipeline run."}
+            } else {
+                this._execution_codes.push(execution_code);
+            }
+        }
+
+        let infos = {};
+        this.validate_pipeline(user_input, stages);
+        infos.user_input = user_input;
         let total_cost = 0.00;
         // Execute per stage:
-        for (let i = 0; i < this._stages.length; i++) {
-            let node = this._stages[i];
+        for (let i = 0; i < stages.length; i++) {
+            // Before running the node, check if a termination request is present:
+            if (this._termination_codes.includes(execution_code)) {
+                // remove the execution code from both termination codes and execution codes
+                let index_from_execution = this._execution_codes.indexOf(execution_code);
+                if (index_from_execution > -1 ) {
+                    this._execution_codes.splice(index_from_execution, 1);
+                }
+                let index_from_termination = this._termination_codes.indexOf(execution_code);
+                if (index_from_termination > -1) {
+                    this._termination_codes.splice(index_from_termination, 1);
+                }
+
+                // return values that are ready:
+                infos.total_call_cost = total_cost;
+                infos.warning = "This Soffos Pipeline run is prematurely terminated."
+                return infos;
+            }
+
+            let node = stages[i];
             console.log(`Running ${node.service._service}`);
             let temp_src = node.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
                 if (isDictObject(notation)) { // value is a reference to a node or user input
-                    let value = this._infos[notation.source][notation.field];
+                    let value = infos[notation.source][notation.field];
                     if ("pre_process" in notation) { // pre-processing needed before use of input param
                         if (notation.pre_process instanceof Function) {
                             src[key] = notation.pre_process(value);
@@ -99,6 +134,7 @@ class Pipeline {
             if (!('user' in src)) {
                 src.user = user_input.user;
             }
+            src.apiKey = this.apiKey;
 
             let response = await node.service.getResponse(src);
             if ("error" in response || !isDictObject(response)) {
@@ -106,11 +142,18 @@ class Pipeline {
             }
             
             console.log(`Response ready for ${node.service._service}`);
-            this._infos[node.name] = response;
+            infos[node.name] = response;
             total_cost += response.cost.total_cost;
         }
-        this._infos.total_call_cost = total_cost;
-        return this._infos
+        infos.total_call_cost = total_cost;
+
+        // remove the execution code from the execution_codes in effect Array.
+        const exec_code_index = this._execution_codes.indexOf(execution_code);
+        if (exec_code_index > -1){
+            this._execution_codes.splice(exec_code_index,1);
+        }
+        
+        return infos
     }
 
 
@@ -176,7 +219,7 @@ class Pipeline {
                             throw new TypeError(`On ${stage.name} node: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
                         }
                     } else {
-                        for (let subnode of this._stages) {
+                        for (let subnode of stages) {
                             if (reference_node_name == subnode.name) {
                                 let output_datatype = get_serviceio_datatype(subnode.service._serviceio.output_structure[required_key]);
                                 if (output_datatype == 'null') {
@@ -305,6 +348,18 @@ class Pipeline {
             defaulted_stages.push(defaulted_stage);
         }
         return defaulted_stages;
+    }
+
+    /**
+     * Discontinue the execution of remaining nodes in the pipeline run
+     * @param {string} termination_code 
+     */
+    async terminate(termination_code) {
+        if (termination_code) {
+            this._termination_codes.push(this.apiKey + termination_code);
+        return {"message": `Request to terminate job "${termination_code}" received.`}
+        }
+        return {"message": `Request to terminate job is not valid (execution code missing).`}
     }
 }
 
