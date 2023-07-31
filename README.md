@@ -10,7 +10,10 @@ Javascript SDK for Soffos.ai API
 - Protect this API Key as it will incur charges.
 - You can also save your API Key into your environment variables with variable name = SOFFOSAI_API_KEY
 - To set your api key:
-    Save your API Key into your environment variable. Enforcing one layer of security.
+    When you initialize a service, include it on key word arguments:
+    ```
+    let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+    ```
 
 ## Installation
 `npm install soffosai`
@@ -55,7 +58,7 @@ Here is the list of SoffosAIService Subclasses:
 import { SoffosServices } from "soffosai";
 
 //Instantiate the SoffosAIService that you need:
-let service = new SoffosServices.TagGenerationService();
+let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
 
 //Call the service and print the output:
 let response = await service.call(
@@ -118,7 +121,7 @@ In order to create a Pipeline a service Node should be defined as stated above t
 import { SoffosPipeline } from "soffosai";
 
 const nodes = [file_converter, summarize, ingestor];
-const pipe = new SoffosPipeline(nodes);
+const pipe = new SoffosPipeline(nodes, false, {apiKey: my_apiKey});
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
 ```
@@ -138,25 +141,16 @@ import { SoffosNodes } from "soffosai";
 import {inspectArguments} from 'soffosai';
 
 
-function get_filename(path) {
-    let parts = null;
-    if (path.includes("/")) {
-        parts = path.split("/");
-        return parts.pop();
-    } else if (path.includes("\\")) {
-        parts = path.split("\\");
-        return parts.pop();
-    } else {
-        return path;
-    }
+function get_filename(file) {
+    return file.name.split('.')[0];
 }
 
 
 /**
- * Given a file path, upload the file to Soffos and get its reference document_id.
+ * Given a file upload the file to Soffos and get its reference document_id.
  */
 export class FileIngestPipeline extends SoffosPipeline {
-    constructor() {
+    constructor(kwargs) {
         const file_converter = new SoffosNodes.FileConverterNode(
             "file_converter",
             {
@@ -180,7 +174,7 @@ export class FileIngestPipeline extends SoffosPipeline {
                 field: "text"
             }
         );
-        return super([file_converter, document_ingest]);
+        return super([file_converter, document_ingest], false, kwargs);
     }
 
     /*
@@ -206,7 +200,7 @@ When you do this, you can easily reuse your pipeline like this:
 ```
 import { FileIngestPipeline } from "./your_directory/your_file.js";
 
-let pipe = new FileIngestPipeline();
+let pipe = new FileIngestPipeline({apiKey: my_apiKey});
 let result = await pipe.call("client_id", "matrix.pdf", 0);
 console.log(JSON.stringify(result, null, 2));
 
@@ -240,7 +234,9 @@ const AskFromDocument = new SoffosPipeline(
             {"source": "user_input", "field": "question"},
             {"source": "search", "field": "passages", "pre_process": get_content}
         )
-    ]
+    ],
+    false,
+    {apiKey: my_apiKey}
 );
 
 let input = {
@@ -285,8 +281,10 @@ const AskFromDocument = new SoffosPipeline(
             {"source": "search", "field": "passages", "pre_process": get_content}
         )
     ],
-    true // this is the **use_defaults** argument. defaults to **false** if not provided. 
-         // You can only use the "**default**" keyword on arguments to mean "default this value" if this is **true**.  if use_defaults is false, it will be taken as literal string "default".
+    true, // this is the **use_defaults** argument. defaults to **false** if not provided. 
+         // You can only use the "**default**" keyword on arguments to mean "default this value" if this 
+         //is **true**.  if use_defaults is false, it will be taken as literal string "default".
+    {apiKey: my_apiKey}
 );
 
 let input = {
@@ -304,7 +302,7 @@ You can use them like this:
 ```
 import { SoffosPipelines } from "soffosai";
 
-let pipe = new SoffosPipelines.FileIngestPipeline();
+let pipe = new SoffosPipelines.FileIngestPipeline({apiKey: my_apiKey});
 result = await pipe.call("client_id2", "matrix_file.pdf")
 console.log(JSON.stringify(result, null, 2));
 ```

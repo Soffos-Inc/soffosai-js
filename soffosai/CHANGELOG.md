@@ -4,6 +4,7 @@ To all who installed soffosai package lower than 0.0.4, please reinstall/update 
 
 ## 0.0.10
 - file parameter will now accept File instead of file path.
+- sample page
 
 ## 0.0.9
 - SoffosServices, SoffosNodes, SoffosPipelines namespaces

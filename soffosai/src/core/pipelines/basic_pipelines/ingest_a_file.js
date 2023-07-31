@@ -3,17 +3,21 @@ import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.js";
 import {inspectArguments} from '../../services/index.js';
 
 
-function get_filename(path) {
-    let parts = null;
-    if (path.includes("/")) {
-        parts = path.split("/");
-        return parts.pop();
-    } else if (path.includes("\\")) {
-        parts = path.split("\\");
-        return parts.pop();
-    } else {
-        return path;
-    }
+// function get_filename(path) {
+//     let parts = null;
+//     if (path.includes("/")) {
+//         parts = path.split("/");
+//         return parts.pop();
+//     } else if (path.includes("\\")) {
+//         parts = path.split("\\");
+//         return parts.pop();
+//     } else {
+//         return path;
+//     }
+// }
+
+function get_filename(file) {
+    return file.name.split('.')[0];
 }
 
 
@@ -21,7 +25,7 @@ function get_filename(path) {
  * Given a file path, upload the file to Soffos and get its reference document_id.
  */
 export class FileIngestPipeline extends Pipeline {
-    constructor() {
+    constructor(kwargs={}) {
         const file_converter = new FileConverterNode(
             "file_converter",
             {
@@ -45,7 +49,7 @@ export class FileIngestPipeline extends Pipeline {
                 field: "text"
             }
         );
-        return super([file_converter, document_ingest]);
+        return super([file_converter, document_ingest], false, kwargs);
     }
 
     /**
@@ -53,15 +57,11 @@ export class FileIngestPipeline extends Pipeline {
      * @param {string} user
      * @param {string} file
      * @param {number} [normalize=0]
+     * @param {string} [execution_code=null]
      * @returns {object}
      */
-    async call(user, file, normalize=0) {
+    async call(user, file, normalize=0, execution_code=null) {
         let payload = inspectArguments(this.call, user, file, normalize);
-        const output = await this.run(payload);
-        let data = {
-            document_id: output.doc_ingest.document_id,
-            total_call_cost: output.total_call_cost
-        };
-        return data;
+        return await this.run(payload, execution_code);
     }
 }

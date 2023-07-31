@@ -164,7 +164,10 @@ class SoffosAIService {
      * Based on the knowledge/context, Soffos AI will now give you the data you need
      */
     async getResponse(payload = {}) {
-        
+        // the apiKey can also be a part of the payload.  This is usefull when defining apiKey in the pipeline.
+        if ("apiKey" in payload) {
+          this._apikey = payload.apiKey;
+        }
         this._payload = payload;
         const [allowInput, message] = this.validatePayload();
         if ("question" in this._payload) {
@@ -234,7 +237,6 @@ class SoffosAIService {
         }
 
         response_data = await response.json();
-        print(response_data);
         return response_data;
 
     }
