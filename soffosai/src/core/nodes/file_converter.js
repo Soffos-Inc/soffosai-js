@@ -8,7 +8,7 @@ class FileConverterNode extends Node {
 
     /**
      * @param {string} name
-     * @param {string} file
+     * @param {string|Blob} file
      * @param {number} normalize
      */
     constructor(name, file, normalize=0) {

@@ -55,7 +55,7 @@ export class FileIngestPipeline extends Pipeline {
     /**
      * 
      * @param {string} user
-     * @param {string} file
+     * @param {string|Blob} file
      * @param {number} [normalize=0]
      * @param {string} [execution_code=null]
      * @returns {object}

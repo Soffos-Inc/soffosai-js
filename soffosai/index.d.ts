@@ -80,7 +80,7 @@ declare module 'soffosai' {
      */
     export class FileConverterService {
         constructor(kwargs?: {});
-        call(user: string, file:string, normalize?:number): Promise<object>;
+        call(user: string, file:string|Blob, normalize?:number): Promise<object>;
     }
 
     /**
@@ -416,7 +416,7 @@ declare module 'soffosai' {
          */
         export class FileConverterService {
             constructor(kwargs?: {});
-            call(user: string, file:string, normalize?:number): Promise<object>;
+            call(user: string, file:string|Blob, normalize?:number): Promise<object>;
         }
 
         /**
@@ -710,10 +710,10 @@ declare module 'soffosai' {
         export class FileConverterNode {
             /**
              * @param {string} name
-             * @param {string} file
+             * @param {string|Blob} file
              * @param {number} normalize
              */
-            constructor(name:string, file:string, normalize:number);
+            constructor(name:string, file:string|Blob, normalize:number);
         }
         
         /**
@@ -986,11 +986,11 @@ declare module 'soffosai' {
             /**
              * 
              * @param {string} user 
-             * @param {string} file 
+             * @param {string|Blob} file 
              * @param {number} [normalize=0]
              * @returns {object}
              */
-            call(user:string, file:string, normalize?:number): object;
+            call(user:string, file:string|Blob, normalize?:number): object;
         }
     }
 }
