@@ -45,7 +45,8 @@ var Pipeline = /*#__PURE__*/function () {
     var use_defaults = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var kwargs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     _classCallCheck(this, Pipeline);
-    this.apiKey = _app.apiKey;
+    var api_key = kwargs.apiKey;
+    this.apiKey = _app.apiKey || api_key;
     this._stages = nodes;
     this._input = {};
     this._infos = {};
@@ -88,39 +89,22 @@ var Pipeline = /*#__PURE__*/function () {
     key: "run",
     value: function () {
       var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user_input) {
-        var execution_code,
-          total_cost,
-          i,
-          index_from_execution,
-          index_from_termination,
-          node,
-          temp_src,
-          src,
-          _i,
-          _Object$entries,
-          _Object$entries$_i,
-          key,
-          notation,
-          value,
-          response,
-          exec_code_index,
-          _args = arguments;
+        var stages, execution_code, infos, total_cost, i, index_from_execution, index_from_termination, node, temp_src, src, _i, _Object$entries, _Object$entries$_i, key, notation, value, response, exec_code_index;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              execution_code = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
               if ((0, _type_classifications.isDictObject)(user_input)) {
-                _context.next = 3;
+                _context.next = 2;
                 break;
               }
               throw new Error("Invalid user input.");
-            case 3:
+            case 2:
               if ("user" in user_input) {
-                _context.next = 5;
+                _context.next = 4;
                 break;
               }
               throw new ReferenceError("'user' is not defined in user_input.");
-            case 5:
+            case 4:
               if ("text" in user_input) {
                 user_input.document_text = this._input.text;
               }
@@ -128,9 +112,12 @@ var Pipeline = /*#__PURE__*/function () {
                 user_input.message = user_input.question;
               }
               if (this._use_defaults) {
-                this._stages = this.setDefaults(this._stages, user_input);
+                stages = this.setDefaults(this._stages, user_input);
+              } else {
+                stages = this._stages;
               }
-              if (!(execution_code != null)) {
+              execution_code = user_input.execution_code;
+              if (!(execution_code != null && execution_code != undefined)) {
                 _context.next = 15;
                 break;
               }
@@ -145,17 +132,18 @@ var Pipeline = /*#__PURE__*/function () {
             case 14:
               this._execution_codes.push(execution_code);
             case 15:
-              this.validate_pipeline(user_input, this._stages);
-              this._infos.user_input = user_input;
+              infos = {};
+              this.validate_pipeline(user_input, stages);
+              infos.user_input = user_input;
               total_cost = 0.00; // Execute per stage:
               i = 0;
-            case 19:
-              if (!(i < this._stages.length)) {
-                _context.next = 64;
+            case 20:
+              if (!(i < stages.length)) {
+                _context.next = 66;
                 break;
               }
               if (!this._termination_codes.includes(execution_code)) {
-                _context.next = 28;
+                _context.next = 29;
                 break;
               }
               // remove the execution code from both termination codes and execution codes
@@ -169,87 +157,88 @@ var Pipeline = /*#__PURE__*/function () {
               }
 
               // return values that are ready:
-              this._infos.total_call_cost = total_cost;
-              this._infos.warning = "This Soffos Pipeline run is prematurely terminated.";
-              return _context.abrupt("return", this._infos);
-            case 28:
-              node = this._stages[i];
+              infos.total_call_cost = total_cost;
+              infos.warning = "This Soffos Pipeline run is prematurely terminated.";
+              return _context.abrupt("return", infos);
+            case 29:
+              node = stages[i];
               console.log("Running ".concat(node.service._service));
               temp_src = node.source;
               src = {};
               _i = 0, _Object$entries = Object.entries(temp_src);
-            case 33:
+            case 34:
               if (!(_i < _Object$entries.length)) {
-                _context.next = 52;
+                _context.next = 53;
                 break;
               }
               _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
               if (!(0, _type_classifications.isDictObject)(notation)) {
-                _context.next = 48;
+                _context.next = 49;
                 break;
               }
               // value is a reference to a node or user input
-              value = this._infos[notation.source][notation.field];
+              value = infos[notation.source][notation.field];
               if (!("pre_process" in notation)) {
-                _context.next = 45;
+                _context.next = 46;
                 break;
               }
               if (!(notation.pre_process instanceof Function)) {
-                _context.next = 42;
+                _context.next = 43;
                 break;
               }
               src[key] = notation.pre_process(value);
-              _context.next = 43;
+              _context.next = 44;
               break;
-            case 42:
-              throw new Error("pre_process value is not a function");
             case 43:
-              _context.next = 46;
+              throw new Error("pre_process value is not a function");
+            case 44:
+              _context.next = 47;
               break;
-            case 45:
+            case 46:
               // no pre-processing required
               src[key] = value;
-            case 46:
-              _context.next = 49;
+            case 47:
+              _context.next = 50;
               break;
-            case 48:
+            case 49:
               // notation is a constant
               src[key] = notation;
-            case 49:
+            case 50:
               _i++;
-              _context.next = 33;
+              _context.next = 34;
               break;
-            case 52:
+            case 53:
               if (!('user' in src)) {
                 src.user = user_input.user;
               }
-              _context.next = 55;
+              src.apiKey = this.apiKey;
+              _context.next = 57;
               return node.service.getResponse(src);
-            case 55:
+            case 57:
               response = _context.sent;
               if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 58;
+                _context.next = 60;
                 break;
               }
               throw new Error(response);
-            case 58:
+            case 60:
               console.log("Response ready for ".concat(node.service._service));
-              this._infos[node.name] = response;
+              infos[node.name] = response;
               total_cost += response.cost.total_cost;
-            case 61:
+            case 63:
               i++;
-              _context.next = 19;
+              _context.next = 20;
               break;
-            case 64:
-              this._infos.total_call_cost = total_cost;
+            case 66:
+              infos.total_call_cost = total_cost;
 
               // remove the execution code from the execution_codes in effect Array.
               exec_code_index = this._execution_codes.indexOf(execution_code);
               if (exec_code_index > -1) {
                 this._execution_codes.splice(exec_code_index, 1);
               }
-              return _context.abrupt("return", this._infos);
-            case 68:
+              return _context.abrupt("return", infos);
+            case 70:
             case "end":
               return _context.stop();
           }
@@ -270,7 +259,6 @@ var Pipeline = /*#__PURE__*/function () {
   }, {
     key: "validate_pipeline",
     value: function validate_pipeline(user_input, stages) {
-      var _this = this;
       /*
       Before running the first service, the Pipeline will validate all nodes if they will all be
       executed successfully with the exception of database and server issues.
@@ -332,7 +320,7 @@ var Pipeline = /*#__PURE__*/function () {
                 throw new TypeError("On ".concat(stage.name, " node: ").concat(required_data_type, " required on user_input '").concat(required_key, "' field but ").concat(input_datatype, " is provided."));
               }
             } else {
-              var _iterator3 = _createForOfIteratorHelper(_this._stages),
+              var _iterator3 = _createForOfIteratorHelper(stages),
                 _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -493,11 +481,19 @@ var Pipeline = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
+              if (!termination_code) {
+                _context2.next = 3;
+                break;
+              }
               this._termination_codes.push(this.apiKey + termination_code);
               return _context2.abrupt("return", {
                 "message": "Request to terminate job \"".concat(termination_code, "\" received.")
               });
-            case 2:
+            case 3:
+              return _context2.abrupt("return", {
+                "message": "Request to terminate job is not valid (execution code missing)."
+              });
+            case 4:
             case "end":
               return _context2.stop();
           }

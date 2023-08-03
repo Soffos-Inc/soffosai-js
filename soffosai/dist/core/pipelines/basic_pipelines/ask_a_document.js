@@ -57,6 +57,7 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
   var _super = _createSuper(AskADocumentPipeline);
   function AskADocumentPipeline() {
     var _this;
+    var kwargs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     _classCallCheck(this, AskADocumentPipeline);
     var d_node = new _index.DocumentsSearchNode("search", null, null, {
       source: "user_input",
@@ -71,7 +72,7 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
       pre_process: getContent
     });
     var nodes = [d_node, qa_node];
-    return _possibleConstructorReturn(_this, _this = _super.call(this, nodes));
+    return _possibleConstructorReturn(_this, _this = _super.call(this, nodes, false, kwargs));
   }
 
   /**
@@ -79,22 +80,26 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
    * @param {string} user 
    * @param {Array.<string>} doc_ids 
    * @param {string} question 
+   * @param {string} [execution_code=null]
    * @returns {object}
    */
   _createClass(AskADocumentPipeline, [{
     key: "call",
     value: function () {
       var _call = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user, doc_ids, question) {
-        var payload;
+        var execution_code,
+          payload,
+          _args = arguments;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              payload = (0, _index2.inspectArguments)(this.call, user, doc_ids, question);
-              _context.next = 3;
+              execution_code = _args.length > 3 && _args[3] !== undefined ? _args[3] : null;
+              payload = (0, _index2.inspectArguments)(this.call, user, doc_ids, question, execution_code);
+              _context.next = 4;
               return this.run(payload);
-            case 3:
-              return _context.abrupt("return", _context.sent);
             case 4:
+              return _context.abrupt("return", _context.sent);
+            case 5:
             case "end":
               return _context.stop();
           }

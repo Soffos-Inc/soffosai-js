@@ -125,9 +125,11 @@ const pipe = new SoffosPipeline(nodes, false, {apiKey: my_apiKey});
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
 ```
+// provided you have a <input type="file" id="file">
+let the_file = document.getElementById("file").files[0];
 let sample_user_input = {
     "user": "your_client's_id", // always required on services and pipelines
-    "my_file": "matrix.pdf"
+    "my_file": the_file
 }
 let response = await pipe.run(sample_user_input);
 console.log(JSON.stringify(response, null, 2));
@@ -201,11 +203,14 @@ When you do this, you can easily reuse your pipeline like this:
 import { FileIngestPipeline } from "./your_directory/your_file.js";
 
 let pipe = new FileIngestPipeline({apiKey: my_apiKey});
-let result = await pipe.call("client_id", "matrix.pdf", 0);
+
+// provided you have a <input type="file" id="file">
+let the_file = document.getElementById("file").files[0];
+let result = await pipe.call("client_id", the_file, 0);
 console.log(JSON.stringify(result, null, 2));
 
 // on your successive calls:
-result = await pipe.call("client2", "otherFile.docx", 0);
+result = await pipe.call("client2", other_file, 0);
 console.log(JSON.stringify(result, null, 2));
 ```
 
@@ -303,7 +308,7 @@ You can use them like this:
 import { SoffosPipelines } from "soffosai";
 
 let pipe = new SoffosPipelines.FileIngestPipeline({apiKey: my_apiKey});
-result = await pipe.call("client_id2", "matrix_file.pdf")
+result = await pipe.call("client_id2", the_file)
 console.log(JSON.stringify(result, null, 2));
 ```
 

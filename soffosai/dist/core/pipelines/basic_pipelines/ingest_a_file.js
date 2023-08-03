@@ -23,17 +23,20 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function get_filename(path) {
-  var parts = null;
-  if (path.includes("/")) {
-    parts = path.split("/");
-    return parts.pop();
-  } else if (path.includes("\\")) {
-    parts = path.split("\\");
-    return parts.pop();
-  } else {
-    return path;
-  }
+// function get_filename(path) {
+//     let parts = null;
+//     if (path.includes("/")) {
+//         parts = path.split("/");
+//         return parts.pop();
+//     } else if (path.includes("\\")) {
+//         parts = path.split("\\");
+//         return parts.pop();
+//     } else {
+//         return path;
+//     }
+// }
+function get_filename(file) {
+  return file.name.split('.')[0];
 }
 
 /**
@@ -44,6 +47,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
   var _super = _createSuper(FileIngestPipeline);
   function FileIngestPipeline() {
     var _this;
+    var kwargs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     _classCallCheck(this, FileIngestPipeline);
     var file_converter = new _index.FileConverterNode("file_converter", {
       source: "user_input",
@@ -60,7 +64,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
       source: "file_converter",
       field: "text"
     });
-    return _possibleConstructorReturn(_this, _this = _super.call(this, [file_converter, document_ingest]));
+    return _possibleConstructorReturn(_this, _this = _super.call(this, [file_converter, document_ingest], false, kwargs));
   }
 
   /**
@@ -68,6 +72,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
    * @param {string} user
    * @param {string} file
    * @param {number} [normalize=0]
+   * @param {string} [execution_code=null]
    * @returns {object}
    */
   _createClass(FileIngestPipeline, [{
@@ -75,25 +80,20 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
     value: function () {
       var _call = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user, file) {
         var normalize,
+          execution_code,
           payload,
-          output,
-          data,
           _args = arguments;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               normalize = _args.length > 2 && _args[2] !== undefined ? _args[2] : 0;
-              payload = (0, _index2.inspectArguments)(this.call, user, file, normalize);
-              _context.next = 4;
+              execution_code = _args.length > 3 && _args[3] !== undefined ? _args[3] : null;
+              payload = (0, _index2.inspectArguments)(this.call, user, file, normalize, execution_code);
+              _context.next = 5;
               return this.run(payload);
-            case 4:
-              output = _context.sent;
-              data = {
-                document_id: output.doc_ingest.document_id,
-                total_call_cost: output.total_call_cost
-              };
-              return _context.abrupt("return", data);
-            case 7:
+            case 5:
+              return _context.abrupt("return", _context.sent);
+            case 6:
             case "end":
               return _context.stop();
           }

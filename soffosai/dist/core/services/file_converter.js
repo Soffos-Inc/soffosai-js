@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -52,7 +51,16 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
       if (![0, 1].includes(normalize)) {
         throw new Error("".concat(this._service, ": normalize can only accept a value of 0 or 1;"));
       }
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, file, normalize);
+
+      // if (!(file instanceof File)) {
+      //     throw new TypeError(`Please provide a file`)
+      // }
+
+      this._argsDict = {
+        user: user,
+        file: file,
+        normalize: normalize
+      };
       return _get(_getPrototypeOf(FileConverterService.prototype), "call", this).call(this);
     }
   }]);
