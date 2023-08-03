@@ -15,9 +15,9 @@ class FileConverterService extends SoffosAIService {
   
     /**
      * @param {string} user 
-     * @param {string|Blob} file
+     * @param {Blob} file
      * @param {number} [normalize=0] 
-     * @returns {Promise<Object>} 
+     * @returns {Promise<Object>}
      */
     call(user, file, normalize=0) {
         if ( ![ 0, 1 ].includes(normalize)) {
