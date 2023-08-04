@@ -15,6 +15,8 @@ Note that this is in Alpha.
     ```
     let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
     ```
+    OR
+    set it in your environment variable with variable name = SOFFOSAI_API_KEY
 
 ## Installation
 `npm install soffosai`
@@ -60,6 +62,9 @@ import { SoffosServices } from "soffosai";
 
 //Instantiate the SoffosAIService that you need:
 let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
+
+// if you set your environment variables no need to put keyword argument apiKey:
+// let service = new SoffosServices.TagGenerationService();
 
 //Call the service and print the output:
 let response = await service.call(

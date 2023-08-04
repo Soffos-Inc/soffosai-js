@@ -1,6 +1,8 @@
 import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.js";
 import { apiKey } from "../../../../soffosai/src/app.js";
-// import FormData from 'form-data'; 
+import axios from 'axios';
+import FormData from 'form-data'; 
+import { createReadStream } from 'fs';
 import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.js"
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
@@ -184,61 +186,46 @@ class SoffosAIService {
         }
       
         let response;
-        let response_data;
-        const data = this.getData();
+        let data = this.getData();
         const url = SOFFOS_SERVICE_URL + this._service + "/";
-        let headers
+        let headers = {}
       
         if (!FORM_DATA_REQUIRED.includes(this._service)) {
-          headers = {
-            "content-type": "application/json",
-            "x-api-key": this._apikey
-          };
-          // response = await axios.post(url, data,{headers: headers});
-          try {
-            response = await fetch(
-              url, 
-              {
-                headers: headers,
-                method: 'POST',
-                body: JSON.stringify(data)
-              }
-            );
-          } catch (error){
-            return {
-              error: error,
-              response: response
-            }
-          }
-          
+          headers["content-type"] = "application/json";
+          headers["x-api-key"] = this._apikey;
+          // response = await axios.post(url, data, {headers: headers});
         } else {
           const formData = new FormData();
           Object.keys(data).forEach(key=>{
-            formData.append(key, data[key]);
-          })
-          // let headers = formData.getHeaders();
-          headers = {};
-          headers["x-api-key"] = this._apikey;
-          try {
-            response = await fetch(
-              url,
-              {
-                headers: headers,
-                method: 'POST',
-                body: formData
-              }
-            );
-          } catch (error) {
-            return {
-              error: error,
-              response: response
+            if (key=='file'){
+              formData.append(key, createReadStream(data[key]));
+            } else {
+              formData.append(key, data[key]);
             }
-          }
+          });
+          headers = formData.getHeaders();
+          headers["x-api-key"] = this._apikey;
+          data = formData
         }
 
-        response_data = await response.json();
-        return response_data;
-
+        try {
+          response = await axios.post(url, data,{headers:headers});
+          
+          if (response.status >= 200 && response.status < 300) {
+            return response.data;
+          } else {
+            console.log('Request failed');
+            return response.data;
+          }
+        } catch (error) {
+          if (error.response) {
+            return error.response.status, error.response.data;
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+        }
     }
     
     /**
