@@ -14,7 +14,7 @@ function getContent(value) {
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
  */
 class AskADocumentPipeline extends SoffosPipeline {
-    constructor(){
+    constructor(kwargs){
         let d_node = new SoffosNodes.DocumentsSearchNode(
                 "search", null, null, {source: "user_input", field: "doc_ids"}
             );
@@ -25,7 +25,7 @@ class AskADocumentPipeline extends SoffosPipeline {
             );
                 
         let nodes = [d_node, qa_node];
-        return super(nodes, false);
+        return super(nodes, false, kwargs);
     }
 
     /**
@@ -40,7 +40,7 @@ class AskADocumentPipeline extends SoffosPipeline {
     }
 }
 
-let pipe = new AskADocumentPipeline();
+let pipe = new AskADocumentPipeline({apiKey: my_apiKey});
 // On this test, the API key used has access to document "1d77babf8164427cad8276ba944e6cbc"
 // Please ingest a document first and replace the docuent_id here.
 let result = await pipe.call("client_id", ["1d77babf8164427cad8276ba944e6cbc"], "Who is Neo?");
@@ -51,6 +51,6 @@ console.log(JSON.stringify(result, null, 2));
 // you can also import from pre-defined pipelines:
 import { SoffosPipelines } from "soffosai";
 
-let pipe2 = new SoffosPipelines.FileIngestPipeline();
+let pipe2 = new SoffosPipelines.FileIngestPipeline({apiKey: my_apiKey});
 result = await pipe2.call("client_id2", "matrix_file.pdf")
 console.log(JSON.stringify(result, null, 2));
