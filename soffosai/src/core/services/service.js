@@ -235,7 +235,7 @@ class SoffosAIService {
             }
           }
         }
-
+        console.log(response);
         response_data = await response.json();
         return response_data;
 

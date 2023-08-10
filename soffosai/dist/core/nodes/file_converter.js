@@ -27,7 +27,7 @@ var FileConverterNode = /*#__PURE__*/function (_Node) {
   var _super = _createSuper(FileConverterNode);
   /**
    * @param {string} name
-   * @param {string} file
+   * @param {Blob} file
    * @param {number} normalize
    */
   function FileConverterNode(name, file) {

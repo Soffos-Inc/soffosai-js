@@ -40,9 +40,9 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
 
   /**
    * @param {string} user 
-   * @param {string} file
+   * @param {Blob} file
    * @param {number} [normalize=0] 
-   * @returns {Promise<Object>} 
+   * @returns {Promise<Object>}
    */
   _createClass(FileConverterService, [{
     key: "call",
@@ -51,11 +51,6 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
       if (![0, 1].includes(normalize)) {
         throw new Error("".concat(this._service, ": normalize can only accept a value of 0 or 1;"));
       }
-
-      // if (!(file instanceof File)) {
-      //     throw new TypeError(`Please provide a file`)
-      // }
-
       this._argsDict = {
         user: user,
         file: file,
