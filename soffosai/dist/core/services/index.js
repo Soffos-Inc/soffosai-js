@@ -177,12 +177,6 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
     return _transcript_correction["default"];
   }
 });
-Object.defineProperty(exports, "inspectArguments", {
-  enumerable: true,
-  get: function get() {
-    return _inspect_arguments.inspectArguments;
-  }
-});
 var _ambiguity_detection = _interopRequireDefault(require("./ambiguity_detection.js"));
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
 var _contradiction_detection = _interopRequireDefault(require("./contradiction_detection.js"));
@@ -207,5 +201,4 @@ var _table_generator = _interopRequireDefault(require("./table_generator.js"));
 var _tag_generation = _interopRequireDefault(require("./tag_generation.js"));
 var _transcript_correction = _interopRequireDefault(require("./transcript_correction.js"));
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

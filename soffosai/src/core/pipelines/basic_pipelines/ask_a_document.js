@@ -1,6 +1,5 @@
 import { Pipeline } from "./../pipeline.js";
 import { DocumentsSearchNode, QuestionAnsweringNode } from "./../../nodes/index.js";
-import {inspectArguments} from './../../services/index.js';
 
 /**
  * The document search service provides "passages" which is a list of contents plus some more description.
@@ -43,7 +42,12 @@ export class AskADocumentPipeline extends Pipeline {
      * @returns {object}
      */
     async call(user, doc_ids, question, execution_code=null) {
-        let payload = inspectArguments(this.call, user, doc_ids, question, execution_code);
+        let payload = {
+            "user": user,
+            "doc_ids": doc_ids,
+            "question": question,
+            "execution_code": execution_code
+        }
         return await this.run(payload);
     }
 }

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DocumentsSearchService = exports.DocumentsIngestService = exports.DocumentsDeleteService = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -57,8 +56,14 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
       var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var tagged_elements = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var meta = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, document_name, text, tagged_elements, meta);
-      this._argsDict.name = document_name;
+      this._argsDict = {
+        "user": user,
+        "document_name": document_name,
+        "name": document_name,
+        "text": text,
+        "tagged_elements": tagged_elements,
+        "meta": meta
+      };
       return _get(_getPrototypeOf(DocumentsIngestService.prototype), "call", this).call(this);
     }
   }]);
@@ -102,7 +107,16 @@ var DocumentsSearchService = /*#__PURE__*/function (_SoffosAIService2) {
       var top_n_natural_language = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 5;
       var date_from = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var date_until = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, query, filters, document_ids, top_n_keywords, top_n_natural_language, date_from, date_until);
+      this._argsDict = {
+        "user": user,
+        "query": query,
+        "filters": filters,
+        "document_ids": document_ids,
+        "top_n_keywords": top_n_keywords,
+        "top_n_natural_language": top_n_natural_language,
+        "date_from": date_from,
+        "date_until": date_until
+      };
       var response = _get(_getPrototypeOf(DocumentsSearchService.prototype), "call", this).call(this);
       var text = "";
       if (response.hasOwnProperty('passages')) {
@@ -150,7 +164,10 @@ var DocumentsDeleteService = /*#__PURE__*/function (_SoffosAIService3) {
   _createClass(DocumentsDeleteService, [{
     key: "call",
     value: function call(user, document_ids) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, document_ids);
+      this._argsDict = {
+        "user": user,
+        "document_ids": document_ids
+      };
       return _get(_getPrototypeOf(DocumentsDeleteService.prototype), "call", this).call(this);
     }
   }]);

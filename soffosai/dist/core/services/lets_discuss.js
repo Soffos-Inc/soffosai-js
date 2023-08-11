@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LetsDiscussService = exports.LetsDiscussRetrieveService = exports.LetsDiscussDeleteService = exports.LetsDiscussCreateService = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51,7 +50,10 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(LetsDiscussCreateService, [{
     key: "call",
     value: function call(user, context) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, context);
+      this._argsDict = {
+        "user": user,
+        "context": context
+      };
       return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "call", this).call(this);
     }
   }]);
@@ -87,7 +89,11 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
   _createClass(LetsDiscussService, [{
     key: "call",
     value: function call(user, session_id, query) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, session_id, query);
+      this._argsDict = {
+        "user": user,
+        "session_id": session_id,
+        "query": query
+      };
       return _get(_getPrototypeOf(LetsDiscussService.prototype), "call", this).call(this);
     }
   }]);
@@ -122,7 +128,10 @@ var LetsDiscussRetrieveService = /*#__PURE__*/function (_SoffosAIService3) {
   _createClass(LetsDiscussRetrieveService, [{
     key: "call",
     value: function call(user, return_messages) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, return_messages);
+      this._argsDict = {
+        "user": user,
+        "return_messages": return_messages
+      };
       return _get(_getPrototypeOf(LetsDiscussRetrieveService.prototype), "call", this).call(this);
     }
   }]);
@@ -157,7 +166,10 @@ var LetsDiscussDeleteService = /*#__PURE__*/function (_SoffosAIService4) {
   _createClass(LetsDiscussDeleteService, [{
     key: "call",
     value: function call(user, session_ids) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, session_ids);
+      this._argsDict = {
+        "user": user,
+        "session_ids": session_ids
+      };
       return _get(_getPrototypeOf(LetsDiscussDeleteService.prototype), "call", this).call(this);
     }
   }]);

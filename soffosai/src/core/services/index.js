@@ -28,7 +28,6 @@ import TagGenerationService from './tag_generation.js';
 import TranscriptCorrectionService from './transcript_correction.js';
 
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 
 export {
     AmbiguityDetectionService,
@@ -61,5 +60,4 @@ export {
     TranscriptCorrectionService,
 
     SoffosAIService,
-    inspectArguments,
 };

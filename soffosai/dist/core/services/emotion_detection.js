@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -73,7 +72,13 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
       } finally {
         _iterator.f();
       }
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text, sentence_split, sentence_overlap, emotion_choices);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sentence_split": sentence_split,
+        "sentence_overlap": sentence_overlap,
+        "emotion_choices": emotion_choices
+      };
       return _get(_getPrototypeOf(EmotionDetectionService.prototype), "call", this).call(this);
     }
   }]);

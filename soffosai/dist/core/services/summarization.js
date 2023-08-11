@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53,7 +52,11 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(SummarizationService, [{
     key: "call",
     value: function call(user, text, sent_length) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text, sent_length);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sent_length": sent_length
+      };
       return _get(_getPrototypeOf(SummarizationService.prototype), "call", this).call(this);
     }
   }]);

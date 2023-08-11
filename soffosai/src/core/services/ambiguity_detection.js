@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {AmbiguityDetectionIO} from '../../common/serviceio_fields/index.js';
 
@@ -23,7 +22,12 @@ class AmbiguityDetectionService extends SoffosAIService {
      * @returns {Promise<Object>}
      */
     call(user, text, sentence_split = 4, sentence_overlap = false) {
-      this._argsDict = inspectArguments(this.call, user, text, sentence_split, sentence_overlap);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sentence_split": sentence_split,
+        "sentence_overlap": sentence_overlap
+      };
       return super.call();
     }
 }

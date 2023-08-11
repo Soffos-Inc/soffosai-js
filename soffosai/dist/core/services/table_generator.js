@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,7 +55,11 @@ var TableGeneratorService = /*#__PURE__*/function (_SoffosAIService) {
       if (!TABLE_FORMATS.includes(table_format)) {
         throw new Error("".concat(table_format, " is not a supported format. Please choose from ").concat(TABLE_FORMATS, "."));
       }
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text, table_format);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "table_format": table_format
+      };
       return _get(_getPrototypeOf(TableGeneratorService.prototype), "call", this).call(this);
     }
   }]);

@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {TranscriptCorrectionIO} from '../../common/serviceio_fields/index.js';
 
@@ -23,7 +22,10 @@ class TranscriptCorrectionService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, text) {
-      this._argsDict = inspectArguments(this.call, user, text);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+      };
       return super.call();
     }
 }

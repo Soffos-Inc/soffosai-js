@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {SummarizationIO} from '../../common/serviceio_fields/index.js';
 
@@ -26,7 +25,11 @@ class SummarizationService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, text, sent_length) {
-      this._argsDict = inspectArguments(this.call, user, text, sent_length);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sent_length": sent_length
+      };
       return super.call();
     }
 }

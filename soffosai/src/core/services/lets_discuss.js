@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {LetsDiscussCreateIO, LetsDiscussIO, LetsDiscussRetrieveIO, LetsDiscussDeleteIO} from '../../common/serviceio_fields/index.js';
 
@@ -24,7 +23,10 @@ class LetsDiscussCreateService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, context) {
-      this._argsDict = inspectArguments(this.call, user, context);
+      this._argsDict = {
+        "user": user,
+        "context": context
+      };
       return super.call();
     }
 }
@@ -51,7 +53,11 @@ class LetsDiscussService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, session_id, query) {
-      this._argsDict = inspectArguments(this.call, user, session_id, query);
+      this._argsDict = {
+        "user": user,
+        "session_id": session_id,
+        "query": query
+      };
       return super.call();
     }
 }
@@ -77,7 +83,10 @@ class LetsDiscussRetrieveService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, return_messages) {
-      this._argsDict = inspectArguments(this.call, user, return_messages);
+      this._argsDict = {
+        "user": user,
+        "return_messages": return_messages
+      };
       return super.call();
     }
 }
@@ -103,7 +112,10 @@ class LetsDiscussDeleteService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, session_ids) {
-      this._argsDict = inspectArguments(this.call, user, session_ids);
+      this._argsDict = {
+        "user": user,
+        "session_ids": session_ids
+      };
       return super.call();
     }
 }

@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO} from '../../common/serviceio_fields/index.js';
 
@@ -24,8 +23,14 @@ class DocumentsIngestService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, document_name, text=null, tagged_elements=null, meta=null) {
-      this._argsDict = inspectArguments(this.call, user, document_name, text, tagged_elements, meta);
-      this._argsDict.name = document_name;
+      this._argsDict = {
+        "user": user,
+        "document_name": document_name,
+        "name": document_name,
+        "text": text,
+        "tagged_elements": tagged_elements,
+        "meta": meta
+      };
       return super.call();
     }
 }
@@ -55,8 +60,16 @@ class DocumentsSearchService extends SoffosAIService {
     call(user, query=null, filters=null, document_ids=null, top_n_keywords=5,
         top_n_natural_language=5, date_from=null, date_until=null) 
     {
-      this._argsDict = inspectArguments(this.call, user, query, filters, document_ids, top_n_keywords,
-        top_n_natural_language, date_from, date_until);
+      this._argsDict = {
+        "user": user,
+        "query": query,
+        "filters": filters,
+        "document_ids": document_ids,
+        "top_n_keywords": top_n_keywords,
+        "top_n_natural_language": top_n_natural_language,
+        "date_from": date_from,
+        "date_until": date_until
+      };
 
       let response = super.call();
       let text = "";
@@ -88,7 +101,10 @@ class DocumentsDeleteService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, document_ids) {
-      this._argsDict = inspectArguments(this.call, user, document_ids);
+      this._argsDict = {
+        "user": user,
+        "document_ids": document_ids
+      };
       return super.call();
     }
 }

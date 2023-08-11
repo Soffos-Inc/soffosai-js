@@ -2,7 +2,6 @@
 
 import { ServiceString } from './common/constants.js';
 import { SoffosAIService } from './core/services/service.js';
-import { inspectArguments } from './core/services/index.js';
 import { Pipeline as SoffosPipeline } from './core/pipelines/index.js';
 import {
     AmbiguityDetectionService,
@@ -73,7 +72,6 @@ export {
     TagGenerationService,
     TranscriptCorrectionService,
 
-    inspectArguments,
     SoffosPipeline,
     SoffosServices,
     SoffosNodes,

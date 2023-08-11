@@ -28,7 +28,7 @@ class FileConverterService extends SoffosAIService {
           user: user,
           file: file,
           normalize:normalize
-        }
+        };
         return super.call();
     }
 }

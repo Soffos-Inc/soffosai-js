@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53,7 +52,12 @@ var SentimentAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
     value: function call(user, text) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text, sentence_split, sentence_overlap);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sentence_split": sentence_split,
+        "sentence_overlap": sentence_overlap
+      };
       return _get(_getPrototypeOf(SentimentAnalysisService.prototype), "call", this).call(this);
     }
   }]);

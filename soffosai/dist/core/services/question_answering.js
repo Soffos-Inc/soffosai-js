@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62,7 +61,16 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       var check_query_type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
       var generic_response = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
       var meta = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : undefined;
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, question, document_text, document_ids, check_ambiguity, check_query_type, generic_response, meta);
+      this._argsDict = {
+        "user": user,
+        "question": question,
+        "document_text": document_text,
+        "document_ids": document_ids,
+        "check_ambiguity": check_ambiguity,
+        "check_query_type": check_query_type,
+        "generic_response": generic_response,
+        "meta": meta
+      };
       this._argsDict['message'] = question;
       return _get(_getPrototypeOf(QuestionAnsweringService.prototype), "call", this).call(this);
     }

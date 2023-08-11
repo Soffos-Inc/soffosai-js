@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {TableGeneratorIO} from '../../common/serviceio_fields/index.js';
 
@@ -28,7 +27,11 @@ class TableGeneratorService extends SoffosAIService {
       if (!TABLE_FORMATS.includes(table_format)){
         throw new Error(`${table_format} is not a supported format. Please choose from ${TABLE_FORMATS}.`)
       }
-      this._argsDict = inspectArguments(this.call, user, text, table_format);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "table_format": table_format
+      };
       return super.call();
     }
 }

@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {MicrolessonIO} from '../../common/serviceio_fields/index.js';
 
@@ -23,7 +22,10 @@ class MicrolessonService extends SoffosAIService {
       if (content != undefined){
         this.content = content;
       }
-      this._argsDict = inspectArguments(this.call, user, content);
+      this._argsDict = {
+        "user": user,
+        "content": content
+      };
       this._argsDict['content'] = this.content;
       return super.call();
     }

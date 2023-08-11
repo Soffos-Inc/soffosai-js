@@ -13,20 +13,8 @@ module.exports = {
     umdNamedDefine: true
   },
   externals: {
-    'fs': 'fs',
     'path': 'path'
   },
   target: "web",
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          mangle: {
-            properties: false,
-          },
-        },
-      }),
-    ],
-  },
+
 };

@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {EmotionDetectionIO} from '../../common/serviceio_fields/index.js';
 
@@ -31,7 +30,13 @@ class EmotionDetectionService extends SoffosAIService {
             throw new Error(`${emotion} is not valid as an emotion_choices element. Please choose from ${_EMOTION_LIST}.`);
         }
       }
-      this._argsDict = inspectArguments(this.call, user, text, sentence_split, sentence_overlap, emotion_choices);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "sentence_split": sentence_split,
+        "sentence_overlap": sentence_overlap,
+        "emotion_choices": emotion_choices
+      };
       return super.call();
     }
 }

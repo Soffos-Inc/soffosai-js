@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {QuestionAnsweringIO} from '../../common/serviceio_fields/index.js';
 
@@ -30,8 +29,16 @@ class QuestionAnsweringService extends SoffosAIService {
      */
     call(user, question, document_text=undefined, document_ids=undefined, 
         check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {
-      this._argsDict = inspectArguments(this.call, user, question, document_text, document_ids, 
-        check_ambiguity, check_query_type, generic_response, meta);
+        this._argsDict = {
+          "user": user,
+          "question": question,
+          "document_text": document_text,
+          "document_ids": document_ids,
+          "check_ambiguity": check_ambiguity,
+          "check_query_type": check_query_type,
+          "generic_response": generic_response,
+          "meta": meta
+        };
       this._argsDict['message'] = question;
       return super.call();
     }

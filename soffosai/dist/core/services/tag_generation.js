@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67,7 +66,12 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
           throw new Error("".concat(this._service, " types argument's elements can only be \"topic\", \"domain\", \"audience\" and/or \"entity\"."));
         }
       }
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text, types, n);
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "types": types,
+        "n": n
+      };
       return _get(_getPrototypeOf(TagGenerationService.prototype), "call", this).call(this);
     }
   }]);

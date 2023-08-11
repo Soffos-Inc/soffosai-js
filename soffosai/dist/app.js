@@ -193,18 +193,12 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
   }
 });
 exports.apiKey = void 0;
-Object.defineProperty(exports, "inspectArguments", {
-  enumerable: true,
-  get: function get() {
-    return SoffosServices.inspectArguments;
-  }
-});
 var _constants = require("./common/constants.js");
 var _service = require("./core/services/service.js");
-var SoffosServices = _interopRequireWildcard(require("./core/services/index.js"));
-exports.SoffosServices = SoffosServices;
 var SoffosPipelines = _interopRequireWildcard(require("./core/pipelines/index.js"));
 exports.SoffosPipelines = SoffosPipelines;
+var SoffosServices = _interopRequireWildcard(require("./core/services/index.js"));
+exports.SoffosServices = SoffosServices;
 var SoffosNodes = _interopRequireWildcard(require("./core/nodes/index.js"));
 exports.SoffosNodes = SoffosNodes;
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }

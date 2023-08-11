@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.js';
 
@@ -23,9 +22,13 @@ class NamedEntityRecognitionService extends SoffosAIService {
      * @returns {Promise<Object>}
      */
     call(user, text, labels=undefined) {
-      this._argsDict = inspectArguments(this.call, user, text, labels);
-      if (!(labels == undefined) && Object.keys(this.labels).length > 0){
-        this._argsDict['labels'] = labels;
+      this._argsDict = {
+        "user": user,
+        "text": text,
+        "labels": labels
+      };
+      if ((labels == undefined) && Object.keys(this.labels).length > 0){
+        this._argsDict['labels'] = this.labels;
       }
       return super.call();
     }

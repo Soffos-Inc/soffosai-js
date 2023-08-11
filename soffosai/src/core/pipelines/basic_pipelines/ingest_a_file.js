@@ -1,6 +1,5 @@
 import { Pipeline } from "../pipeline.js";
 import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.js";
-import {inspectArguments} from '../../services/index.js';
 
 
 // function get_filename(path) {
@@ -61,7 +60,12 @@ export class FileIngestPipeline extends Pipeline {
      * @returns {object}
      */
     async call(user, file, normalize=0, execution_code=null) {
-        let payload = inspectArguments(this.call, user, file, normalize, execution_code);
+        let payload = {
+            "user": user,
+            "file": file,
+            "normalize": normalize,
+            "execution_code": execution_code
+        }
         return await this.run(payload);
     }
 }

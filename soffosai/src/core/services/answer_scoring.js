@@ -1,5 +1,4 @@
 import { SoffosAIService } from './service.js';
-import { inspectArguments  } from '../../utils/inspect_arguments.js';
 import { ServiceString } from '../../common/constants.js';
 import {AnswerScoringIO} from '../../common/serviceio_fields/index.js';
 
@@ -24,7 +23,13 @@ class AnswerScoringService extends SoffosAIService {
      * @returns {Promise<Object>}
      */
     call(user, context, question, user_answer, answer=null) {
-      this._argsDict = inspectArguments(this.call, user, context, question, user_answer, answer);
+      this._argsDict = {
+        "user": user,
+        "context": context,
+        "question": question,
+        "user_answer": user_answer,
+        "answer": answer
+      };
       return super.call();
     }
 }
