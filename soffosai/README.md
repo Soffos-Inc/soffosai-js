@@ -1,6 +1,5 @@
-# Soffosai JS (Alpha)
+# Soffosai JS
 Javascript SDK for Soffos.ai API
-Note that this is in Alpha.
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
@@ -17,8 +16,10 @@ Note that this is in Alpha.
     ```
 
 ## Installation
-`npm install soffosai`
+`npm install soffosai` 
 
+## CDN package:
+`<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>`
 
 ## SoffosAIService
 The SoffosAIService class handles validation and execution of specified endpoint vs payload.
@@ -70,6 +71,13 @@ let response = await service.call(
 console.log(JSON.stringify(response, null, 2));
 ```
 
+- For the web package:
+```
+// The only difference is the declaration of the service. You must append soffosai.
+let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+```
+
+
 ## Nodes 
 Nodes are the configuration of Services for Pipeline use.
 In a Soffos Pipeline, you will be declaring multiple sevices working together for a purpose.
@@ -115,6 +123,18 @@ let ingestor = new SoffosNodes.DocumentsIngestNode(
 ```
 the node's argument, if an object, can only have 3 attributes: "source", "field" and "pre_process".  Other attributes will be ignored.
 
+- For the web package:
+```
+// The only difference is the declaration of the node. You must append soffosai.
+let file_converter = new soffosai.SoffosNodes.FileConverterNode(
+    "file-converter", // reference name of a Node in the Pipeline, you can have the same service in it.
+    { // definition of file parameter:
+        "source": "user_input", // take from user_input
+        "field":"my_file" // the file property/field_name
+    } 
+);
+```
+
 ## Pipeline
 - A Soffos Pipeline is a series of Soffos Service working together.
 In order to create a Pipeline a service Node should be defined as stated above then supply it to the pipeline's constructor:
@@ -134,6 +154,11 @@ let sample_user_input = {
 }
 let response = await pipe.run(sample_user_input);
 console.log(JSON.stringify(response, null, 2));
+```
+
+- For the web package:
+```
+const pipe = new soffosai.SoffosPipeline(nodes, false, {apiKey: my_apiKey});
 ```
 
 ### Best way to declare a Pipeline
@@ -191,7 +216,7 @@ export class FileIngestPipeline extends SoffosPipeline {
             user: user,
             file: file,
             normalize: normalize
-        }
+        };
         const output = await this.run(payload);
         let output_data = {
             document_id: output.doc_ingest.document_id,
