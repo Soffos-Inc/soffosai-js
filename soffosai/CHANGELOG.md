@@ -3,6 +3,11 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.1.3
+- inspect_arguments removed as it is not converting well during minification
+- soffosai.bundle.js created
+
+
 ## 0.1.2
 - ES5 compatibility updates
 - documentation updates
