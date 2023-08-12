@@ -141,7 +141,6 @@ To make your Pipeline more maintainable and easy to use, create a subclass:
 ```
 import { SoffosPipeline } from "soffosai";
 import { SoffosNodes } from "soffosai";
-import {inspectArguments} from 'soffosai';
 
 
 function get_filename(file) {
@@ -188,7 +187,11 @@ export class FileIngestPipeline extends SoffosPipeline {
      * @returns {object}
      */
     async call(user, file, normalize) {
-        let payload = inspectArguments(this.call, user, file, normalize);
+        let payload = {
+            user: user,
+            file: file,
+            normalize: normalize
+        }
         const output = await this.run(payload);
         let output_data = {
             document_id: output.doc_ingest.document_id,

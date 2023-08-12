@@ -1,6 +1,5 @@
 import { SoffosPipeline } from "soffosai";
 import { SoffosNodes } from "soffosai";
-import {inspectArguments} from "soffosai";
 
 function getContent(value) {
     let combined_text = "";
@@ -35,7 +34,11 @@ class AskADocumentPipeline extends SoffosPipeline {
      * @param {string} question 
      */
     async call(user, doc_ids, question) {
-        let payload = inspectArguments(this.call, user, doc_ids, question);
+        let payload = {
+            user: user,
+            doc_ids: doc_ids,
+            question: question
+        }
         return this.run(payload)
     }
 }
