@@ -25,14 +25,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /**
- * A controller for consuming multiple Services called stages.
- * It validates all inputs of all stages before sending the first Soffos API request to ensure
+ * A controller for consuming multiple Services called Nodes.
+ * It validates all inputs of all Nodes before sending the first Soffos API request to ensure
  * that the Pipeline will not waste credits.
  * 
- * ** use_defaults=True means that stages will take input from the previous stages' 
- * output of the same field name prioritizing the latest stage's output. 
- * If the previous stages does not have it, it will take from the
- * pipeline's user_input.  Also, the stages will only be supplied with the required fields + default
+ * ** use_defaults=True means that Nodes will take input from the previous Nodes' 
+ * output of the same field name prioritizing the latest Node's output. 
+ * If the previous Nodes does not have it, it will take from the
+ * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
  * of the require_one_of_choices fields.
  */
 var Pipeline = /*#__PURE__*/function () {
@@ -89,22 +89,27 @@ var Pipeline = /*#__PURE__*/function () {
     key: "run",
     value: function () {
       var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user_input) {
-        var stages, execution_code, infos, total_cost, i, index_from_execution, index_from_termination, node, temp_src, src, _i, _Object$entries, _Object$entries$_i, key, notation, value, response, exec_code_index;
+        var pipelineStartEvent, stages, execution_code, infos, total_cost, i, index_from_execution, index_from_termination, node, nodeStartEvent, temp_src, src, _i, _Object$entries, _Object$entries$_i, key, notation, value, response, nodeEndEvent, exec_code_index, pipelineEndEvent;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              // dispatch soffosai:pipeline-start event
+              pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {
+                detail: user_input
+              });
+              window.dispatchEvent(pipelineStartEvent);
               if ((0, _type_classifications.isDictObject)(user_input)) {
-                _context.next = 2;
-                break;
-              }
-              throw new Error("Invalid user input.");
-            case 2:
-              if ("user" in user_input) {
                 _context.next = 4;
                 break;
               }
-              throw new ReferenceError("'user' is not defined in user_input.");
+              throw new Error("Invalid user input.");
             case 4:
+              if ("user" in user_input) {
+                _context.next = 6;
+                break;
+              }
+              throw new ReferenceError("'user' is not defined in user_input.");
+            case 6:
               if ("text" in user_input) {
                 user_input.document_text = this._input.text;
               }
@@ -118,32 +123,32 @@ var Pipeline = /*#__PURE__*/function () {
               }
               execution_code = user_input.execution_code;
               if (!(execution_code != null && execution_code != undefined)) {
-                _context.next = 15;
+                _context.next = 17;
                 break;
               }
               execution_code = this.apiKey + execution_code;
               if (!this._execution_codes.includes(execution_code)) {
-                _context.next = 14;
+                _context.next = 16;
                 break;
               }
               return _context.abrupt("return", {
                 "error": "You are still using this execution code in a current pipeline run."
               });
-            case 14:
+            case 16:
               this._execution_codes.push(execution_code);
-            case 15:
+            case 17:
               infos = {};
               this.validate_pipeline(user_input, stages);
               infos.user_input = user_input;
               total_cost = 0.00; // Execute per stage:
               i = 0;
-            case 20:
+            case 22:
               if (!(i < stages.length)) {
-                _context.next = 66;
+                _context.next = 72;
                 break;
               }
               if (!this._termination_codes.includes(execution_code)) {
-                _context.next = 29;
+                _context.next = 31;
                 break;
               }
               // remove the execution code from both termination codes and execution codes
@@ -160,76 +165,86 @@ var Pipeline = /*#__PURE__*/function () {
               infos.total_call_cost = total_cost;
               infos.warning = "This Soffos Pipeline run is prematurely terminated.";
               return _context.abrupt("return", infos);
-            case 29:
+            case 31:
               node = stages[i];
               console.log("Running ".concat(node.service._service));
+              // dispatch nodeStartEvent
+              nodeStartEvent = new CustomEvent("soffosai:node-start", {
+                detail: response_data
+              });
+              window.dispatchEvent(nodeStartEvent);
               temp_src = node.source;
               src = {};
               _i = 0, _Object$entries = Object.entries(temp_src);
-            case 34:
+            case 38:
               if (!(_i < _Object$entries.length)) {
-                _context.next = 53;
+                _context.next = 57;
                 break;
               }
               _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
               if (!(0, _type_classifications.isDictObject)(notation)) {
-                _context.next = 49;
+                _context.next = 53;
                 break;
               }
               // value is a reference to a node or user input
               value = infos[notation.source][notation.field];
               if (!("pre_process" in notation)) {
-                _context.next = 46;
+                _context.next = 50;
                 break;
               }
               if (!(notation.pre_process instanceof Function)) {
-                _context.next = 43;
+                _context.next = 47;
                 break;
               }
               src[key] = notation.pre_process(value);
-              _context.next = 44;
+              _context.next = 48;
               break;
-            case 43:
+            case 47:
               throw new Error("pre_process value is not a function");
-            case 44:
-              _context.next = 47;
+            case 48:
+              _context.next = 51;
               break;
-            case 46:
+            case 50:
               // no pre-processing required
               src[key] = value;
-            case 47:
-              _context.next = 50;
-              break;
-            case 49:
-              // notation is a constant
-              src[key] = notation;
-            case 50:
-              _i++;
-              _context.next = 34;
+            case 51:
+              _context.next = 54;
               break;
             case 53:
+              // notation is a constant
+              src[key] = notation;
+            case 54:
+              _i++;
+              _context.next = 38;
+              break;
+            case 57:
               if (!('user' in src)) {
                 src.user = user_input.user;
               }
               src.apiKey = this.apiKey;
-              _context.next = 57;
+              _context.next = 61;
               return node.service.getResponse(src);
-            case 57:
+            case 61:
               response = _context.sent;
               if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 60;
+                _context.next = 64;
                 break;
               }
               throw new Error(response);
-            case 60:
+            case 64:
+              // dispatch nodeStartEvent
+              nodeEndEvent = new CustomEvent("soffosai:node-end", {
+                detail: response
+              });
+              window.dispatchEvent(nodeEndEvent);
               console.log("Response ready for ".concat(node.service._service));
               infos[node.name] = response;
               total_cost += response.cost.total_cost;
-            case 63:
+            case 69:
               i++;
-              _context.next = 20;
+              _context.next = 22;
               break;
-            case 66:
+            case 72:
               infos.total_call_cost = total_cost;
 
               // remove the execution code from the execution_codes in effect Array.
@@ -237,8 +252,13 @@ var Pipeline = /*#__PURE__*/function () {
               if (exec_code_index > -1) {
                 this._execution_codes.splice(exec_code_index, 1);
               }
+              // dispatch soffosai:pipeline-end event
+              pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
+                detail: response_data
+              });
+              window.dispatchEvent(pipelineEndEvent);
               return _context.abrupt("return", infos);
-            case 70:
+            case 78:
             case "end":
               return _context.stop();
           }
@@ -274,7 +294,6 @@ var Pipeline = /*#__PURE__*/function () {
         // check if required fields are present: already solved by making the node subclasses.
 
         // check if require_one_of_choices is present and not more than one
-        // code here
         var serviceio = stage.service._serviceio;
         if (serviceio.require_one_of_choices.length > 0) {
           var groupErrors = [];
@@ -317,21 +336,23 @@ var Pipeline = /*#__PURE__*/function () {
             if (reference_node_name == "user_input") {
               var input_datatype = (0, _type_classifications.get_userinput_datatype)(user_input[required_key]);
               if (required_data_type != input_datatype) {
-                throw new TypeError("On ".concat(stage.name, " node: ").concat(required_data_type, " required on user_input '").concat(required_key, "' field but ").concat(input_datatype, " is provided."));
+                error_messages.push("On ".concat(stage.name, " node: ").concat(required_data_type, " required on user_input '").concat(required_key, "' field but ").concat(input_datatype, " is provided."));
               }
             } else {
+              var source_node_found = false;
               var _iterator3 = _createForOfIteratorHelper(stages),
                 _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                   var subnode = _step3.value;
                   if (reference_node_name == subnode.name) {
+                    source_node_found = true;
                     var output_datatype = (0, _type_classifications.get_serviceio_datatype)(subnode.service._serviceio.output_structure[required_key]);
                     if (output_datatype == 'null') {
-                      throw new TypeError("On ".concat(stage.name, " node: the reference node '").concat(reference_node_name, "' does not have ").concat(required_key, " key on its output."));
+                      error_messages.push("On ".concat(stage.name, " node: the reference node '").concat(reference_node_name, "' does not have ").concat(required_key, " key on its output."));
                     }
                     if (required_data_type != output_datatype) {
-                      throw new TypeError("On ".concat(stage.name, " node: The input datatype required for field ").concat(key, " is ").concat(required_data_type, ". This does not match the datatype to be given by node ").concat(subnode.name, "'s ").concat(notation.field, " field which is ").concat(output_datatype, "."));
+                      error_messages.push("On ".concat(stage.name, " node: The input datatype required for field ").concat(key, " is ").concat(required_data_type, ". This does not match the datatype to be given by node ").concat(subnode.name, "'s ").concat(notation.field, " field which is ").concat(output_datatype, "."));
                     }
                     break;
                   }
@@ -341,12 +362,15 @@ var Pipeline = /*#__PURE__*/function () {
               } finally {
                 _iterator3.f();
               }
+              if (!source_node_found) {
+                error_messages.push("Node '".concat(reference_node_name, "' is not found."));
+              }
             }
           } else {
             if ((0, _type_classifications.get_userinput_datatype)(notation) == required_data_type) {
               stage.service._payload[key] = notation;
             } else {
-              throw new TypeError("On ".concat(stage.name, " node: ").concat(key, " requires ").concat(required_data_type, " but ").concat(_typeof(notation), " is provided."));
+              error_messages.push("On ".concat(stage.name, " node: ").concat(key, " requires ").concat(required_data_type, " but ").concat(_typeof(notation), " is provided."));
             }
           }
 
@@ -357,7 +381,7 @@ var Pipeline = /*#__PURE__*/function () {
         _loop();
       }
       if (error_messages.length != 0) {
-        throw new Error(error_messages);
+        throw new Error(",".join(error_messages));
       }
       return true;
     }
