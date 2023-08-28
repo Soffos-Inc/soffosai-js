@@ -26,8 +26,12 @@ class ServiceIO {
     }
   }
 
-  get output_fields() {
+  get_output_fields() {
     return this._output_fields;
+  }
+
+  special_validation(payload) {
+    return [true, null]
   }
 }
 

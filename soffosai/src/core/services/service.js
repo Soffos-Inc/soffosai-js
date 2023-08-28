@@ -67,21 +67,21 @@ class SoffosAIService {
     /**
      * Checks if the input type is allowed for the service
      */
-    validatePayload() {
+    async validatePayload(payload) {
         
-        if (!isDictObject(this._payload)) {
+        if (!isDictObject(payload)) {
           throw new TypeError("payload should be an object");
         }
-      
+
         // Check for missing arguments
-        const userFromSrc = this._payload.user;
+        const userFromSrc = payload.user;
         if (!userFromSrc) {
           return [false, `${this._service}: user key is required in the payload`];
         }
       
         if (this._serviceio.required_input_fields.length > 0) {
           const missingRequirements = this._serviceio.required_input_fields.filter(
-            (required) => !(required in this._payload)
+            (required) => !(required in payload)
           );
 
           if (missingRequirements.length > 0) {
@@ -92,11 +92,19 @@ class SoffosAIService {
             ];
           }
         }
-      
+
+        let groupErrors = [];
+
+        let special_validation = this._serviceio.special_validation(payload);
+        let special_validation_passed = special_validation[0];
+        let special_validation_error_message = special_validation[1];
+        if (!special_validation_passed) {
+          groupErrors.push(special_validation_error_message);
+        }
+
         if (this._serviceio.require_one_of_choices.length > 0) {
-          const groupErrors = [];
           for (const group of this._serviceio.require_one_of_choices) {
-            const foundChoices = group.filter((choice) => choice in this._payload);
+            const foundChoices = group.filter((choice) => choice in payload);
             if (foundChoices.length === 0) {
               groupErrors.push(
                 `${this._service}: Please provide one of these values on your payload: ${group}`
@@ -107,16 +115,16 @@ class SoffosAIService {
               );
             }
           }
-      
-          if (groupErrors.length > 0) {
-            return [false, groupErrors];
-          }
+        
+        if (groupErrors.length > 0) {
+          return [false, groupErrors];
+        }
         }
       
         // Check if payload has proper types
         const inputStructure = this._serviceio.input_structure;
         const valueErrors = [];
-        for (const [key, value] of Object.entries(this._payload)) {
+        for (const [key, value] of Object.entries(payload)) {
           if (key in inputStructure && key != 'file') {
             const serviceioType = get_serviceio_datatype(inputStructure[key]);
             const inputType = get_userinput_datatype(value);
@@ -131,8 +139,8 @@ class SoffosAIService {
           return [false, valueErrors];
         }
       
-        if ("document_ids" in this._payload) {
-          const documentIds = this._payload.document_ids;
+        if ("document_ids" in payload) {
+          const documentIds = payload.document_ids;
           if (Array.isArray(documentIds)) {
             for (const _id of documentIds) {
               const validUuid = isValidUuid(_id);
@@ -166,9 +174,10 @@ class SoffosAIService {
         // the apiKey can also be a part of the payload.  This is usefull when defining apiKey in the pipeline.
         if ("apiKey" in payload) {
           this._apikey = payload.apiKey;
+          delete payload.apiKey;
         }
         this._payload = payload;
-        const [allowInput, message] = this.validatePayload();
+        const [allowInput, message] = await this.validatePayload(payload);
         if ("question" in this._payload) {
           // The API receives the question as "message"
           this._payload["message"] = this._payload["question"];
@@ -181,19 +190,22 @@ class SoffosAIService {
         if (!this._service) {
           throw new Error("Please provide the service you need from Soffos AI.");
         }
-      
+        
+        const data = this.getData();
+        // dispatch soffosai:on-request event
+        const onRequestEvent = new CustomEvent("soffosai:on-request", {detail: data});
+        window.dispatchEvent(onRequestEvent);
+
+        // Call the API
         let response;
         let response_data;
-        const data = this.getData();
         const url = SOFFOS_SERVICE_URL + this._service + "/";
         let headers
-      
         if (!FORM_DATA_REQUIRED.includes(this._service)) {
           headers = {
             "content-type": "application/json",
             "x-api-key": this._apikey
           };
-          // response = await axios.post(url, data,{headers: headers});
           try {
             response = await fetch(
               url, 
@@ -204,6 +216,9 @@ class SoffosAIService {
               }
             );
           } catch (error){
+            // dispatch soffosai:on-service-error event
+            const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
+            window.dispatchEvent(onServiceErorrEvent);
             return {
               error: error,
               response: response
@@ -228,14 +243,19 @@ class SoffosAIService {
               }
             );
           } catch (error) {
+            // dispatch soffosai:on-service-error event
+            const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
+            window.dispatchEvent(onServiceErorrEvent);
             return {
               error: error,
               response: response
             }
           }
         }
-        console.log(response);
         response_data = await response.json();
+        // dispatch soffosai:on-response event
+        const responseEvent = new CustomEvent("soffosai:on-response", {detail: response_data});
+        window.dispatchEvent(responseEvent);
         return response_data;
 
     }

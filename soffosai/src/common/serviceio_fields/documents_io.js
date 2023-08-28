@@ -12,7 +12,8 @@ class DocumentsIngestIO extends ServiceIO {
     this.input_structure = {
       "name": "string",
       "meta": "object",
-      "text": "string"
+      "text": "string",
+      "tagged_elements": ["object", "object"]
     };
     // output_fields = ["success", "document_id"]
     this.output_structure = {
@@ -28,7 +29,7 @@ class DocumentSearchIO extends ServiceIO {
     super();
     this.service = ServiceString.DOCUMENTS_SEARCH;
     this.required_input_fields = [];
-    this.require_one_of_choices = [["document_ids", "query", "filters"]];
+    this.require_one_of_choices = [];
     this.defaults = ["query"];
     this.optional_input_fields = [
       "query", "filters", "document_ids", "top_n_keywords", 
@@ -61,6 +62,23 @@ class DocumentSearchIO extends ServiceIO {
       "text": "string"
     };
   }
+
+  special_validation(payload) {
+    if (!payload.hasOwnProperty('query')) {
+      if (!payload.hasOwnProperty('filters')) {
+        return [False, "If query is not provided, please provide 'filters' argument."]
+      }
+    }
+
+    if (payload.hasOwnProperty('top_n_natural_language')) {
+      if (payload.top_n_natural_language > 0 && !payload.hasOwnProperty('query') && !payload.hasOwnProperty("document_ids")) {
+        return [false, "If document_ids are not defined: query is required if top_n_natural_language is defined and is greater than 0."]
+      }
+    }
+
+    return super.special_validation(payload);
+  }
+
 }
 
 class DocumentDeleteIO extends ServiceIO {

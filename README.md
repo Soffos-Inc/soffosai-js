@@ -64,7 +64,7 @@ let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
 
 //Call the service and print the output:
 let response = await service.call(
-    "client_id",
+    "client_id", // This is the UUID of your clients. The API will accept any string
     "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis. It is the first installment in The Matrix film series...",
     undefined, 5
 )
@@ -322,7 +322,7 @@ const AskFromDocument = new SoffosPipeline(
 );
 
 let input = {
-    "user": "client_id",
+    "user": "client_id", // This is the UUID of your clients. The API will accept any string
     "document_ids": ["1d77babf8164427cad8276ba944e6cbc"],
     "question": "who is Neo?"
 }
@@ -344,3 +344,30 @@ console.log(JSON.stringify(result, null, 2));
 Take note of the difference in names:
 - SoffosPipeline is the pipeline Superclass while:
 - SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.Pipeline.
+
+
+## Events
+- Events are being generated on service, node, and pipeline key operations. These events are:
+```
+"soffosai:on-request" - dispatched when a http request is sent to Soffosai API,
+"soffosai:on-response" - dispatched when a http response is received,
+"soffosai:node-start" - dispatched when a node is run,
+"soffosai:node-end" - dispatched when a node receives a response,
+"soffosai:pipeline-start" - dispatched when a pipeline starts to run,
+"soffosai:pipeline-end" - dispatched when the pipeline run ended with success,
+"soffosai:on-service-error" -  dispatched when there is an error on the http request
+```
+
+- This events can be caught by:
+```
+window.addEventListener("<event name>", <function or arror function>);
+```
+
+- Example:
+```
+async function captureOnRequest (e) {
+    console.log(e.detail);
+}
+
+window.addEventListener("soffosai:on-request", captureOnRequest);
+```

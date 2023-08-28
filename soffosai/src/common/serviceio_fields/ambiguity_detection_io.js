@@ -22,6 +22,7 @@ class AmbiguityDetectionIO extends ServiceIO {
       }
     };
   }
+
 }
 
 export default AmbiguityDetectionIO;

@@ -5,14 +5,14 @@ import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.js";
 
 
 /**
- * A controller for consuming multiple Services called stages.
- * It validates all inputs of all stages before sending the first Soffos API request to ensure
+ * A controller for consuming multiple Services called Nodes.
+ * It validates all inputs of all Nodes before sending the first Soffos API request to ensure
  * that the Pipeline will not waste credits.
  * 
- * ** use_defaults=True means that stages will take input from the previous stages' 
- * output of the same field name prioritizing the latest stage's output. 
- * If the previous stages does not have it, it will take from the
- * pipeline's user_input.  Also, the stages will only be supplied with the required fields + default
+ * ** use_defaults=True means that Nodes will take input from the previous Nodes' 
+ * output of the same field name prioritizing the latest Node's output. 
+ * If the previous Nodes does not have it, it will take from the
+ * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
  * of the require_one_of_choices fields.
  */
 class Pipeline {
@@ -57,6 +57,9 @@ class Pipeline {
      * @returns 
      */
     async run(user_input) {
+        // dispatch soffosai:pipeline-start event
+        const pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {detail: user_input});
+        window.dispatchEvent(pipelineStartEvent);
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -112,6 +115,9 @@ class Pipeline {
 
             let node = stages[i];
             console.log(`Running ${node.service._service}`);
+            // dispatch nodeStartEvent
+            const nodeStartEvent = new CustomEvent("soffosai:node-start", {detail: response_data});
+            window.dispatchEvent(nodeStartEvent);
             let temp_src = node.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
@@ -140,6 +146,10 @@ class Pipeline {
             if ("error" in response || !isDictObject(response)) {
                 throw new Error(response);
             }
+
+            // dispatch nodeStartEvent
+            const nodeEndEvent = new CustomEvent("soffosai:node-end", {detail: response});
+            window.dispatchEvent(nodeEndEvent);
             
             console.log(`Response ready for ${node.service._service}`);
             infos[node.name] = response;
@@ -152,6 +162,9 @@ class Pipeline {
         if (exec_code_index > -1){
             this._execution_codes.splice(exec_code_index,1);
         }
+        // dispatch soffosai:pipeline-end event
+        const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: response_data});
+        window.dispatchEvent(pipelineEndEvent);
         
         return infos
     }
@@ -181,7 +194,6 @@ class Pipeline {
             // check if required fields are present: already solved by making the node subclasses.
 
             // check if require_one_of_choices is present and not more than one
-            // code here
             let serviceio = stage.service._serviceio;
             if (serviceio.require_one_of_choices.length > 0) {
                 const groupErrors = [];
@@ -216,20 +228,25 @@ class Pipeline {
                     if (reference_node_name == "user_input") {
                         let input_datatype = get_userinput_datatype(user_input[required_key])
                         if (required_data_type != input_datatype) {
-                            throw new TypeError(`On ${stage.name} node: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
+                            error_messages.push(`On ${stage.name} node: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
                         }
                     } else {
+                        let source_node_found = false;
                         for (let subnode of stages) {
                             if (reference_node_name == subnode.name) {
+                                source_node_found = true;
                                 let output_datatype = get_serviceio_datatype(subnode.service._serviceio.output_structure[required_key]);
                                 if (output_datatype == 'null') {
-                                    throw new TypeError(`On ${stage.name} node: the reference node '${reference_node_name}' does not have ${required_key} key on its output.`);
+                                    error_messages.push(`On ${stage.name} node: the reference node '${reference_node_name}' does not have ${required_key} key on its output.`);
                                 }
                                 if (required_data_type != output_datatype) {
-                                    throw new TypeError(`On ${stage.name} node: The input datatype required for field ${key} is ${required_data_type}. This does not match the datatype to be given by node ${subnode.name}'s ${notation.field} field which is ${output_datatype}.`);
+                                    error_messages.push(`On ${stage.name} node: The input datatype required for field ${key} is ${required_data_type}. This does not match the datatype to be given by node ${subnode.name}'s ${notation.field} field which is ${output_datatype}.`);
                                 }
                                 break;
                             }
+                        }
+                        if (!source_node_found) {
+                            error_messages.push(`Node '${reference_node_name}' is not found.`)
                         }
                     }
                     
@@ -237,7 +254,7 @@ class Pipeline {
                     if (get_userinput_datatype(notation) == required_data_type) {
                         stage.service._payload[key] = notation;
                     } else {
-                        throw new TypeError(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
+                        error_messages.push(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
                     }
                 }
 
@@ -246,7 +263,7 @@ class Pipeline {
         }
     
         if (error_messages.length != 0) {
-            throw new Error(error_messages);
+            throw new Error(",".join(error_messages));
         }
         return true;
     }
