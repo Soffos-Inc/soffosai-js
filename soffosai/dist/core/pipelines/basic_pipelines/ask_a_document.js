@@ -50,13 +50,16 @@ function getContent(value) {
 
 /**
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
+ * @class
+ * @alias SoffosPipelines.AskADocumentPipeline
  */
 var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
   _inherits(AskADocumentPipeline, _Pipeline);
   var _super = _createSuper(AskADocumentPipeline);
   function AskADocumentPipeline() {
     var _this;
-    var kwargs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var kwargs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     _classCallCheck(this, AskADocumentPipeline);
     var d_node = new _index.DocumentsSearchNode("search", null, null, {
       source: "user_input",
@@ -71,12 +74,13 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
       pre_process: getContent
     });
     var nodes = [d_node, qa_node];
-    return _possibleConstructorReturn(_this, _this = _super.call(this, nodes, false, kwargs));
+    return _possibleConstructorReturn(_this, _this = _super.call(this, nodes, false, name, kwargs));
   }
 
   /**
    * Call the pipeline
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Array.<string>} doc_ids 
    * @param {string} question 
    * @param {string} [execution_code=null]

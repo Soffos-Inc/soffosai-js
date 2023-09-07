@@ -971,7 +971,8 @@ declare module 'soffosai' {
         export class AskADocumentPipeline{
             /**
              * Call the pipeline
-             * @param {string} user 
+             * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string[]} doc_ids 
              * @param {string} question 
              * @returns {object}
@@ -985,7 +986,8 @@ declare module 'soffosai' {
         export class FileIngestPipeline{
             /**
              * 
-             * @param {string} user 
+             * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {Blob} file 
              * @param {number} [normalize=0]
              * @returns {object}

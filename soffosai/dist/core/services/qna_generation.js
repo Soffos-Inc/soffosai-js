@@ -44,7 +44,8 @@ var QuestionAndAnswerGenerationService = /*#__PURE__*/function (_SoffosAIService
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text
    * @param {number} [sentence_split=3]
    * @param {boolean} [sentence_overlap=false]
@@ -55,13 +56,13 @@ var QuestionAndAnswerGenerationService = /*#__PURE__*/function (_SoffosAIService
     value: function call(user, text) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text,
         "sentence_split": sentence_split,
         "sentence_overlap": sentence_overlap
       };
-      return _get(_getPrototypeOf(QuestionAndAnswerGenerationService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(QuestionAndAnswerGenerationService.prototype), "call", this).call(this, payload);
     }
   }]);
   return QuestionAndAnswerGenerationService;

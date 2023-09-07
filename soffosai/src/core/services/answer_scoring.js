@@ -15,7 +15,8 @@ class AnswerScoringService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} context
      * @param {string} question
      * @param {string} user_answer
@@ -23,14 +24,14 @@ class AnswerScoringService extends SoffosAIService {
      * @returns {Promise<Object>}
      */
     call(user, context, question, user_answer, answer=null) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "context": context,
         "question": question,
         "user_answer": user_answer,
         "answer": answer
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 

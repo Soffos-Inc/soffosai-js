@@ -1,0 +1,27 @@
+{
+    "tags": {
+      "allowUnknownTags": true,
+      "dictionaries": ["jsdoc"]
+    },
+    "source": {
+      "include": ["./src/core"],
+      "includePattern": ".+\\.js(doc|x)?$",
+      "excludePattern": "(^|\\/|\\\\)_",
+      "exclude": [
+        "./src/core/services/service.js",
+        "./src/core/nodes/node.js"
+      ]
+    },
+    "plugins": [],
+    "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false
+    },
+    "opts": {
+      "readme": "./README.md",
+      "encoding": "utf8",
+      "destination": "./docs/",
+      "recurse": true,
+      "verbose": true
+    }
+  }

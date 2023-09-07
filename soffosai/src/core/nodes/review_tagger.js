@@ -3,6 +3,8 @@ import {ReviewTaggerService} from "../../app.js";
 
 /**
  * A service configuration for ReviewTaggerService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.ReviewTaggerNode
  */
 class ReviewTaggerNode extends Node {
 

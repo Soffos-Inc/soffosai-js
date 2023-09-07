@@ -42,7 +42,8 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} question
    * @param {string} document_text
    * @param {Array.<string>} document_ids
@@ -61,7 +62,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       var check_query_type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
       var generic_response = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
       var meta = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : undefined;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "question": question,
         "document_text": document_text,
@@ -71,8 +72,8 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
         "generic_response": generic_response,
         "meta": meta
       };
-      this._argsDict['message'] = question;
-      return _get(_getPrototypeOf(QuestionAnsweringService.prototype), "call", this).call(this);
+      payload['message'] = question;
+      return _get(_getPrototypeOf(QuestionAnsweringService.prototype), "call", this).call(this, payload);
     }
   }]);
   return QuestionAnsweringService;

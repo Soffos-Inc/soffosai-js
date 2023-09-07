@@ -43,18 +43,19 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} context
    * @returns {Promise<Object>} 
    */
   _createClass(LetsDiscussCreateService, [{
     key: "call",
     value: function call(user, context) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "context": context
       };
-      return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "call", this).call(this, payload);
     }
   }]);
   return LetsDiscussCreateService;
@@ -81,7 +82,8 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} session_id
    * @param {string} query
    * @returns {Promise<Object>} 
@@ -89,12 +91,12 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
   _createClass(LetsDiscussService, [{
     key: "call",
     value: function call(user, session_id, query) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "session_id": session_id,
         "query": query
       };
-      return _get(_getPrototypeOf(LetsDiscussService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(LetsDiscussService.prototype), "call", this).call(this, payload);
     }
   }]);
   return LetsDiscussService;
@@ -121,18 +123,19 @@ var LetsDiscussRetrieveService = /*#__PURE__*/function (_SoffosAIService3) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {boolean} return_messages
    * @returns {Promise<Object>} 
    */
   _createClass(LetsDiscussRetrieveService, [{
     key: "call",
     value: function call(user, return_messages) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "return_messages": return_messages
       };
-      return _get(_getPrototypeOf(LetsDiscussRetrieveService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(LetsDiscussRetrieveService.prototype), "call", this).call(this, payload);
     }
   }]);
   return LetsDiscussRetrieveService;
@@ -159,18 +162,19 @@ var LetsDiscussDeleteService = /*#__PURE__*/function (_SoffosAIService4) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Array.<string>} session_ids
    * @returns {Promise<Object>} 
    */
   _createClass(LetsDiscussDeleteService, [{
     key: "call",
     value: function call(user, session_ids) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "session_ids": session_ids
       };
-      return _get(_getPrototypeOf(LetsDiscussDeleteService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(LetsDiscussDeleteService.prototype), "call", this).call(this, payload);
     }
   }]);
   return LetsDiscussDeleteService;

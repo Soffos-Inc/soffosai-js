@@ -18,16 +18,17 @@ class LetsDiscussCreateService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} context
      * @returns {Promise<Object>} 
      */
     call(user, context) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "context": context
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 
@@ -47,18 +48,19 @@ class LetsDiscussService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} session_id
      * @param {string} query
      * @returns {Promise<Object>} 
      */
     call(user, session_id, query) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "session_id": session_id,
         "query": query
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 
@@ -78,16 +80,17 @@ class LetsDiscussRetrieveService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {boolean} return_messages
      * @returns {Promise<Object>} 
      */
     call(user, return_messages) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "return_messages": return_messages
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 
@@ -107,16 +110,17 @@ class LetsDiscussDeleteService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<string>} session_ids
      * @returns {Promise<Object>} 
      */
     call(user, session_ids) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "session_ids": session_ids
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 

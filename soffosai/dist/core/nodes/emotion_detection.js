@@ -23,6 +23,8 @@ var _EMOTION_LIST = ["joy", "trust", "fear", "surprise", "sadness", "disgust", "
 
 /**
  * A service configuration for EmotionDetectionService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.EmotionDetectionNode
  */
 var EmotionDetectionNode = /*#__PURE__*/function (_Node) {
   _inherits(EmotionDetectionNode, _Node);

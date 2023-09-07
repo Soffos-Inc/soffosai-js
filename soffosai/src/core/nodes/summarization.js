@@ -3,6 +3,8 @@ import {SummarizationService} from "../../app.js";
 
 /**
  * A service configuration for SummarizationService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.SummarizationNode
  */
 class SummarizationNode extends Node {
 

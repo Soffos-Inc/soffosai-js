@@ -16,7 +16,8 @@ class TagGenerationService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text
      * @param {Array.<string>} [types=["topic"]]
      * @param {number} [n=10]
@@ -38,13 +39,13 @@ class TagGenerationService extends SoffosAIService {
                 throw new Error(`${this._service} types argument's elements can only be "topic", "domain", "audience" and/or "entity".`);
             }
         }
-      this._argsDict = {
+      let payload = {
         "user": user,
         "text": text,
         "types": types,
         "n": n
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 

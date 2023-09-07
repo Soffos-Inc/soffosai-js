@@ -21,6 +21,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * A service configuration for TableGeneratorService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.TableGeneratorNode
  */
 var TableGeneratorNode = /*#__PURE__*/function (_Node) {
   _inherits(TableGeneratorNode, _Node);

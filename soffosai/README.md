@@ -206,7 +206,8 @@ export class FileIngestPipeline extends SoffosPipeline {
 
     /*
      * Create your own "call" function so you can create JSDocs and arrange your output data
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} file 
      * @param {number} normalize 
      * @returns {object}

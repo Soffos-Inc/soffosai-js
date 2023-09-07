@@ -3,6 +3,12 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.1.5 
+- bug fixes on events
+- costs per service format in a pipeline inside a pipeline
+- documentation updates
+
+
 ## 0.1.4
 - added special validation on serviceio
 - added events: soffosai:on-request, soffosai:on-response, soffosai:on-service-error, soffosai:pipeline-start, soffosai:pipeline-end

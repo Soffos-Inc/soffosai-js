@@ -3,6 +3,8 @@ import {ProfanityService} from "../../app.js";
 
 /**
  * A service configuration for ProfanityService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.ProfanityNode
  */
 class ProfanityNode extends Node {
 

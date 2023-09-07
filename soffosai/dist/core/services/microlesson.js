@@ -39,7 +39,8 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Array.<object>} content
    * @returns {Promise<Object>} 
    */
@@ -50,12 +51,12 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
       if (content != undefined) {
         this.content = content;
       }
-      this._argsDict = {
+      var payload = {
         "user": user,
         "content": content
       };
-      this._argsDict['content'] = this.content;
-      return _get(_getPrototypeOf(MicrolessonService.prototype), "call", this).call(this);
+      payload['content'] = this.content;
+      return _get(_getPrototypeOf(MicrolessonService.prototype), "call", this).call(this, payload);
     }
 
     /**

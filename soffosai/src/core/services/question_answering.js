@@ -17,7 +17,8 @@ class QuestionAnsweringService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} question
      * @param {string} document_text
      * @param {Array.<string>} document_ids
@@ -29,7 +30,7 @@ class QuestionAnsweringService extends SoffosAIService {
      */
     call(user, question, document_text=undefined, document_ids=undefined, 
         check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {
-        this._argsDict = {
+        let payload = {
           "user": user,
           "question": question,
           "document_text": document_text,
@@ -39,8 +40,8 @@ class QuestionAnsweringService extends SoffosAIService {
           "generic_response": generic_response,
           "meta": meta
         };
-      this._argsDict['message'] = question;
-      return super.call();
+      payload['message'] = question;
+      return super.call(payload);
     }
 }
 

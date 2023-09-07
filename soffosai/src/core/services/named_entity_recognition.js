@@ -16,21 +16,22 @@ class NamedEntityRecognitionService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text
      * @param {Object.<string, string>} labels
      * @returns {Promise<Object>}
      */
     call(user, text, labels=undefined) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "text": text,
         "labels": labels
       };
       if ((labels == undefined) && Object.keys(this.labels).length > 0){
-        this._argsDict['labels'] = this.labels;
+        payload['labels'] = this.labels;
       }
-      return super.call();
+      return super.call(payload);
     }
 
     /**

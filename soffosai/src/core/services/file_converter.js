@@ -14,7 +14,8 @@ class FileConverterService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Blob} file
      * @param {number} [normalize=0] 
      * @returns {Promise<Object>}
@@ -24,12 +25,12 @@ class FileConverterService extends SoffosAIService {
             throw new Error(`${this._service}: normalize can only accept a value of 0 or 1;`);
         }
 
-        this._argsDict = {
+        let payload = {
           user: user,
           file: file,
           normalize:normalize
         };
-        return super.call();
+        return super.call(payload);
     }
 }
 

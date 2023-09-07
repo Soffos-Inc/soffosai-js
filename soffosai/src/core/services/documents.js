@@ -15,7 +15,8 @@ class DocumentsIngestService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} document_name
      * @param {string} [text]
      * @param {object} [tagged_elements] 
@@ -23,7 +24,7 @@ class DocumentsIngestService extends SoffosAIService {
      * @returns {Promise<Object>} 
      */
     call(user, document_name, text=null, tagged_elements=null, meta=null) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "document_name": document_name,
         "name": document_name,
@@ -31,7 +32,7 @@ class DocumentsIngestService extends SoffosAIService {
         "tagged_elements": tagged_elements,
         "meta": meta
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 
@@ -47,7 +48,8 @@ class DocumentsSearchService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {object} [query]
      * @param {object} [filters]
      * @param {Array.<string>} [document_ids] 
@@ -60,7 +62,7 @@ class DocumentsSearchService extends SoffosAIService {
     call(user, query=null, filters=null, document_ids=null, top_n_keywords=5,
         top_n_natural_language=5, date_from=null, date_until=null) 
     {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "query": query,
         "filters": filters,
@@ -71,7 +73,7 @@ class DocumentsSearchService extends SoffosAIService {
         "date_until": date_until
       };
 
-      let response = super.call();
+      let response = super.call(payload);
       let text = "";
       if (response.hasOwnProperty('passages')){
         for (let passage of response.passages){
@@ -96,16 +98,17 @@ class DocumentsDeleteService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<string>} [document_ids] 
      * @returns {Promise<Object>} 
      */
     call(user, document_ids) {
-      this._argsDict = {
+      let payload = {
         "user": user,
         "document_ids": document_ids
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 

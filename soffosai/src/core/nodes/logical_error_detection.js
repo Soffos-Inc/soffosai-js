@@ -3,6 +3,8 @@ import {LogicalErrorDetectionService} from "../../app.js";
 
 /**
  * A service configuration for LogicalErrorDetectionService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LogicalErrorDetectionNode
  */
 class LogicalErrorDetectionNode extends Node {
 

@@ -17,9 +17,11 @@ function getContent(value) {
 
 /**
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
+ * @class
+ * @alias SoffosPipelines.AskADocumentPipeline
  */
 export class AskADocumentPipeline extends Pipeline {
-    constructor(kwargs={}){
+    constructor(name=null, kwargs={}){
         let d_node = new DocumentsSearchNode(
                 "search", null, null, {source: "user_input", field: "doc_ids"}
             );
@@ -30,12 +32,13 @@ export class AskADocumentPipeline extends Pipeline {
             );
                 
         let nodes = [d_node, qa_node];
-        return super(nodes, false, kwargs);
+        return super(nodes, false, name, kwargs);
     }
 
     /**
      * Call the pipeline
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<string>} doc_ids 
      * @param {string} question 
      * @param {string} [execution_code=null]

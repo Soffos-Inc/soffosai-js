@@ -21,6 +21,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * A service configuration for LetsDiscussCreateService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussCreateNode
  */
 var LetsDiscussCreateNode = /*#__PURE__*/function (_Node) {
   _inherits(LetsDiscussCreateNode, _Node);
@@ -42,13 +44,16 @@ var LetsDiscussCreateNode = /*#__PURE__*/function (_Node) {
 }(_node.Node);
 /**
  * A service configuration for LetsDiscussService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussNode
  */
 exports.LetsDiscussCreateNode = LetsDiscussCreateNode;
 var LetsDiscussNode = /*#__PURE__*/function (_Node2) {
   _inherits(LetsDiscussNode, _Node2);
   var _super2 = _createSuper(LetsDiscussNode);
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} session_id
    * @param {string} query
    * @returns {Promise<Object>} 
@@ -67,6 +72,8 @@ var LetsDiscussNode = /*#__PURE__*/function (_Node2) {
 }(_node.Node);
 /**
  * A service configuration for LetsDiscussRetrieveService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussRetrieveNode
  */
 exports.LetsDiscussNode = LetsDiscussNode;
 var LetsDiscussRetrieveNode = /*#__PURE__*/function (_Node3) {
@@ -90,6 +97,8 @@ var LetsDiscussRetrieveNode = /*#__PURE__*/function (_Node3) {
 }(_node.Node);
 /**
  * A service configuration for LetsDiscussDeleteService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussDeleteNode
  */
 exports.LetsDiscussRetrieveNode = LetsDiscussRetrieveNode;
 var LetsDiscussDeleteNode = /*#__PURE__*/function (_Node4) {

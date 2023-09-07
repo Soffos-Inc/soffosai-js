@@ -64,11 +64,11 @@ class DocumentSearchIO extends ServiceIO {
   }
 
   special_validation(payload) {
-    if (!payload.hasOwnProperty('query')) {
-      if (!payload.hasOwnProperty('filters')) {
-        return [False, "If query is not provided, please provide 'filters' argument."]
-      }
-    }
+    // if (!payload.hasOwnProperty('query')) {
+    //   if (!payload.hasOwnProperty('filters')) {
+    //     return [false, "If query is not provided, please provide 'filters' argument."]
+    //   }
+    // }
 
     if (payload.hasOwnProperty('top_n_natural_language')) {
       if (payload.top_n_natural_language > 0 && !payload.hasOwnProperty('query') && !payload.hasOwnProperty("document_ids")) {

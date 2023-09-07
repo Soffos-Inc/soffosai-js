@@ -44,7 +44,8 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text
    * @param {number} sent_length
    * @returns {Promise<Object>} 
@@ -52,12 +53,12 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(SummarizationService, [{
     key: "call",
     value: function call(user, text, sent_length) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text,
         "sent_length": sent_length
       };
-      return _get(_getPrototypeOf(SummarizationService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(SummarizationService.prototype), "call", this).call(this, payload);
     }
   }]);
   return SummarizationService;

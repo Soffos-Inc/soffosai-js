@@ -3,6 +3,8 @@ import {DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService} 
 
 /**
  * A service configuration for Documents Ingest Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsIngestNode
  */
 class DocumentsIngestNode extends Node {
     /**
@@ -28,6 +30,8 @@ class DocumentsIngestNode extends Node {
 
 /**
  * A service configuration for Documents Search Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsSearchNode
  */
 class DocumentsSearchNode extends Node {
     /**
@@ -59,6 +63,8 @@ class DocumentsSearchNode extends Node {
 
 /**
  * A service configuration for DocumentsDeleteService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsDeleteNode
  */
  class DocumentsDeleteNode extends Node {
 

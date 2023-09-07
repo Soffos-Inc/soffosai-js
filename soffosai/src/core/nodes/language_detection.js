@@ -3,6 +3,8 @@ import {LanguageDetectionService} from "../../app.js";
 
 /**
  * A service configuration for LanguageDetectionService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LanguageDetectionNode
  */
 class LanguageDetectionNode extends Node {
 

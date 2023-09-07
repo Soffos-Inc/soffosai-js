@@ -2,19 +2,6 @@ import { Pipeline } from "../pipeline.js";
 import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.js";
 
 
-// function get_filename(path) {
-//     let parts = null;
-//     if (path.includes("/")) {
-//         parts = path.split("/");
-//         return parts.pop();
-//     } else if (path.includes("\\")) {
-//         parts = path.split("\\");
-//         return parts.pop();
-//     } else {
-//         return path;
-//     }
-// }
-
 function get_filename(file) {
     return file.name.split('.')[0];
 }
@@ -22,9 +9,11 @@ function get_filename(file) {
 
 /**
  * Given a file path, upload the file to Soffos and get its reference document_id.
+ * @class
+ * @alias SoffosPipelines.FileIngestPipeline
  */
 export class FileIngestPipeline extends Pipeline {
-    constructor(kwargs={}) {
+    constructor(name=null, kwargs={}) {
         const file_converter = new FileConverterNode(
             "file_converter",
             {
@@ -48,7 +37,7 @@ export class FileIngestPipeline extends Pipeline {
                 field: "text"
             }
         );
-        return super([file_converter, document_ingest], false, kwargs);
+        return super([file_converter, document_ingest], false, name, kwargs);
     }
 
     /**

@@ -3,6 +3,8 @@ import {ContradictionDetectionService} from "../../app.js";
 
 /**
  * A service configuration for Ambiguity Detection Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.ContradictionDetectionNode
  */
 class ContradictionDetectionNode extends Node{
     /**

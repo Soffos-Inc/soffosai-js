@@ -3,6 +3,8 @@ import {TagGenerationService} from "../../app.js";
 
 /**
  * A service configuration for TagGenerationService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.TagGenerationNode
  */
 class TagGenerationNode extends Node {
 

@@ -3,6 +3,8 @@ import {TranscriptCorrectionService} from "../../app.js";
 
 /**
  * A service configuration for TranscriptCorrectionService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.TranscriptCorrectionIO
  */
 class TranscriptCorrectionNode extends Node {
 

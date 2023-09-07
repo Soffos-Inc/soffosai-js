@@ -9,7 +9,7 @@ import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.js";
  * It validates all inputs of all Nodes before sending the first Soffos API request to ensure
  * that the Pipeline will not waste credits.
  * 
- * ** use_defaults=True means that Nodes will take input from the previous Nodes' 
+ * ** use_defaults=true means that Nodes will take input from the previous Nodes' 
  * output of the same field name prioritizing the latest Node's output. 
  * If the previous Nodes does not have it, it will take from the
  * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
@@ -19,16 +19,18 @@ class Pipeline {
     /**
      * @param {Array.<object>} nodes 
      * @param {boolean} [ use_defaults=false ]
+     * @param {string} [name]
      * @param {Object} [ kwargs={} ]
      */
-    constructor (nodes, use_defaults=false, kwargs={}) {
+    constructor (nodes, use_defaults=false, name=null, kwargs={}) {
         const api_key = kwargs.apiKey;
         this.apiKey = apiKey || api_key;
         this._stages = nodes;
+
         this._input = {};
         this._infos = {};
         this._use_defaults = use_defaults;
-        this._execution_codes = [];
+        this._executionCodes = [];
         this._termination_codes = [];
 
         let error_messages = [];
@@ -36,9 +38,15 @@ class Pipeline {
             error_messages.push("stages field should be a list of Service Nodes");
         }
 
-        for (let stage of this._stages) {
-            if (!(stage instanceof Node)) {
-              error_messages.push(`${stage} is not an instance of Node`);
+        let nodeNames = nodes.map(node => node.name);
+
+        for (let node of nodes) {
+            if (!(node instanceof Node) && !(node instanceof Pipeline)) {
+              error_messages.push(`${node} is not an instance of Node`);
+            }
+            let count = nodeNames.filter(n => n === node.name).length;
+            if (count > 1) {
+                error_messages.push(`Node name '${node.name}' is not unique.`)
             }
         }
 
@@ -46,15 +54,14 @@ class Pipeline {
             throw new Error(error_messages.join("\n"));
         }
 
-        this._outputfields = this._stages.map(stage => Object.keys(stage.service._serviceio.output_structure));
-
+        // when the pipeline is used as a Node, it needs a name
+        this.name = name;
     }
 
     /**
      * Run the Pipeline
-     * @param {object} user_input 
-     * @param {string} [execution_code=null]
-     * @returns 
+     * @param {object} user_input - The object that holds the input information including executionCode if needed.
+     * @returns {object} The response object from soffosai.
      */
     async run(user_input) {
         // dispatch soffosai:pipeline-start event
@@ -79,30 +86,30 @@ class Pipeline {
         } else {
             stages = this._stages;
         }
-        let execution_code = user_input.execution_code;
-        if (execution_code != null && execution_code != undefined) {
-            execution_code = this.apiKey + execution_code;
-            if (this._execution_codes.includes(execution_code)) {
+        let executionCode = user_input.executionCode;
+        if (executionCode != null && executionCode != undefined) {
+            executionCode = this.apiKey + executionCode;
+            if (this._executionCodes.includes(executionCode)) {
                 return {"error": "You are still using this execution code in a current pipeline run."}
             } else {
-                this._execution_codes.push(execution_code);
+                this._executionCodes.push(executionCode);
             }
         }
 
         let infos = {};
-        this.validate_pipeline(user_input, stages);
+        this.validate_pipeline(stages, user_input);
         infos.user_input = user_input;
         let total_cost = 0.00;
         // Execute per stage:
         for (let i = 0; i < stages.length; i++) {
             // Before running the node, check if a termination request is present:
-            if (this._termination_codes.includes(execution_code)) {
+            if (this._termination_codes.includes(executionCode)) {
                 // remove the execution code from both termination codes and execution codes
-                let index_from_execution = this._execution_codes.indexOf(execution_code);
+                let index_from_execution = this._executionCodes.indexOf(executionCode);
                 if (index_from_execution > -1 ) {
-                    this._execution_codes.splice(index_from_execution, 1);
+                    this._executionCodes.splice(index_from_execution, 1);
                 }
-                let index_from_termination = this._termination_codes.indexOf(execution_code);
+                let index_from_termination = this._termination_codes.indexOf(executionCode);
                 if (index_from_termination > -1) {
                     this._termination_codes.splice(index_from_termination, 1);
                 }
@@ -113,12 +120,40 @@ class Pipeline {
                 return infos;
             }
 
-            let node = stages[i];
-            console.log(`Running ${node.service._service}`);
+            let stage = stages[i];
+            console.log(`Running ${stage.name}`);
+
+            if (stage instanceof Pipeline) {
+                let response = await stage.run(user_input);
+                console.log(`Response ready for ${stage.name}.`);
+                let pipeOutput = {};
+                pipeOutput.costs = {};
+                for (let key in response) {
+                    if (key !== 'total_call_cost') {
+                        for (let subkey in response[key]) {
+                            if (subkey == 'cost') {
+                                pipeOutput['costs'][key] = response[key][subkey];
+                            } else if (subkey == 'charged_character_count') {
+                                pipeOutput['costs'][key]['charged_character_count'] = response[key][subkey]
+                            } else if (subkey == 'unit_price'){
+                                pipeOutput['costs'][key]['unit_price'] = response[key][subkey]
+                            } else {
+                                pipeOutput[subkey] = response[key][subkey];
+                            }
+                        }
+                    } 
+                    else {
+                        total_cost += response[key];
+                    }
+                }
+                infos[stage.name] = pipeOutput;
+                continue;
+            }
+
             // dispatch nodeStartEvent
-            const nodeStartEvent = new CustomEvent("soffosai:node-start", {detail: response_data});
+            const nodeStartEvent = new CustomEvent("soffosai:node-start", {detail: stage.source});
             window.dispatchEvent(nodeStartEvent);
-            let temp_src = node.source;
+            let temp_src = stage.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
                 if (isDictObject(notation)) { // value is a reference to a node or user input
@@ -127,7 +162,7 @@ class Pipeline {
                         if (notation.pre_process instanceof Function) {
                             src[key] = notation.pre_process(value);
                         } else {
-                            throw new Error("pre_process value is not a function");
+                            throw new Error("pre_process value should be a function");
                         }
                     } else { // no pre-processing required
                         src[key] = value;
@@ -142,7 +177,7 @@ class Pipeline {
             }
             src.apiKey = this.apiKey;
 
-            let response = await node.service.getResponse(src);
+            let response = await stage.service.getResponse(src);
             if ("error" in response || !isDictObject(response)) {
                 throw new Error(response);
             }
@@ -151,19 +186,19 @@ class Pipeline {
             const nodeEndEvent = new CustomEvent("soffosai:node-end", {detail: response});
             window.dispatchEvent(nodeEndEvent);
             
-            console.log(`Response ready for ${node.service._service}`);
-            infos[node.name] = response;
+            console.log(`Response ready for ${stage.name}`);
+            infos[stage.name] = response;
             total_cost += response.cost.total_cost;
         }
         infos.total_call_cost = total_cost;
 
-        // remove the execution code from the execution_codes in effect Array.
-        const exec_code_index = this._execution_codes.indexOf(execution_code);
+        // remove the execution code from the executionCodes in effect Array.
+        const exec_code_index = this._executionCodes.indexOf(executionCode);
         if (exec_code_index > -1){
-            this._execution_codes.splice(exec_code_index,1);
+            this._executionCodes.splice(exec_code_index,1);
         }
         // dispatch soffosai:pipeline-end event
-        const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: response_data});
+        const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: infos});
         window.dispatchEvent(pipelineEndEvent);
         
         return infos
@@ -177,18 +212,26 @@ class Pipeline {
      * @param {Node} stages 
      * @returns 
      */
-    validate_pipeline(user_input, stages) {
+    validate_pipeline(stages, user_input) {
         /*
         Before running the first service, the Pipeline will validate all nodes if they will all be
         executed successfully with the exception of database and server issues.
         */
         let error_messages = [];
     
-        //  The first available keys are of the source
-        this._outputfields.unshift(Object.keys(user_input));
-    
         for(let i = 0; i < stages.length; i++) {
             let stage = stages[i];
+
+            let sub_pipe_stages
+            if (stage instanceof Pipeline) {
+                if (stage._use_defaults) {
+                    sub_pipe_stages = stage.setDefaults(stage._stages, user_input)
+                } else {
+                    sub_pipe_stages = stage._stages
+                }
+                stage.validate_pipeline(sub_pipe_stages, user_input)
+                continue;
+            }   
             // stage: Node to be validated
 
             // check if required fields are present: already solved by making the node subclasses.
@@ -235,6 +278,9 @@ class Pipeline {
                         for (let subnode of stages) {
                             if (reference_node_name == subnode.name) {
                                 source_node_found = true;
+                                if (subnode instanceof Pipeline) {
+                                    break;
+                                }
                                 let output_datatype = get_serviceio_datatype(subnode.service._serviceio.output_structure[required_key]);
                                 if (output_datatype == 'null') {
                                     error_messages.push(`On ${stage.name} node: the reference node '${reference_node_name}' does not have ${required_key} key on its output.`);
@@ -257,13 +303,11 @@ class Pipeline {
                         error_messages.push(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
                     }
                 }
-
-                // check datatype here
             }
         }
     
         if (error_messages.length != 0) {
-            throw new Error(",".join(error_messages));
+            throw new Error(error_messages.join(","));
         }
         return true;
     }
@@ -273,7 +317,7 @@ class Pipeline {
      * @param {Node} node 
      */
     add_node(node) {
-        if (node instanceof Node){
+        if ((node instanceof Node) || (node instanceof Pipeline)){
             this._stages.push(node);
         } else {
             throw new Error(`${node} is not a Node instance.`)
@@ -291,6 +335,9 @@ class Pipeline {
 
         for (let i=0; i<stages.length; i++) {
             const stage = stages[i];
+            if (stage instanceof Pipeline) {
+                continue;
+            }
             let stage_source = {};
             // enumerate the required inputs of this stage
             let required_keys= stage.service._serviceio.required_input_fields
@@ -325,21 +372,21 @@ class Pipeline {
                         found_input = true;
                     }
                     // special considerations
-                    if (required_key == "context" && "text" in stage_for_output_output_fields) {
+                    else if (required_key == "context" && "text" in stage_for_output_output_fields) {
                         stage_source.context = {
                             source: stage_for_output.name,
                             field: "text"
                         };
                         found_input = true;
                     }
-                    if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
+                    else if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
                         stage_source.document_text = {
                             source: stage_for_output.name,
                             field: "text"
                         };
                         found_input = true;
                     }
-                    if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
+                    else if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
                         stage_source.document_ids = {
                             source: stage_for_output.name,
                             field: "document_id",

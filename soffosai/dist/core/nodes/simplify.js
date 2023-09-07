@@ -21,6 +21,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * A service configuration for SimplifyService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.SimplifyNode
  */
 var SimplifyNode = /*#__PURE__*/function (_Node) {
   _inherits(SimplifyNode, _Node);

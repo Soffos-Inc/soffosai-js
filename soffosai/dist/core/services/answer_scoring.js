@@ -40,7 +40,8 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} context
    * @param {string} question
    * @param {string} user_answer
@@ -51,14 +52,14 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
     key: "call",
     value: function call(user, context, question, user_answer) {
       var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "context": context,
         "question": question,
         "user_answer": user_answer,
         "answer": answer
       };
-      return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this, payload);
     }
   }]);
   return AnswerScoringService;

@@ -43,7 +43,8 @@ var TableGeneratorService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text
    * @param {string} [table_format="markdown"]
    * @returns {Promise<Object>} 
@@ -55,12 +56,12 @@ var TableGeneratorService = /*#__PURE__*/function (_SoffosAIService) {
       if (!TABLE_FORMATS.includes(table_format)) {
         throw new Error("".concat(table_format, " is not a supported format. Please choose from ").concat(TABLE_FORMATS, "."));
       }
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text,
         "table_format": table_format
       };
-      return _get(_getPrototypeOf(TableGeneratorService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(TableGeneratorService.prototype), "call", this).call(this, payload);
     }
   }]);
   return TableGeneratorService;

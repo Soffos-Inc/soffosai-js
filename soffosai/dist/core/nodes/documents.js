@@ -21,6 +21,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * A service configuration for Documents Ingest Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsIngestNode
  */
 var DocumentsIngestNode = /*#__PURE__*/function (_Node) {
   _inherits(DocumentsIngestNode, _Node);
@@ -52,6 +54,8 @@ var DocumentsIngestNode = /*#__PURE__*/function (_Node) {
 }(_node.Node);
 /**
  * A service configuration for Documents Search Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsSearchNode
  */
 exports.DocumentsIngestNode = DocumentsIngestNode;
 var DocumentsSearchNode = /*#__PURE__*/function (_Node2) {
@@ -92,6 +96,8 @@ var DocumentsSearchNode = /*#__PURE__*/function (_Node2) {
 }(_node.Node);
 /**
  * A service configuration for DocumentsDeleteService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.DocumentsDeleteNode
  */
 exports.DocumentsSearchNode = DocumentsSearchNode;
 var DocumentsDeleteNode = /*#__PURE__*/function (_Node3) {

@@ -3,6 +3,8 @@ import {LetsDiscussCreateService, LetsDiscussService, LetsDiscussRetrieveService
 
 /**
  * A service configuration for LetsDiscussCreateService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussCreateNode
  */
 class LetsDiscussCreateNode extends Node {
 
@@ -22,11 +24,14 @@ class LetsDiscussCreateNode extends Node {
 
 /**
  * A service configuration for LetsDiscussService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussNode
  */
  class LetsDiscussNode extends Node {
 
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} session_id
      * @param {string} query
      * @returns {Promise<Object>} 
@@ -44,6 +49,8 @@ class LetsDiscussCreateNode extends Node {
 
 /**
  * A service configuration for LetsDiscussRetrieveService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussRetrieveNode
  */
  class LetsDiscussRetrieveNode extends Node {
 
@@ -63,6 +70,8 @@ class LetsDiscussCreateNode extends Node {
 
 /**
  * A service configuration for LetsDiscussDeleteService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.LetsDiscussDeleteNode
  */
  class LetsDiscussDeleteNode extends Node {
 

@@ -41,8 +41,8 @@ function isValidUuid(uuidString) {
  */
 class SoffosAIService {
   /**
-   * @param {string} service 
-   * @param {Object} kwargs 
+   * @param {string} service - The name of the Soffos Service
+   * @param {Object} kwargs  - holds additional properties for the Service like apiKey.
    */
     constructor(service, kwargs = {}) {
       const apikey = kwargs.apiKey;
@@ -51,9 +51,8 @@ class SoffosAIService {
       };
       this._apikey = this.headers["x-api-key"];
       this._service = service;
+      // In a pipeline, some payload properties are constants and should be related to the Service's instance
       this._payload = {};
-      this._payload_keys = Object.keys(this._payload);
-      this._args_dict = {};
     }
 
     /**
@@ -65,7 +64,10 @@ class SoffosAIService {
       }
 
     /**
-     * Checks if the input type is allowed for the service
+     * Prefetch validation algorithm before the API is actually accessed. Saves time and credits.
+     * @param {object} payload         - The data that will be sent to the Soffos API for interpretation and response
+     * @returns {Array<boolean,Array>} - The first element of the return value is the status of the validation: true if valid else false. 
+     *                                   The second element is the list of errors. null if there are no errors
      */
     async validatePayload(payload) {
         
@@ -156,11 +158,11 @@ class SoffosAIService {
     
     /**
      * Prepare the JSON or form data input of the service
-     * Will be used when there is a special handling needed for an element of this._payload
+     * Will be used when there is a special handling needed for an element of the payload
      */
-    getData() {
+    getData(payload) {
         const requestData = {};
-        for (const [key, value] of Object.entries(this._payload)) {
+        for (const [key, value] of Object.entries(payload)) {
             requestData[key] = value;
         }
       
@@ -169,18 +171,18 @@ class SoffosAIService {
 
     /**
      * Based on the knowledge/context, Soffos AI will now give you the data you need
+     * @param {object} payload - the payload to be supplied into the fetch request
      */
-    async getResponse(payload = {}) {
+    async getResponse(payload = {}, kwargs={}) {
         // the apiKey can also be a part of the payload.  This is usefull when defining apiKey in the pipeline.
         if ("apiKey" in payload) {
           this._apikey = payload.apiKey;
           delete payload.apiKey;
         }
-        this._payload = payload;
         const [allowInput, message] = await this.validatePayload(payload);
-        if ("question" in this._payload) {
+        if ("question" in payload) {
           // The API receives the question as "message"
-          this._payload["message"] = this._payload["question"];
+          payload["message"] = payload["question"];
         }
       
         if (!allowInput) {
@@ -191,7 +193,7 @@ class SoffosAIService {
           throw new Error("Please provide the service you need from Soffos AI.");
         }
         
-        const data = this.getData();
+        const data = this.getData(payload);
         // dispatch soffosai:on-request event
         const onRequestEvent = new CustomEvent("soffosai:on-request", {detail: data});
         window.dispatchEvent(onRequestEvent);
@@ -265,8 +267,8 @@ class SoffosAIService {
      * @param {object} kwargs 
      * @returns {object}
      */
-    call(kwargs = {}) {
-        return this.getResponse({ ...this._argsDict, ...kwargs });
+    call(payload, kwargs = {}) {
+        return this.getResponse(payload, kwargs);
     }
       
     toString() {

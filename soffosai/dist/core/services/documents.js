@@ -43,7 +43,8 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} document_name
    * @param {string} [text]
    * @param {object} [tagged_elements] 
@@ -56,7 +57,7 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
       var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var tagged_elements = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var meta = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "document_name": document_name,
         "name": document_name,
@@ -64,7 +65,7 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
         "tagged_elements": tagged_elements,
         "meta": meta
       };
-      return _get(_getPrototypeOf(DocumentsIngestService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(DocumentsIngestService.prototype), "call", this).call(this, payload);
     }
   }]);
   return DocumentsIngestService;
@@ -87,7 +88,8 @@ var DocumentsSearchService = /*#__PURE__*/function (_SoffosAIService2) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {object} [query]
    * @param {object} [filters]
    * @param {Array.<string>} [document_ids] 
@@ -107,7 +109,7 @@ var DocumentsSearchService = /*#__PURE__*/function (_SoffosAIService2) {
       var top_n_natural_language = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 5;
       var date_from = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var date_until = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "query": query,
         "filters": filters,
@@ -117,7 +119,7 @@ var DocumentsSearchService = /*#__PURE__*/function (_SoffosAIService2) {
         "date_from": date_from,
         "date_until": date_until
       };
-      var response = _get(_getPrototypeOf(DocumentsSearchService.prototype), "call", this).call(this);
+      var response = _get(_getPrototypeOf(DocumentsSearchService.prototype), "call", this).call(this, payload);
       var text = "";
       if (response.hasOwnProperty('passages')) {
         var _iterator = _createForOfIteratorHelper(response.passages),
@@ -157,18 +159,19 @@ var DocumentsDeleteService = /*#__PURE__*/function (_SoffosAIService3) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Array.<string>} [document_ids] 
    * @returns {Promise<Object>} 
    */
   _createClass(DocumentsDeleteService, [{
     key: "call",
     value: function call(user, document_ids) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "document_ids": document_ids
       };
-      return _get(_getPrototypeOf(DocumentsDeleteService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(DocumentsDeleteService.prototype), "call", this).call(this, payload);
     }
   }]);
   return DocumentsDeleteService;

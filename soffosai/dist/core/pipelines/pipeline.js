@@ -29,7 +29,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
  * It validates all inputs of all Nodes before sending the first Soffos API request to ensure
  * that the Pipeline will not waste credits.
  * 
- * ** use_defaults=True means that Nodes will take input from the previous Nodes' 
+ * ** use_defaults=true means that Nodes will take input from the previous Nodes' 
  * output of the same field name prioritizing the latest Node's output. 
  * If the previous Nodes does not have it, it will take from the
  * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
@@ -39,11 +39,13 @@ var Pipeline = /*#__PURE__*/function () {
   /**
    * @param {Array.<object>} nodes 
    * @param {boolean} [ use_defaults=false ]
+   * @param {string} [name]
    * @param {Object} [ kwargs={} ]
    */
   function Pipeline(nodes) {
     var use_defaults = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var kwargs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var kwargs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     _classCallCheck(this, Pipeline);
     var api_key = kwargs.apiKey;
     this.apiKey = _app.apiKey || api_key;
@@ -51,20 +53,32 @@ var Pipeline = /*#__PURE__*/function () {
     this._input = {};
     this._infos = {};
     this._use_defaults = use_defaults;
-    this._execution_codes = [];
+    this._executionCodes = [];
     this._termination_codes = [];
     var error_messages = [];
     if (!Array.isArray(nodes)) {
       error_messages.push("stages field should be a list of Service Nodes");
     }
-    var _iterator = _createForOfIteratorHelper(this._stages),
+    var nodeNames = nodes.map(function (node) {
+      return node.name;
+    });
+    var _iterator = _createForOfIteratorHelper(nodes),
       _step;
     try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var stage = _step.value;
-        if (!(stage instanceof _node.Node)) {
-          error_messages.push("".concat(stage, " is not an instance of Node"));
+      var _loop = function _loop() {
+        var node = _step.value;
+        if (!(node instanceof _node.Node) && !(node instanceof Pipeline)) {
+          error_messages.push("".concat(node, " is not an instance of Node"));
         }
+        var count = nodeNames.filter(function (n) {
+          return n === node.name;
+        }).length;
+        if (count > 1) {
+          error_messages.push("Node name '".concat(node.name, "' is not unique."));
+        }
+      };
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
       }
     } catch (err) {
       _iterator.e(err);
@@ -74,22 +88,21 @@ var Pipeline = /*#__PURE__*/function () {
     if (error_messages.length !== 0) {
       throw new Error(error_messages.join("\n"));
     }
-    this._outputfields = this._stages.map(function (stage) {
-      return Object.keys(stage.service._serviceio.output_structure);
-    });
+
+    // when the pipeline is used as a Node, it needs a name
+    this.name = name;
   }
 
   /**
    * Run the Pipeline
-   * @param {object} user_input 
-   * @param {string} [execution_code=null]
-   * @returns 
+   * @param {object} user_input - The object that holds the input information including executionCode if needed.
+   * @returns {object} The response object from soffosai.
    */
   _createClass(Pipeline, [{
     key: "run",
     value: function () {
       var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user_input) {
-        var pipelineStartEvent, stages, execution_code, infos, total_cost, i, index_from_execution, index_from_termination, node, nodeStartEvent, temp_src, src, _i, _Object$entries, _Object$entries$_i, key, notation, value, response, nodeEndEvent, exec_code_index, pipelineEndEvent;
+        var pipelineStartEvent, stages, executionCode, infos, total_cost, i, index_from_execution, index_from_termination, stage, _response, pipeOutput, key, subkey, nodeStartEvent, temp_src, src, _i, _Object$entries, _Object$entries$_i, _key, notation, value, response, nodeEndEvent, exec_code_index, pipelineEndEvent;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -121,13 +134,13 @@ var Pipeline = /*#__PURE__*/function () {
               } else {
                 stages = this._stages;
               }
-              execution_code = user_input.execution_code;
-              if (!(execution_code != null && execution_code != undefined)) {
+              executionCode = user_input.executionCode;
+              if (!(executionCode != null && executionCode != undefined)) {
                 _context.next = 17;
                 break;
               }
-              execution_code = this.apiKey + execution_code;
-              if (!this._execution_codes.includes(execution_code)) {
+              executionCode = this.apiKey + executionCode;
+              if (!this._executionCodes.includes(executionCode)) {
                 _context.next = 16;
                 break;
               }
@@ -135,28 +148,28 @@ var Pipeline = /*#__PURE__*/function () {
                 "error": "You are still using this execution code in a current pipeline run."
               });
             case 16:
-              this._execution_codes.push(execution_code);
+              this._executionCodes.push(executionCode);
             case 17:
               infos = {};
-              this.validate_pipeline(user_input, stages);
+              this.validate_pipeline(stages, user_input);
               infos.user_input = user_input;
               total_cost = 0.00; // Execute per stage:
               i = 0;
             case 22:
               if (!(i < stages.length)) {
-                _context.next = 72;
+                _context.next = 82;
                 break;
               }
-              if (!this._termination_codes.includes(execution_code)) {
+              if (!this._termination_codes.includes(executionCode)) {
                 _context.next = 31;
                 break;
               }
               // remove the execution code from both termination codes and execution codes
-              index_from_execution = this._execution_codes.indexOf(execution_code);
+              index_from_execution = this._executionCodes.indexOf(executionCode);
               if (index_from_execution > -1) {
-                this._execution_codes.splice(index_from_execution, 1);
+                this._executionCodes.splice(index_from_execution, 1);
               }
-              index_from_termination = this._termination_codes.indexOf(execution_code);
+              index_from_termination = this._termination_codes.indexOf(executionCode);
               if (index_from_termination > -1) {
                 this._termination_codes.splice(index_from_termination, 1);
               }
@@ -166,99 +179,130 @@ var Pipeline = /*#__PURE__*/function () {
               infos.warning = "This Soffos Pipeline run is prematurely terminated.";
               return _context.abrupt("return", infos);
             case 31:
-              node = stages[i];
-              console.log("Running ".concat(node.service._service));
-              // dispatch nodeStartEvent
-              nodeStartEvent = new CustomEvent("soffosai:node-start", {
-                detail: response_data
-              });
-              window.dispatchEvent(nodeStartEvent);
-              temp_src = node.source;
-              src = {};
-              _i = 0, _Object$entries = Object.entries(temp_src);
-            case 38:
-              if (!(_i < _Object$entries.length)) {
-                _context.next = 57;
+              stage = stages[i];
+              console.log("Running ".concat(stage.name));
+              if (!(stage instanceof Pipeline)) {
+                _context.next = 43;
                 break;
               }
-              _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
+              _context.next = 36;
+              return stage.run(user_input);
+            case 36:
+              _response = _context.sent;
+              console.log("Response ready for ".concat(stage.name, "."));
+              pipeOutput = {};
+              pipeOutput.costs = {};
+              for (key in _response) {
+                if (key !== 'total_call_cost') {
+                  for (subkey in _response[key]) {
+                    if (subkey == 'cost') {
+                      pipeOutput['costs'][key] = _response[key][subkey];
+                    } else if (subkey == 'charged_character_count') {
+                      pipeOutput['costs'][key]['charged_character_count'] = _response[key][subkey];
+                    } else if (subkey == 'unit_price') {
+                      pipeOutput['costs'][key]['unit_price'] = _response[key][subkey];
+                    } else {
+                      pipeOutput[subkey] = _response[key][subkey];
+                    }
+                  }
+                } else {
+                  total_cost += _response[key];
+                }
+              }
+              infos[stage.name] = pipeOutput;
+              return _context.abrupt("continue", 79);
+            case 43:
+              // dispatch nodeStartEvent
+              nodeStartEvent = new CustomEvent("soffosai:node-start", {
+                detail: stage.source
+              });
+              window.dispatchEvent(nodeStartEvent);
+              temp_src = stage.source;
+              src = {};
+              _i = 0, _Object$entries = Object.entries(temp_src);
+            case 48:
+              if (!(_i < _Object$entries.length)) {
+                _context.next = 67;
+                break;
+              }
+              _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), _key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
               if (!(0, _type_classifications.isDictObject)(notation)) {
-                _context.next = 53;
+                _context.next = 63;
                 break;
               }
               // value is a reference to a node or user input
               value = infos[notation.source][notation.field];
               if (!("pre_process" in notation)) {
-                _context.next = 50;
+                _context.next = 60;
                 break;
               }
               if (!(notation.pre_process instanceof Function)) {
-                _context.next = 47;
+                _context.next = 57;
                 break;
               }
-              src[key] = notation.pre_process(value);
-              _context.next = 48;
-              break;
-            case 47:
-              throw new Error("pre_process value is not a function");
-            case 48:
-              _context.next = 51;
-              break;
-            case 50:
-              // no pre-processing required
-              src[key] = value;
-            case 51:
-              _context.next = 54;
-              break;
-            case 53:
-              // notation is a constant
-              src[key] = notation;
-            case 54:
-              _i++;
-              _context.next = 38;
+              src[_key] = notation.pre_process(value);
+              _context.next = 58;
               break;
             case 57:
+              throw new Error("pre_process value should be a function");
+            case 58:
+              _context.next = 61;
+              break;
+            case 60:
+              // no pre-processing required
+              src[_key] = value;
+            case 61:
+              _context.next = 64;
+              break;
+            case 63:
+              // notation is a constant
+              src[_key] = notation;
+            case 64:
+              _i++;
+              _context.next = 48;
+              break;
+            case 67:
               if (!('user' in src)) {
                 src.user = user_input.user;
               }
               src.apiKey = this.apiKey;
-              _context.next = 61;
-              return node.service.getResponse(src);
-            case 61:
+              _context.next = 71;
+              return stage.service.getResponse(src);
+            case 71:
               response = _context.sent;
               if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 64;
+                _context.next = 74;
                 break;
               }
               throw new Error(response);
-            case 64:
+            case 74:
               // dispatch nodeStartEvent
               nodeEndEvent = new CustomEvent("soffosai:node-end", {
                 detail: response
               });
               window.dispatchEvent(nodeEndEvent);
-              console.log("Response ready for ".concat(node.service._service));
-              infos[node.name] = response;
+              console.log("Response ready for ".concat(stage.name));
+              infos[stage.name] = response;
               total_cost += response.cost.total_cost;
-            case 69:
+            case 79:
               i++;
               _context.next = 22;
               break;
-            case 72:
+            case 82:
               infos.total_call_cost = total_cost;
 
-              // remove the execution code from the execution_codes in effect Array.
-              exec_code_index = this._execution_codes.indexOf(execution_code);
+              // remove the execution code from the executionCodes in effect Array.
+              exec_code_index = this._executionCodes.indexOf(executionCode);
               if (exec_code_index > -1) {
-                this._execution_codes.splice(exec_code_index, 1);
+                this._executionCodes.splice(exec_code_index, 1);
               }
               // dispatch soffosai:pipeline-end event
               pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
-                detail: response_data
+                detail: infos
               });
               window.dispatchEvent(pipelineEndEvent);
               return _context.abrupt("return", infos);
-            case 78:
+            case 88:
             case "end":
               return _context.stop();
           }
@@ -278,17 +322,24 @@ var Pipeline = /*#__PURE__*/function () {
      */
   }, {
     key: "validate_pipeline",
-    value: function validate_pipeline(user_input, stages) {
+    value: function validate_pipeline(stages, user_input) {
       /*
       Before running the first service, the Pipeline will validate all nodes if they will all be
       executed successfully with the exception of database and server issues.
       */
       var error_messages = [];
-
-      //  The first available keys are of the source
-      this._outputfields.unshift(Object.keys(user_input));
-      var _loop = function _loop() {
+      var _loop2 = function _loop2() {
         var stage = stages[i];
+        var sub_pipe_stages;
+        if (stage instanceof Pipeline) {
+          if (stage._use_defaults) {
+            sub_pipe_stages = stage.setDefaults(stage._stages, user_input);
+          } else {
+            sub_pipe_stages = stage._stages;
+          }
+          stage.validate_pipeline(sub_pipe_stages, user_input);
+          return "continue";
+        }
         // stage: Node to be validated
 
         // check if required fields are present: already solved by making the node subclasses.
@@ -347,6 +398,9 @@ var Pipeline = /*#__PURE__*/function () {
                   var subnode = _step3.value;
                   if (reference_node_name == subnode.name) {
                     source_node_found = true;
+                    if (subnode instanceof Pipeline) {
+                      break;
+                    }
                     var output_datatype = (0, _type_classifications.get_serviceio_datatype)(subnode.service._serviceio.output_structure[required_key]);
                     if (output_datatype == 'null') {
                       error_messages.push("On ".concat(stage.name, " node: the reference node '").concat(reference_node_name, "' does not have ").concat(required_key, " key on its output."));
@@ -373,15 +427,14 @@ var Pipeline = /*#__PURE__*/function () {
               error_messages.push("On ".concat(stage.name, " node: ").concat(key, " requires ").concat(required_data_type, " but ").concat(_typeof(notation), " is provided."));
             }
           }
-
-          // check datatype here
         }
       };
       for (var i = 0; i < stages.length; i++) {
-        _loop();
+        var _ret = _loop2();
+        if (_ret === "continue") continue;
       }
       if (error_messages.length != 0) {
-        throw new Error(",".join(error_messages));
+        throw new Error(error_messages.join(","));
       }
       return true;
     }
@@ -393,7 +446,7 @@ var Pipeline = /*#__PURE__*/function () {
   }, {
     key: "add_node",
     value: function add_node(node) {
-      if (node instanceof _node.Node) {
+      if (node instanceof _node.Node || node instanceof Pipeline) {
         this._stages.push(node);
       } else {
         throw new Error("".concat(node, " is not a Node instance."));
@@ -412,6 +465,9 @@ var Pipeline = /*#__PURE__*/function () {
       var defaulted_stages = [];
       for (var i = 0; i < stages.length; i++) {
         var stage = stages[i];
+        if (stage instanceof Pipeline) {
+          continue;
+        }
         var stage_source = {};
         // enumerate the required inputs of this stage
         var required_keys = stage.service._serviceio.required_input_fields;
@@ -448,21 +504,19 @@ var Pipeline = /*#__PURE__*/function () {
                 found_input = true;
               }
               // special considerations
-              if (required_key == "context" && "text" in stage_for_output_output_fields) {
+              else if (required_key == "context" && "text" in stage_for_output_output_fields) {
                 stage_source.context = {
                   source: stage_for_output.name,
                   field: "text"
                 };
                 found_input = true;
-              }
-              if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
+              } else if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
                 stage_source.document_text = {
                   source: stage_for_output.name,
                   field: "text"
                 };
                 found_input = true;
-              }
-              if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
+              } else if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
                 stage_source.document_ids = {
                   source: stage_for_output.name,
                   field: "document_id",

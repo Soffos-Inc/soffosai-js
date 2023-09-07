@@ -3,6 +3,8 @@ import {QuestionAndAnswerGenerationService} from "../../app.js";
 
 /**
  * A service configuration for QuestionAndAnswerGenerationService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.QuestionAndAnswerGenerationNode
  */
 class QuestionAndAnswerGenerationNode extends Node {
 

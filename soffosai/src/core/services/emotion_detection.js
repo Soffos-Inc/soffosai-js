@@ -17,7 +17,8 @@ class EmotionDetectionService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text
      * @param {number} [sentence_split=4] 
      * @param {number} [sentence_overlap=false] 
@@ -30,14 +31,14 @@ class EmotionDetectionService extends SoffosAIService {
             throw new Error(`${emotion} is not valid as an emotion_choices element. Please choose from ${_EMOTION_LIST}.`);
         }
       }
-      this._argsDict = {
+      let payload = {
         "user": user,
         "text": text,
         "sentence_split": sentence_split,
         "sentence_overlap": sentence_overlap,
         "emotion_choices": emotion_choices
       };
-      return super.call();
+      return super.call(payload);
     }
 }
 

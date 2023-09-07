@@ -3,6 +3,8 @@ import {SentimentAnalysisService} from "../../app.js";
 
 /**
  * A service configuration for SentimentAnalysisService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.SentimentAnalysisNode
  */
 class SentimentAnalysisNode extends Node {
 

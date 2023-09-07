@@ -22,31 +22,22 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-// function get_filename(path) {
-//     let parts = null;
-//     if (path.includes("/")) {
-//         parts = path.split("/");
-//         return parts.pop();
-//     } else if (path.includes("\\")) {
-//         parts = path.split("\\");
-//         return parts.pop();
-//     } else {
-//         return path;
-//     }
-// }
 function get_filename(file) {
   return file.name.split('.')[0];
 }
 
 /**
  * Given a file path, upload the file to Soffos and get its reference document_id.
+ * @class
+ * @alias SoffosPipelines.FileIngestPipeline
  */
 var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
   _inherits(FileIngestPipeline, _Pipeline);
   var _super = _createSuper(FileIngestPipeline);
   function FileIngestPipeline() {
     var _this;
-    var kwargs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var kwargs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     _classCallCheck(this, FileIngestPipeline);
     var file_converter = new _index.FileConverterNode("file_converter", {
       source: "user_input",
@@ -63,7 +54,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
       source: "file_converter",
       field: "text"
     });
-    return _possibleConstructorReturn(_this, _this = _super.call(this, [file_converter, document_ingest], false, kwargs));
+    return _possibleConstructorReturn(_this, _this = _super.call(this, [file_converter, document_ingest], false, name, kwargs));
   }
 
   /**

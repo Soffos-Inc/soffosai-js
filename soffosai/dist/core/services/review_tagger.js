@@ -42,18 +42,19 @@ var ReviewTaggerService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text
    * @returns {Promise<Object>} 
    */
   _createClass(ReviewTaggerService, [{
     key: "call",
     value: function call(user, text) {
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text
       };
-      return _get(_getPrototypeOf(ReviewTaggerService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(ReviewTaggerService.prototype), "call", this).call(this, payload);
     }
   }]);
   return ReviewTaggerService;

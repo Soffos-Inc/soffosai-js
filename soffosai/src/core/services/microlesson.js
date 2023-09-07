@@ -14,7 +14,8 @@ class MicrolessonService extends SoffosAIService {
     }
   
     /**
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<object>} content
      * @returns {Promise<Object>} 
      */
@@ -22,12 +23,12 @@ class MicrolessonService extends SoffosAIService {
       if (content != undefined){
         this.content = content;
       }
-      this._argsDict = {
+      let payload = {
         "user": user,
         "content": content
       };
-      this._argsDict['content'] = this.content;
-      return super.call();
+      payload['content'] = this.content;
+      return super.call(payload);
     }
 
     /**

@@ -40,24 +40,53 @@ var AmbiguityDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user
-   * @param {string} text
-   * @param {number} [sentence_split=4]
-   * @param {boolean} [sentence_overlap=false]
+   * @param {string} user                     - The ID of the user accessing the Soffos API.  
+   *                                            Soffos assumes that the owner of
+   *                                            the api is an application (app) and that app has users. 
+   *                                            Soffos API will accept any string.
+   * @param {string} text                     - Text to be analyzed for ambiguitites.
+   * @param {number} [sentence_split=4]       - The number of sentences of each chunk when splitting the input text.
+   * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence. 
+   *                                            For example, with sentence_split=3 and sentence_overlap=true : <br>
+   *                                            [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
    * @returns {Promise<Object>}
+   * @example
+   * import { SoffosServices } from "./soffosai/src/app.js";
+   * 
+   * const service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+   * let output = await service.call("Client1234567","I saw the signs");
+   * console.log(JSON.stringify(output, null, 2));
+   * 
+   * // returns {
+   * // "ambiguities": [
+   * //   {
+   * //     "text": "I saw the signs",
+   * //     "span_start": 0,
+   * //     "spane_end": 15,
+   * //     "reason": "It is unclear if the signs refer to literal signs or figurative signs."
+   * //   }
+   * // ],
+   * // "cost": {
+   * //     "api_call_cost": 0.005,
+   * //     "character_volume_cost": 0.005,
+   * //     "total_cost": 0.01
+   * // },
+   * // "charged_character_count": 100,
+   * // "unit_price": "0.000050"
+   * //}
    */
   _createClass(AmbiguityDetectionService, [{
     key: "call",
     value: function call(user, text) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text,
         "sentence_split": sentence_split,
         "sentence_overlap": sentence_overlap
       };
-      return _get(_getPrototypeOf(AmbiguityDetectionService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(AmbiguityDetectionService.prototype), "call", this).call(this, payload);
     }
   }]);
   return AmbiguityDetectionService;

@@ -1,6 +1,6 @@
 {
   "name": "soffosai",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Javascript package for Soffos.ai API",
   "main": "./dist/app.js",
   "module": "./src/app.js",
@@ -18,7 +18,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "transpile": "babel src --out-dir dist"
+    "transpile": "babel src --out-dir dist",
+    "build_bundle": "webpack"
   },
   "repository": {
     "type": "git",

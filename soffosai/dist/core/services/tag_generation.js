@@ -41,7 +41,8 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text
    * @param {Array.<string>} [types=["topic"]]
    * @param {number} [n=10]
@@ -66,13 +67,13 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
           throw new Error("".concat(this._service, " types argument's elements can only be \"topic\", \"domain\", \"audience\" and/or \"entity\"."));
         }
       }
-      this._argsDict = {
+      var payload = {
         "user": user,
         "text": text,
         "types": types,
         "n": n
       };
-      return _get(_getPrototypeOf(TagGenerationService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(TagGenerationService.prototype), "call", this).call(this, payload);
     }
   }]);
   return TagGenerationService;

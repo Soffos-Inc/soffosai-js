@@ -39,7 +39,8 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Blob} file
    * @param {number} [normalize=0] 
    * @returns {Promise<Object>}
@@ -51,12 +52,12 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
       if (![0, 1].includes(normalize)) {
         throw new Error("".concat(this._service, ": normalize can only accept a value of 0 or 1;"));
       }
-      this._argsDict = {
+      var payload = {
         user: user,
         file: file,
         normalize: normalize
       };
-      return _get(_getPrototypeOf(FileConverterService.prototype), "call", this).call(this);
+      return _get(_getPrototypeOf(FileConverterService.prototype), "call", this).call(this, payload);
     }
   }]);
   return FileConverterService;

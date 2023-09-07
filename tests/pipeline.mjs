@@ -29,7 +29,8 @@ class AskADocumentPipeline extends SoffosPipeline {
 
     /**
      * 
-     * @param {string} user 
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<string>} doc_ids 
      * @param {string} question 
      */

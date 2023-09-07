@@ -3,6 +3,8 @@ import {QuestionAnsweringService} from "../../app.js";
 
 /**
  * A service configuration for QuestionAnsweringService for Pipeline use.
+ * @class
+ * @alias SoffosNodes.QuestionAnsweringNode
  */
 class QuestionAnsweringNode extends Node {
 

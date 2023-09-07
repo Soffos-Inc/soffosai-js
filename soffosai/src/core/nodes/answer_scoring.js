@@ -3,6 +3,8 @@ import {AnswerScoringService} from "../../app.js";
 
 /**
  * A service configuration for Answer Scoring Service for Pipeline use.
+ * @class
+ * @alias SoffosNodes.AnswerScoringNode
  */
 class AnswerScoringNode extends Node{
     /**
