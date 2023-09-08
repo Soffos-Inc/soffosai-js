@@ -313,7 +313,13 @@ var SoffosAIService = /*#__PURE__*/function () {
               onRequestEvent = new CustomEvent("soffosai:on-request", {
                 detail: data
               });
-              window.dispatchEvent(onRequestEvent);
+              try {
+                window.dispatchEvent(onRequestEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
 
               // Call the API
               url = _index.SOFFOS_SERVICE_URL + this._service + "/";
@@ -343,7 +349,13 @@ var SoffosAIService = /*#__PURE__*/function () {
               onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
                 detail: _context2.t0
               });
-              window.dispatchEvent(onServiceErorrEvent);
+              try {
+                window.dispatchEvent(onServiceErorrEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               return _context2.abrupt("return", {
                 error: _context2.t0,
                 response: response
@@ -377,7 +389,13 @@ var SoffosAIService = /*#__PURE__*/function () {
               _onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
                 detail: _context2.t1
               });
-              window.dispatchEvent(_onServiceErorrEvent);
+              try {
+                window.dispatchEvent(_onServiceErorrEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               return _context2.abrupt("return", {
                 error: _context2.t1,
                 response: response
@@ -391,7 +409,13 @@ var SoffosAIService = /*#__PURE__*/function () {
               responseEvent = new CustomEvent("soffosai:on-response", {
                 detail: response_data
               });
-              window.dispatchEvent(responseEvent);
+              try {
+                window.dispatchEvent(responseEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               return _context2.abrupt("return", response_data);
             case 54:
             case "end":

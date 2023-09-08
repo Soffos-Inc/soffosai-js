@@ -66,7 +66,13 @@ class Pipeline {
     async run(user_input) {
         // dispatch soffosai:pipeline-start event
         const pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {detail: user_input});
-        window.dispatchEvent(pipelineStartEvent);
+        try{
+            window.dispatchEvent(pipelineStartEvent);
+          }catch (error) {
+            if (error instanceof ReferenceError) {
+              console.log('Will not dispatch an Event outside of a DOM.');
+            }
+          }
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -152,7 +158,13 @@ class Pipeline {
 
             // dispatch nodeStartEvent
             const nodeStartEvent = new CustomEvent("soffosai:node-start", {detail: stage.source});
-            window.dispatchEvent(nodeStartEvent);
+            try{
+                window.dispatchEvent(nodeStartEvent);
+              }catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
             let temp_src = stage.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
@@ -184,7 +196,13 @@ class Pipeline {
 
             // dispatch nodeStartEvent
             const nodeEndEvent = new CustomEvent("soffosai:node-end", {detail: response});
-            window.dispatchEvent(nodeEndEvent);
+            try{
+                window.dispatchEvent(nodeEndEvent);
+              }catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
             
             console.log(`Response ready for ${stage.name}`);
             infos[stage.name] = response;
@@ -199,7 +217,13 @@ class Pipeline {
         }
         // dispatch soffosai:pipeline-end event
         const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: infos});
-        window.dispatchEvent(pipelineEndEvent);
+        try{
+            window.dispatchEvent(pipelineEndEvent);
+          }catch (error) {
+            if (error instanceof ReferenceError) {
+              console.log('Will not dispatch an Event outside of a DOM.');
+            }
+          }
         
         return infos
     }

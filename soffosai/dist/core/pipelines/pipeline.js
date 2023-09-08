@@ -110,7 +110,13 @@ var Pipeline = /*#__PURE__*/function () {
               pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {
                 detail: user_input
               });
-              window.dispatchEvent(pipelineStartEvent);
+              try {
+                window.dispatchEvent(pipelineStartEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               if ((0, _type_classifications.isDictObject)(user_input)) {
                 _context.next = 4;
                 break;
@@ -216,7 +222,13 @@ var Pipeline = /*#__PURE__*/function () {
               nodeStartEvent = new CustomEvent("soffosai:node-start", {
                 detail: stage.source
               });
-              window.dispatchEvent(nodeStartEvent);
+              try {
+                window.dispatchEvent(nodeStartEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               temp_src = stage.source;
               src = {};
               _i = 0, _Object$entries = Object.entries(temp_src);
@@ -280,7 +292,13 @@ var Pipeline = /*#__PURE__*/function () {
               nodeEndEvent = new CustomEvent("soffosai:node-end", {
                 detail: response
               });
-              window.dispatchEvent(nodeEndEvent);
+              try {
+                window.dispatchEvent(nodeEndEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               console.log("Response ready for ".concat(stage.name));
               infos[stage.name] = response;
               total_cost += response.cost.total_cost;
@@ -300,7 +318,13 @@ var Pipeline = /*#__PURE__*/function () {
               pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
                 detail: infos
               });
-              window.dispatchEvent(pipelineEndEvent);
+              try {
+                window.dispatchEvent(pipelineEndEvent);
+              } catch (error) {
+                if (error instanceof ReferenceError) {
+                  console.log('Will not dispatch an Event outside of a DOM.');
+                }
+              }
               return _context.abrupt("return", infos);
             case 88:
             case "end":

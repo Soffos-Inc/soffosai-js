@@ -196,7 +196,14 @@ class SoffosAIService {
         const data = this.getData(payload);
         // dispatch soffosai:on-request event
         const onRequestEvent = new CustomEvent("soffosai:on-request", {detail: data});
-        window.dispatchEvent(onRequestEvent);
+        try{
+          window.dispatchEvent(onRequestEvent);
+        }catch (error) {
+          if (error instanceof ReferenceError) {
+            console.log('Will not dispatch an Event outside of a DOM.');
+          }
+        }
+          
 
         // Call the API
         let response;
@@ -220,7 +227,13 @@ class SoffosAIService {
           } catch (error){
             // dispatch soffosai:on-service-error event
             const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
-            window.dispatchEvent(onServiceErorrEvent);
+            try{
+              window.dispatchEvent(onServiceErorrEvent);
+            }catch (error) {
+              if (error instanceof ReferenceError) {
+                console.log('Will not dispatch an Event outside of a DOM.');
+              }
+            }
             return {
               error: error,
               response: response
@@ -247,7 +260,13 @@ class SoffosAIService {
           } catch (error) {
             // dispatch soffosai:on-service-error event
             const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
-            window.dispatchEvent(onServiceErorrEvent);
+            try{
+              window.dispatchEvent(onServiceErorrEvent);
+            }catch (error) {
+              if (error instanceof ReferenceError) {
+                console.log('Will not dispatch an Event outside of a DOM.');
+              }
+            }
             return {
               error: error,
               response: response
@@ -257,7 +276,13 @@ class SoffosAIService {
         response_data = await response.json();
         // dispatch soffosai:on-response event
         const responseEvent = new CustomEvent("soffosai:on-response", {detail: response_data});
-        window.dispatchEvent(responseEvent);
+        try{
+          window.dispatchEvent(responseEvent);
+        }catch (error) {
+          if (error instanceof ReferenceError) {
+            console.log('Will not dispatch an Event outside of a DOM.');
+          }
+        }
         return response_data;
 
     }
