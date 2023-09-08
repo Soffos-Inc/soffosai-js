@@ -142,7 +142,7 @@ In order to create a Pipeline a service Node should be defined as stated above t
 import { SoffosPipeline } from "soffosai";
 
 const nodes = [file_converter, summarize, ingestor];
-const pipe = new SoffosPipeline(nodes, false, {apiKey: my_apiKey});
+const pipe = new SoffosPipeline(nodes, false, "my_pipeline", {apiKey: my_apiKey});
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
 ```

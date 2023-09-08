@@ -3,6 +3,13 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.1.7
+- made all .js files in ./src to .mjs
+- created a script to correct the require statements on the generated ES5 code
+
+## 0.1.6
+- documentation template
+
 ## 0.1.5 
 - bug fixes on events
 - costs per service format in a pipeline inside a pipeline

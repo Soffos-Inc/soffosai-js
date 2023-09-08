@@ -5,11 +5,11 @@
     },
     "source": {
       "include": ["./src/core"],
-      "includePattern": ".+\\.js(doc|x)?$",
+      "includePattern": ".+\\.mjs(doc|x)?$",
       "excludePattern": "(^|\\/|\\\\)_",
       "exclude": [
-        "./src/core/services/service.js",
-        "./src/core/nodes/node.js"
+        "./src/core/services/service.mjs",
+        "./src/core/nodes/node.mjs"
       ]
     },
     "plugins": [],

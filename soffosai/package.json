@@ -1,24 +1,24 @@
 {
   "name": "soffosai",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Javascript package for Soffos.ai API",
   "main": "./dist/app.js",
-  "module": "./src/app.js",
-  "jsnext:main": "./src/app.js",
+  "module": "./src/app.mjs",
+  "jsnext:main": "./src/app.mjs",
   "typings": "./index.d.ts",
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/app.js",
+      "import": "./src/app.mjs",
       "require": "./dist/app.js"
     },
-    "./nodes": "./src/core/nodes/index.js",
-    "./pipelines": "./src/core/pipelines/index.js"
+    "./nodes": "./src/core/nodes/index.mjs",
+    "./pipelines": "./src/core/pipelines/index.mjs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "transpile": "babel src --out-dir dist",
+    "transpile": "babel src --out-dir dist && node correct_es5_imports.js",
     "build_bundle": "webpack"
   },
   "repository": {
@@ -35,6 +35,7 @@
     "@babel/cli": "^7.22.9",
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
+    "babel-plugin-transform-rename-import": "^2.3.0",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
