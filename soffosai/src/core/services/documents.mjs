@@ -6,6 +6,8 @@ import {DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO} from '../../commo
 /**
  * The Documents Ingest module enables ingestion of content into Soffos.
  * Takes in the text and gives the document_id to reference the text in Soffos database.
+ * @class
+ * @alias SoffosServices.DocumentsIngestService
  */
 class DocumentsIngestService extends SoffosAIService {
     constructor(kwargs = {}) {
@@ -39,6 +41,8 @@ class DocumentsIngestService extends SoffosAIService {
 
 /**
  * The Documents module enables search of ingested contents from Soffos.
+ * @class
+ * @alias SoffosServices.DocumentsSearchService
  */
 class DocumentsSearchService extends SoffosAIService {
     constructor(kwargs = {}) {
@@ -89,6 +93,8 @@ class DocumentsSearchService extends SoffosAIService {
 
 /**
  * The Documents module enables deletion of ingested contents from Soffos.
+ * @class
+ * @alias SoffosServices.DocumentsDeleteService
  */
 class DocumentsDeleteService extends SoffosAIService {
     constructor(kwargs = {}) {

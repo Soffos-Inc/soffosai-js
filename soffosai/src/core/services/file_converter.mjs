@@ -5,6 +5,8 @@ import {FileConverterIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * The File Converter extracts text from various types of files.
+ * @class
+ * @alias SoffosServices.FileConverterService
  */
 class FileConverterService extends SoffosAIService {
     constructor(kwargs = {}) {

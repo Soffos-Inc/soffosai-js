@@ -9,6 +9,8 @@ import {LetsDiscussCreateIO, LetsDiscussIO, LetsDiscussRetrieveIO, LetsDiscussDe
  * is that Let's Discuss keeps a history of the interactions.
  * 
  * LetsDiscuss service to be used for creating a session.
+ * @class
+ * @alias SoffosServices.LetsDiscussCreateService
  */
 class LetsDiscussCreateService extends SoffosAIService {
     constructor(kwargs = {}) {
@@ -39,6 +41,8 @@ class LetsDiscussCreateService extends SoffosAIService {
  * is that Let's Discuss keeps a history of the interactions.
  * 
  * LetsDiscuss main service, continues thread of conversation.
+ * @class
+ * @alias SoffosServices.LetsDiscussService
  */
 class LetsDiscussService extends SoffosAIService {
     constructor(kwargs = {}) {
@@ -71,6 +75,8 @@ class LetsDiscussService extends SoffosAIService {
  * is that Let's Discuss keeps a history of the interactions.
  * 
  * LetsDiscuss service to be used for retrieving sessions.
+ * @class
+ * @alias SoffosServices.LetsDiscussRetrieveService
  */
 class LetsDiscussRetrieveService extends SoffosAIService {
     constructor(kwargs = {}) {
@@ -101,6 +107,8 @@ class LetsDiscussRetrieveService extends SoffosAIService {
  * is that Let's Discuss keeps a history of the interactions.
  * 
  * LetsDiscuss service to be used for deleting sessions.
+ * @class
+ * @alias SoffosServices.LetsDiscussDeleteService
  */
 class LetsDiscussDeleteService extends SoffosAIService {
     constructor(kwargs = {}) {

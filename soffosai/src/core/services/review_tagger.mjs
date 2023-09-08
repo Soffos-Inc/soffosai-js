@@ -8,6 +8,8 @@ import {ReviewTaggerIO} from '../../common/serviceio_fields/index.mjs';
  * the referred object, it's fault and an action/verb that is associated with it. If any 
  * of the information is not present, it returns "n/a". This is useful for organizations who 
  * want to analyze product reviews in order to identify and prioritize the most important issues.
+ * @class
+ * @alias SoffosServices.ReviewTaggerService
  */
 class ReviewTaggerService extends SoffosAIService {
     constructor(kwargs = {}) {

@@ -5,6 +5,8 @@ import {LogicalErrorDetectionIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * Identifies illogical statements in text and explains why they are illogical.
+ * * @class
+ * @alias SoffosServices.LogicalErrorDetectionService
  */
 class LogicalErrorDetectionService extends SoffosAIService {
     constructor(kwargs = {}) {

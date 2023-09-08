@@ -4,7 +4,7 @@ import {TableGeneratorService} from "../../app.mjs";
 /**
  * A service configuration for TableGeneratorService for Pipeline use.
  * @class
- * @alias SoffosNodes.TableGeneratorNode
+ * @alias _SoffosNodes.TableGeneratorNode
  */
 class TableGeneratorNode extends Node {
 

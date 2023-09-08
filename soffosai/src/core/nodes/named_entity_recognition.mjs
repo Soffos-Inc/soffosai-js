@@ -4,7 +4,7 @@ import {NamedEntityRecognitionService} from "../../app.mjs";
 /**
  * A service configuration for NamedEntityRecognitionService for Pipeline use.
  * @class
- * @alias SoffosNodes.NamedEntityRecognitionNode
+ * @alias _SoffosNodes.NamedEntityRecognitionNode
  */
 class NamedEntityRecognitionNode extends Node {
 

@@ -8,6 +8,8 @@ import {QuestionAnsweringIO} from '../../common/serviceio_fields/index.mjs';
  * questions posed on a large amount of content. It includes basic intent recognition capabilities 
  * to enable appropriate responses to incorrect or profane language, or typical personal questions 
  * like "How are you?" and greetings
+ * @class
+ * @alias SoffosServices.QuestionAnsweringService
  */
 class QuestionAnsweringService extends SoffosAIService {
     constructor(kwargs = {}) {

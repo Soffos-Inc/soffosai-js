@@ -7,6 +7,8 @@ import {SentimentAnalysisIO} from '../../common/serviceio_fields/index.mjs';
  * This module processes the text to measure whether it is negative, positive or neutral.
  * The text is processed in segments of user-defined length and it provides scores for each 
  * segment as well as the overall score of the whole text.
+ * @class
+ * @alias SoffosServices.SentimentAnalysisService
  */
 class SentimentAnalysisService extends SoffosAIService {
     constructor(kwargs = {}) {

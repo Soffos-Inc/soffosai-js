@@ -4,7 +4,7 @@ import {ReviewTaggerService} from "../../app.mjs";
 /**
  * A service configuration for ReviewTaggerService for Pipeline use.
  * @class
- * @alias SoffosNodes.ReviewTaggerNode
+ * @alias _SoffosNodes.ReviewTaggerNode
  */
 class ReviewTaggerNode extends Node {
 

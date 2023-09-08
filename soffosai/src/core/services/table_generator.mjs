@@ -9,6 +9,8 @@ const TABLE_FORMATS = ['markdown', 'CSV'];
  * The table generator module enables applications to extract numerical and statistical 
  * data from raw text in a tabular format. For use-cases where data has to be manually 
  * reviewed and cross-referenced, this module can bring enormous value.
+ * @class
+ * @alias SoffosServices.TableGeneratorService
  */
 class TableGeneratorService extends SoffosAIService {
     constructor(kwargs = {}) {

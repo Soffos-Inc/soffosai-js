@@ -4,7 +4,7 @@ import {MicrolessonService} from "../../app.mjs";
 /**
  * A service configuration for MicrolessonService for Pipeline use.
  * @class
- * @alias SoffosNodes.MicrolessonNode
+ * @alias _SoffosNodes.MicrolessonNode
  */
 class MicrolessonNode extends Node {
 

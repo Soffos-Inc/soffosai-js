@@ -5,6 +5,8 @@ import {EmailAnalysisIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * This module extracts key information from the body of an e-mail.
+ * @class
+ * @alias SoffosServices.EmailAnalysisService
  */
 class EmailAnalysisService extends SoffosAIService {
     constructor(kwargs = {}) {

@@ -10,6 +10,8 @@ import {SummarizationIO} from '../../common/serviceio_fields/index.mjs';
  * concatenate the highest rated ones, abstractive summaries are often more concise and accurate. 
  * The end result isn't necessarily a sum of word-for-word copies of passages from the original text, 
  * but a combination of all key points formulated as a new text.
+ * @class
+ * @alias SoffosServices.SummarizationService
  */
 class SummarizationService extends SoffosAIService {
     constructor(kwargs = {}) {

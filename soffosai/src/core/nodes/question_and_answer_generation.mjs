@@ -4,7 +4,7 @@ import {QuestionAndAnswerGenerationService} from "../../app.mjs";
 /**
  * A service configuration for QuestionAndAnswerGenerationService for Pipeline use.
  * @class
- * @alias SoffosNodes.QuestionAndAnswerGenerationNode
+ * @alias _SoffosNodes.QuestionAndAnswerGenerationNode
  */
 class QuestionAndAnswerGenerationNode extends Node {
 

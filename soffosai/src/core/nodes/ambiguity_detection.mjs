@@ -4,7 +4,7 @@ import {AmbiguityDetectionService} from "../../app.mjs"
 /**
  * A service configuration for Ambiguity Detection Service for Pipeline use.
  * @class
- * @alias SoffosNodes.AmbiguityDetectionNode
+ * @alias _SoffosNodes.AmbiguityDetectionNode
  */
 class AmbiguityDetectionNode extends Node{
     

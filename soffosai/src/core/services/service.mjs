@@ -1,5 +1,4 @@
 import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.mjs";
-import { apiKey } from "../../../../soffosai/src/app.mjs";
 import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.mjs"
 
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
@@ -47,7 +46,7 @@ class SoffosAIService {
     constructor(service, kwargs = {}) {
       const apikey = kwargs.apiKey;
       this.headers = {
-        "x-api-key": apikey || apiKey,
+        "x-api-key": apikey,
       };
       this._apikey = this.headers["x-api-key"];
       this._service = service;

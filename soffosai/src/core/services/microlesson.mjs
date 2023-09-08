@@ -5,6 +5,8 @@ import {MicrolessonIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * Identifies illogical statements in text and explains why they are illogical.
+ * @class
+ * @alias SoffosServices.MicrolessonService
  */
 class MicrolessonService extends SoffosAIService {
     constructor(kwargs = {}) {

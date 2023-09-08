@@ -4,6 +4,8 @@ import {LanguageDetectionIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * The Language Detection module detects the dominant language in the provided text.
+ * @class
+ * @alias SoffosServices.LanguageDetectionService
  */
 class LanguageDetectionService extends SoffosAIService {
     constructor(kwargs = {}) {

@@ -4,7 +4,7 @@ import {EmailAnalysisService} from "../../app.mjs";
 /**
  * A service configuration for EmailAnalysisService for Pipeline use.
  * @class
- * @alias SoffosNodes.EmailAnalysisNode
+ * @alias _SoffosNodes.EmailAnalysisNode
  */
 class EmailAnalysisNode extends Node {
 

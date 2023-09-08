@@ -1,4 +1,3 @@
-import { apiKey } from "../../app.mjs";
 import { Node } from "../nodes/node.mjs";
 import {isDictObject, isNodeInput, get_serviceio_datatype, get_userinput_datatype} from "../../utils/type_classifications.mjs";
 import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.mjs";
@@ -14,6 +13,7 @@ import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.mjs";
  * If the previous Nodes does not have it, it will take from the
  * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
  * of the require_one_of_choices fields.
+ * 
  */
 class Pipeline {
     /**
@@ -24,7 +24,7 @@ class Pipeline {
      */
     constructor (nodes, use_defaults=false, name=null, kwargs={}) {
         const api_key = kwargs.apiKey;
-        this.apiKey = apiKey || api_key;
+        this.apiKey = api_key;
         this._stages = nodes;
 
         this._input = {};

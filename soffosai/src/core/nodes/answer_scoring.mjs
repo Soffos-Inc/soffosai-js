@@ -4,7 +4,7 @@ import {AnswerScoringService} from "../../app.mjs";
 /**
  * A service configuration for Answer Scoring Service for Pipeline use.
  * @class
- * @alias SoffosNodes.AnswerScoringNode
+ * @alias _SoffosNodes.AnswerScoringNode
  */
 class AnswerScoringNode extends Node{
     /**

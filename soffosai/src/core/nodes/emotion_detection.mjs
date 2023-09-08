@@ -7,7 +7,7 @@ const _EMOTION_LIST = ["joy", "trust", "fear", "surprise", "sadness", "disgust",
 /**
  * A service configuration for EmotionDetectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.EmotionDetectionNode
+ * @alias _SoffosNodes.EmotionDetectionNode
  */
 class EmotionDetectionNode extends Node {
 

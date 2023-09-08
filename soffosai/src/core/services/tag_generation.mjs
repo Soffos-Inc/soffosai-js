@@ -7,6 +7,8 @@ import {TagGenerationIO} from '../../common/serviceio_fields/index.mjs';
  * This module can generate tags for a piece of text that can aid with content search in
  * certain use-cases. It allows to specify a number of tags to be generated for each of 
  * the categories "topic", "domain", "audience", "entity".
+ * @class
+ * @alias SoffosServices.TagGenerationService
  */
 class TagGenerationService extends SoffosAIService {
     constructor(kwargs = {}) {

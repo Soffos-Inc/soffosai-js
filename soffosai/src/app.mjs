@@ -32,16 +32,12 @@ import {
     TranscriptCorrectionService,
 } from "./core/services/index.mjs";
 
-// const apiKey = process.env.SOFFOSAI_API_KEY;
-const apiKey = undefined;
-
 import * as SoffosServices from "./core/services/index.mjs";
 import * as SoffosNodes from "./core/nodes/index.mjs";
 import * as SoffosPipelines from "./core/pipelines/index.mjs";
 
 
 export {
-    apiKey,
     ServiceString,
     SoffosAIService,
 

@@ -4,7 +4,7 @@ import {SimplifyService} from "../../app.mjs";
 /**
  * A service configuration for SimplifyService for Pipeline use.
  * @class
- * @alias SoffosNodes.SimplifyNode
+ * @alias _SoffosNodes.SimplifyNode
  */
 class SimplifyNode extends Node {
 

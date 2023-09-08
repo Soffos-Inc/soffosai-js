@@ -8,6 +8,8 @@ import {TranscriptCorrectionIO} from '../../common/serviceio_fields/index.mjs';
  * It can handle cases where STT produced the wrong word or phrase by taking into account the 
  * surrounding context and choosing the most fitting replacement. Although this is meant for correcting 
  * STT outpus, it can also be used to correct grammar, misspellings and syntactical errors.
+ * @class
+ * @alias SoffosServices.TranscriptCorrectionService
  */
 class TranscriptCorrectionService extends SoffosAIService {
     constructor(kwargs = {}) {

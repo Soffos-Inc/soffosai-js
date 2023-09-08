@@ -18,7 +18,7 @@ import {AmbiguityDetectionIO} from '../../common/serviceio_fields/index.mjs';
  * A very fascinating tool for writers that can be used to inspire, write more understandable content, 
  * or even to just delve into the remarkable nuances and complexities hidden in human language and thought
  * @class
- * @alias _SoffosServices.AmbiguityDetectionService
+ * @alias SoffosServices.AmbiguityDetectionService
 */
 class AmbiguityDetectionService extends SoffosAIService {
     

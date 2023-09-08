@@ -10,7 +10,7 @@ function get_filename(file) {
 /**
  * Given a file path, upload the file to Soffos and get its reference document_id.
  * @class
- * @alias SoffosPipelines.FileIngestPipeline
+ * @alias _SoffosPipelines.FileIngestPipeline
  */
 export class FileIngestPipeline extends Pipeline {
     constructor(name=null, kwargs={}) {

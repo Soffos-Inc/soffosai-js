@@ -4,7 +4,7 @@ import {LogicalErrorDetectionService} from "../../app.mjs";
 /**
  * A service configuration for LogicalErrorDetectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.LogicalErrorDetectionNode
+ * @alias _SoffosNodes.LogicalErrorDetectionNode
  */
 class LogicalErrorDetectionNode extends Node {
 

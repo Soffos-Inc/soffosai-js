@@ -4,7 +4,7 @@ import {ProfanityService} from "../../app.mjs";
 /**
  * A service configuration for ProfanityService for Pipeline use.
  * @class
- * @alias SoffosNodes.ProfanityNode
+ * @alias _SoffosNodes.ProfanityNode
  */
 class ProfanityNode extends Node {
 

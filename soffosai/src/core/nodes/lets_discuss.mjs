@@ -4,7 +4,7 @@ import {LetsDiscussCreateService, LetsDiscussService, LetsDiscussRetrieveService
 /**
  * A service configuration for LetsDiscussCreateService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussCreateNode
+ * @alias _SoffosNodes.LetsDiscussCreateNode
  */
 class LetsDiscussCreateNode extends Node {
 
@@ -25,7 +25,7 @@ class LetsDiscussCreateNode extends Node {
 /**
  * A service configuration for LetsDiscussService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussNode
+ * @alias _SoffosNodes.LetsDiscussNode
  */
  class LetsDiscussNode extends Node {
 
@@ -50,7 +50,7 @@ class LetsDiscussCreateNode extends Node {
 /**
  * A service configuration for LetsDiscussRetrieveService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussRetrieveNode
+ * @alias _SoffosNodes.LetsDiscussRetrieveNode
  */
  class LetsDiscussRetrieveNode extends Node {
 
@@ -71,7 +71,7 @@ class LetsDiscussCreateNode extends Node {
 /**
  * A service configuration for LetsDiscussDeleteService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussDeleteNode
+ * @alias _SoffosNodes.LetsDiscussDeleteNode
  */
  class LetsDiscussDeleteNode extends Node {
 

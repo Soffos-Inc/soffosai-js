@@ -10,6 +10,8 @@ import {QuestionAndAnswerGenerationIO} from '../../common/serviceio_fields/index
  * where a topic is discussed over multiple sentences in the context. To address cases where the topic 
  * is split mid-way, the module supports overlapping the chunks by a configurable amount of sentences. 
  * This gives a lot of flexibility to cater to your specific use case.
+ * @class
+ * @alias SoffosServices.QuestionAndAnswerGenerationService
  */
 class QuestionAndAnswerGenerationService extends SoffosAIService {
     constructor(kwargs = {}) {

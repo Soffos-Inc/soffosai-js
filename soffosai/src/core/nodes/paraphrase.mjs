@@ -4,7 +4,7 @@ import {ParaphraseService} from "../../app.mjs";
 /**
  * A service configuration for ParaphraseService for Pipeline use.
  * @class
- * @alias SoffosNodes.ParaphraseNode
+ * @alias _SoffosNodes.ParaphraseNode
  */
 class ParaphraseNode extends Node {
 

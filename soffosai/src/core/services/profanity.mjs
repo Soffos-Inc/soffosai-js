@@ -5,6 +5,8 @@ import {ProfanityIO} from '../../common/serviceio_fields/index.mjs';
 
 /**
  * This module detects profanities and the level of offensiveness in a body of text. 
+ * @class
+ * @alias SoffosServices.ProfanityService
  */
 class ProfanityService extends SoffosAIService {
     constructor(kwargs = {}) {

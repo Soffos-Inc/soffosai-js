@@ -8,6 +8,8 @@ const _EMOTION_LIST = ["joy", "trust", "fear", "surprise", "sadness", "disgust",
 /**
  * Detect selected emotions within the provided text. The original text is chunked to
  * passages of a specified sentence length. Smaller chunks yield better accuracy.
+ * @class
+ * @alias SoffosServices.EmotionDetectionService
  */
 class EmotionDetectionService extends SoffosAIService {
     constructor(kwargs = {}) {

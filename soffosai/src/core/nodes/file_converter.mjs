@@ -4,7 +4,7 @@ import {FileConverterService} from "../../app.mjs";
 /**
  * A service configuration for FileConverterService for Pipeline use.
  * @class
- * @alias SoffosNodes.FileConverterNode
+ * @alias _SoffosNodes.FileConverterNode
  */
 class FileConverterNode extends Node {
 

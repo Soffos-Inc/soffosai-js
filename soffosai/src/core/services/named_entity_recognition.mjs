@@ -6,6 +6,8 @@ import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.mjs'
 /**
  * Identifies named entities in text. It supports custom labels.
  * This module is extremely versatile as the labels can be defined by the user.
+ * @class
+ * @alias SoffosServices.NamedEntityRecognitionService
  */
 class NamedEntityRecognitionService extends SoffosAIService {
     constructor(kwargs = {}) {

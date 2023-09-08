@@ -6,7 +6,9 @@ import {ParaphraseIO} from '../../common/serviceio_fields/index.mjs';
 /**
  * Paraphrase and Simplify are available as two different flavors of the same module. 
  * While the Paraphrase module attempts to change the wording while keeping the same level of complexity, 
- * the Simplify module outputs more commonly used words without altering the meaning of the original text. 
+ * the Simplify module outputs more commonly used words without altering the meaning of the original text.
+ * @class
+ * @alias SoffosServices.ParaphraseService 
  */
 class ParaphraseService extends SoffosAIService {
     constructor(kwargs = {}) {

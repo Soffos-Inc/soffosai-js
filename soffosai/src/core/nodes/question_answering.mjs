@@ -4,7 +4,7 @@ import {QuestionAnsweringService} from "../../app.mjs";
 /**
  * A service configuration for QuestionAnsweringService for Pipeline use.
  * @class
- * @alias SoffosNodes.QuestionAnsweringNode
+ * @alias _SoffosNodes.QuestionAnsweringNode
  */
 class QuestionAnsweringNode extends Node {
 

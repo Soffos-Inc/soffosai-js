@@ -9,7 +9,8 @@
       "excludePattern": "(^|\\/|\\\\)_",
       "exclude": [
         "./src/core/services/service.mjs",
-        "./src/core/nodes/node.mjs"
+        "./src/core/nodes/node.mjs",
+        "./src/core/pipelines/pipeline.mjs"
       ]
     },
     "plugins": [],

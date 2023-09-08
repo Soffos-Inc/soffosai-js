@@ -18,7 +18,7 @@ function getContent(value) {
 /**
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
  * @class
- * @alias SoffosPipelines.AskADocumentPipeline
+ * @alias _SoffosPipelines.AskADocumentPipeline
  */
 export class AskADocumentPipeline extends Pipeline {
     constructor(name=null, kwargs={}){

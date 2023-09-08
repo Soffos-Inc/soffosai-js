@@ -4,7 +4,7 @@ import {SummarizationService} from "../../app.mjs";
 /**
  * A service configuration for SummarizationService for Pipeline use.
  * @class
- * @alias SoffosNodes.SummarizationNode
+ * @alias _SoffosNodes.SummarizationNode
  */
 class SummarizationNode extends Node {
 
