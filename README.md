@@ -1,5 +1,6 @@
 # Soffosai JS
-Javascript SDK for Soffos.ai API
+- Javascript SDK for Soffos.ai API
+- [Detailed Documentaton](https://soffos-inc.github.io/soffosai-js/)
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
@@ -142,7 +143,8 @@ In order to create a Pipeline a service Node should be defined as stated above t
 import { SoffosPipeline } from "soffosai";
 
 const nodes = [file_converter, summarize, ingestor];
-const pipe = new SoffosPipeline(nodes, false, {apiKey: my_apiKey});
+// The pipeline needs a name so it can be referred to in a pipeline (pipeline inside a pipeline).
+const pipe = new SoffosPipeline(nodes, false, "name_of_this_pipeline", {apiKey: my_apiKey});
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
 ```
@@ -177,7 +179,7 @@ function get_filename(file) {
  * Given a file upload the file to Soffos and get its reference document_id.
  */
 export class FileIngestPipeline extends SoffosPipeline {
-    constructor(kwargs) {
+    constructor(name, kwargs) {
         const file_converter = new SoffosNodes.FileConverterNode(
             "file_converter",
             {
@@ -201,7 +203,7 @@ export class FileIngestPipeline extends SoffosPipeline {
                 field: "text"
             }
         );
-        return super([file_converter, document_ingest], false, kwargs);
+        return super([file_converter, document_ingest], false, name, kwargs);
     }
 
     /*
@@ -232,7 +234,7 @@ When you do this, you can easily reuse your pipeline like this:
 ```
 import { FileIngestPipeline } from "./your_directory/your_file.js";
 
-let pipe = new FileIngestPipeline({apiKey: my_apiKey});
+let pipe = new FileIngestPipeline("name_of_this_pipe", {apiKey: my_apiKey});
 
 // provided you have a <input type="file" id="file">
 let the_file = document.getElementById("file").files[0];
@@ -271,6 +273,7 @@ const AskFromDocument = new SoffosPipeline(
         )
     ],
     false,
+    "name_of_the_pipeline",
     {apiKey: my_apiKey}
 );
 

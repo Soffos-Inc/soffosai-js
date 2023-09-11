@@ -1,6 +1,6 @@
 # Soffosai JS
-Javascript SDK for Soffos.ai API
-[Detailed Documentaton](https://soffos-inc.github.io/soffosai-js/)
+- Javascript SDK for Soffos.ai API
+- [Detailed Documentaton](https://soffos-inc.github.io/soffosai-js/)
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
