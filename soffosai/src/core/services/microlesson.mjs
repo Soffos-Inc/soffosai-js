@@ -18,7 +18,7 @@ class MicrolessonService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {Array.<object>} content
+     * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
      * @returns {Promise<Object>} 
      */
     call(user, content=undefined) {

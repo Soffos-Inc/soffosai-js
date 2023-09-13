@@ -22,8 +22,9 @@ class TableGeneratorService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} text
-     * @param {string} [table_format="markdown"]
+     * @param {string} text - Text to extract tables from.
+     * @param {string} [table_format="markdown"] - A string indicating the table output format.
+     * Formats supported:
      * @returns {Promise<Object>} 
      */
     call(user, text, table_format='markdown') {

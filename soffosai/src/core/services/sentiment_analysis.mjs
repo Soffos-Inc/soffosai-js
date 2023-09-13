@@ -20,9 +20,11 @@ class SentimentAnalysisService extends SoffosAIService {
     /**
     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-    * @param {string} text
-    * @param {number} [sentence_split=3]
-    * @param {boolean} [sentence_overlap=false]
+    * @param {string} text - Text to be analyzed for sentiment.
+    * @param {number} [sentence_split=3] - The number of sentences of each chunk when splitting the input text.
+    * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+     * For example, with sentence_split 3 and sentence_overlap=true :
+     * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
     * @returns {Promise<Object>} 
     */
    call(user, text, sentence_split=4, sentence_overlap=false) {

@@ -22,7 +22,7 @@ class LetsDiscussCreateService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} context
+     * @param {string} context - The content to discuss about.
      * @returns {Promise<Object>} 
      */
     call(user, context) {
@@ -54,8 +54,8 @@ class LetsDiscussService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} session_id
-     * @param {string} query
+     * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
+     * @param {string} query - User's message.
      * @returns {Promise<Object>} 
      */
     call(user, session_id, query) {
@@ -88,7 +88,8 @@ class LetsDiscussRetrieveService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {boolean} return_messages
+     * @param {boolean} return_messages - When set to true, in addition to returning 
+     * all the session records, it will also return all the messages associated with each session.
      * @returns {Promise<Object>} 
      */
     call(user, return_messages) {
@@ -120,7 +121,7 @@ class LetsDiscussDeleteService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {Array.<string>} session_ids
+     * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
      * @returns {Promise<Object>} 
      */
     call(user, session_ids) {

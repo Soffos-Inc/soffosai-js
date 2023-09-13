@@ -18,8 +18,8 @@ class FileConverterService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {Blob} file
-     * @param {number} [normalize=0] 
+     * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
+     * @param {number} [normalize=0] - Whether to perform normalization.
      * @returns {Promise<Object>}
      */
     call(user, file, normalize=0) {

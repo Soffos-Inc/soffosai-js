@@ -9,8 +9,9 @@ import {ProfanityService} from "../../app.mjs";
 class ProfanityNode extends Node {
 
     /**
-     * @param {string} name
-     * @param {string} text
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} text - Input text.
      */
     constructor(name, text) {
         let service = new ProfanityService();

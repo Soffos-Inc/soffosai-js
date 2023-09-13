@@ -9,8 +9,9 @@ import {LogicalErrorDetectionService} from "../../app.mjs";
 class LogicalErrorDetectionNode extends Node {
 
     /**
-     * @param {string} name
-     * @param {string} text
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} text - Input text to analyze for logical errors.
      */
     constructor(name, text) {
         let service = new LogicalErrorDetectionService();

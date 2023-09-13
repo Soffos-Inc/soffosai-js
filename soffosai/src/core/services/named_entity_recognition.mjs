@@ -20,8 +20,8 @@ class NamedEntityRecognitionService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} text
-     * @param {Object.<string, string>} labels
+     * @param {string} text - Input text to be analyzed for named entities.
+     * @param {Object.<string, string>} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
      * @returns {Promise<Object>}
      */
     call(user, text, labels=undefined) {

@@ -12,7 +12,7 @@ import MicrolessonNode from "./microlesson.mjs";
 import NamedEntityRecognitionNode from "./named_entity_recognition.mjs";
 import ParaphraseNode from "./paraphrase.mjs";
 import ProfanityNode from "./profanity.mjs"
-import QuestionAndAnswerGenerationNode from "./question_and_answer_generation.mjs";
+import QuestionAndAnswerGenerationNode from "./qna_generation.mjs";
 import QuestionAnsweringNode from "./question_answering.mjs";
 import ReviewTaggerNode from "./review_tagger.mjs";
 import SentimentAnalysisNode from "./sentiment_analysis.mjs";

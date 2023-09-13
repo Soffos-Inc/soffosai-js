@@ -8,11 +8,12 @@ import {AnswerScoringService} from "../../app.mjs";
  */
 class AnswerScoringNode extends Node{
     /**
-     * @param {string} name 
-     * @param {string} context
-     * @param {string} question
-     * @param {string} user_answer
-     * @param {string} [answer=null]
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} context - This should be the passage with the information that is related to the question and answer.
+     * @param {string} question - The question to answer.
+     * @param {string} user_answer - The user's answer which will be marked.
+     * @param {string} [answer=null] - Optionally provide the expected answer.
      */
     constructor(name, context, question, user_answer, answer=null) {
         let service = new AnswerScoringService();

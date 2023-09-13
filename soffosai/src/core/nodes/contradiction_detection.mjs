@@ -8,8 +8,9 @@ import {ContradictionDetectionService} from "../../app.mjs";
  */
 class ContradictionDetectionNode extends Node{
     /**
-     * @param {string} name
-     * @param {string} text
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} text - Text to be analyzed for contradictions.
      * @returns {Promise<Object>} 
      */
     constructor(name, text) {

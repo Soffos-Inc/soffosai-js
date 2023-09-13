@@ -9,8 +9,9 @@ import {LetsDiscussCreateService, LetsDiscussService, LetsDiscussRetrieveService
 class LetsDiscussCreateNode extends Node {
 
     /**
-     * @param {string} name
-     * @param {string} context
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} context - The content to discuss about.
      */
     constructor(name, context) {
         let service = new LetsDiscussCreateService();
@@ -30,10 +31,10 @@ class LetsDiscussCreateNode extends Node {
  class LetsDiscussNode extends Node {
 
     /**
-     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-     * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} session_id
-     * @param {string} query
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
+     * @param {string} query - User's message.
      * @returns {Promise<Object>} 
      */
     constructor(name, session_id, query) {
@@ -55,8 +56,10 @@ class LetsDiscussCreateNode extends Node {
  class LetsDiscussRetrieveNode extends Node {
 
     /**
-     * @param {string} name
-     * @param {boolean} [return_messages=true]
+     * @param {string} name - The name of this Node.
+     *  It will be used by the Pipeline to reference this Node.
+     * @param {boolean} [return_messages=true] - When set to true, in addition to returning 
+     * all the session records, it will also return all the messages associated with each session.
      */
     constructor(name, return_messages=true) {
         let service = new LetsDiscussRetrieveService();
@@ -77,7 +80,7 @@ class LetsDiscussCreateNode extends Node {
 
     /**
      * @param {string} name
-     * @param {Array.<string>} session_ids
+     * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
      */
     constructor(name, session_ids) {
         let service = new LetsDiscussDeleteService();
