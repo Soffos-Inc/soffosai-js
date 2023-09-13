@@ -5,7 +5,7 @@ import { DocumentsSearchNode, QuestionAnsweringNode } from "./../../nodes/index.
  * The document search service provides "passages" which is a list of contents plus some more description.
  * In order to get the content, iterate through the passages and concatenate it.
  * @param {Array.<object>} value 
- * @returns 
+ * @returns {string}
  */
 function getContent(value) {
     let combined_text = "";

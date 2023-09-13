@@ -9,7 +9,6 @@ import {ContradictionDetectionIO} from '../../common/serviceio_fields/index.mjs'
  * offsets within the original text.
  * @class
  * @alias SoffosServices.ContradictionDetectionService
- * @example
  */
 class ContradictionDetectionService extends SoffosAIService {
     constructor(kwargs = {}) {

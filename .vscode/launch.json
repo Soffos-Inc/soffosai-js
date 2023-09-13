@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "node",
             "request": "launch",
@@ -16,8 +17,8 @@
         {
             "type": "python",
             "request": "launch",
-            "name": "Launch PyProgram",
-            "program": "${workspaceFolder}\\coding_helper\\nodes_to_ts_declaration.py"
+            "name": "Launch doc_scraper",
+            "program": "${workspaceFolder}\\coding_helper\\doc_scraper.py"
         }
     ]
 }
