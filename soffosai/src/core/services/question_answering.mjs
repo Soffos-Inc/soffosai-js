@@ -32,12 +32,13 @@ class QuestionAnsweringService extends SoffosAIService {
      * Set this to false only when getting the most relevant content as the answer has equal or higher importance than the question being rejected or the answer being ambiguous/inaccurate.
      * @param {string} [check_query_type=true] - When true, it will check whether the message is a natural language question, or whether it is a keyword query or a statement and respond appropriately if the message is not a question. The module is capable of returning a relevant answer to keyword or poorly formulated queries, but this option can help restrict the input.
      * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
-     * @param {string} [generic_response=false]
+     * @param {string} [generic_responses=false] - In addition to checking for ambiguity or query type, this module performs other checks such as profanity, language, etc.. If the input query fails in one of these checks, it will reject the query by responding with a message that points out the issue.
+     * When true, the module will respond with a generic message without giving the reason as to why the message was rejected, which is the same behavior as when it cannot find an answer to the query in the provided context.
      * @param {Object.<string, string>} meta
      * @returns {Promise<Object>} 
      */
     call(user, question, document_text=undefined, document_ids=undefined, 
-        check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {
+        check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined) {
         let payload = {
           "user": user,
           "question": question,
@@ -45,7 +46,7 @@ class QuestionAnsweringService extends SoffosAIService {
           "document_ids": document_ids,
           "check_ambiguity": check_ambiguity,
           "check_query_type": check_query_type,
-          "generic_response": generic_response,
+          "generic_responses": generic_responses,
           "meta": meta
         };
       payload['message'] = question;

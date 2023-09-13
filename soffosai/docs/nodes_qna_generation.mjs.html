@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: services/profanity.mjs</title>
+    <title>JSDoc: Source: nodes/qna_generation.mjs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: services/profanity.mjs</h1>
+    <h1 class="page-title">Source: nodes/qna_generation.mjs</h1>
 
     
 
@@ -26,40 +26,38 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { SoffosAIService } from './service.mjs';
-import { ServiceString } from '../../common/constants.mjs';
-import {ProfanityIO} from '../../common/serviceio_fields/index.mjs';
-
+            <pre class="prettyprint source linenums"><code>import {Node} from "./node.mjs";
+import {QuestionAndAnswerGenerationService} from "../../app.mjs";
 
 /**
- * This module detects profanities and the level of offensiveness in a body of text. 
+ * A service configuration for QuestionAndAnswerGenerationService for Pipeline use.
  * @class
- * @alias SoffosServices.ProfanityService
+ * @alias _SoffosNodes.QuestionAndAnswerGenerationNode
  */
-class ProfanityService extends SoffosAIService {
-    constructor(kwargs = {}) {
-      const service = ServiceString.PROFANITY;
-      super(service, kwargs);
-      this._serviceio = new ProfanityIO();
-    }
-  
+class QuestionAndAnswerGenerationNode extends Node {
+
     /**
-     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-     * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} text - Input text.
-     * @returns {Promise&lt;Object>} 
+     * @param {string} name - The name of this Node.
+     * It will be used by the Pipeline to reference this Node.
+     * @param {string} text - The input text from which the question-answer pairs will be generated.
+     * @param {number} [sentence_split=3] - The number of sentences of each chunk when splitting the input text.
+     * @param {string} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+     * For example, with sentence_split 3 and sentence_overlap=true :
+     * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
      */
-    call(user, text) {
-      let payload = {
-        "user": user,
-        "text": text,
-      };
-      return super.call(payload);
+    constructor(name, text, sentence_split=3, sentence_overlap=false) {
+        let service = new QuestionAndAnswerGenerationService();
+        let source = {
+			text: text,
+			sentence_split: sentence_split,
+			sentence_overlap: sentence_overlap
+        };
+        
+        return super(name, service, source);
     }
 }
 
-export default ProfanityService
-</code></pre>
+export default QuestionAndAnswerGenerationNode;</code></pre>
         </article>
     </section>
 

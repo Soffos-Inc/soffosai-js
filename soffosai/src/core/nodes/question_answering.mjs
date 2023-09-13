@@ -22,17 +22,17 @@ class QuestionAnsweringNode extends Node {
      * Set this to false only when getting the most relevant content as the answer has equal or higher importance than the question being rejected or the answer being ambiguous/inaccurate.
      * @param {boolean} check_query_type - When true, it will check whether the message is a natural language question, or whether it is a keyword query or a statement and respond appropriately if the message is not a question. The module is capable of returning a relevant answer to keyword or poorly formulated queries, but this option can help restrict the input.
      * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
-     * @param {boolean} generic_response
+     * @param {boolean} generic_responses
      * @param {object} meta
      */
     constructor(name, question, document_text=undefined, document_ids=undefined, 
-        check_ambiguity=true, check_query_type=true, generic_response=false, meta=undefined) {
+        check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined) {
         let service = new QuestionAnsweringService();
         let source = {
 			message: question, // special handling, message is unclear so question is used
 			check_ambiguity: check_ambiguity,
 			check_query_type: check_query_type,
-			generic_response: generic_response
+			generic_responses: generic_responses
         };
         if (document_text) source.document_text = document_text;
 		if (document_ids) source.document_ids = document_ids;
