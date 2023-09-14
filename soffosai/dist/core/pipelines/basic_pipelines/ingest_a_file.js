@@ -29,7 +29,7 @@ function get_filename(file) {
 /**
  * Given a file path, upload the file to Soffos and get its reference document_id.
  * @class
- * @alias SoffosPipelines.FileIngestPipeline
+ * @alias _SoffosPipelines.FileIngestPipeline
  */
 var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
   _inherits(FileIngestPipeline, _Pipeline);

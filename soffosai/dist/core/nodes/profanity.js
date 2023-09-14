@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for ProfanityService for Pipeline use.
  * @class
- * @alias SoffosNodes.ProfanityNode
+ * @alias _SoffosNodes.ProfanityNode
  */
 var ProfanityNode = /*#__PURE__*/function (_Node) {
   _inherits(ProfanityNode, _Node);
   var _super = _createSuper(ProfanityNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Input text.
    */
   function ProfanityNode(name, text) {
     var _this;

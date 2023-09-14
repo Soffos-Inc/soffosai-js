@@ -22,17 +22,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for Answer Scoring Service for Pipeline use.
  * @class
- * @alias SoffosNodes.AnswerScoringNode
+ * @alias _SoffosNodes.AnswerScoringNode
  */
 var AnswerScoringNode = /*#__PURE__*/function (_Node) {
   _inherits(AnswerScoringNode, _Node);
   var _super = _createSuper(AnswerScoringNode);
   /**
-   * @param {string} name 
-   * @param {string} context
-   * @param {string} question
-   * @param {string} user_answer
-   * @param {string} [answer=null]
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} context - This should be the passage with the information that is related to the question and answer.
+   * @param {string} question - The question to answer.
+   * @param {string} user_answer - The user's answer which will be marked.
+   * @param {string} [answer=null] - Optionally provide the expected answer.
    */
   function AnswerScoringNode(name, context, question, user_answer) {
     var _this;

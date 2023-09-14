@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for LogicalErrorDetectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.LogicalErrorDetectionNode
+ * @alias _SoffosNodes.LogicalErrorDetectionNode
  */
 var LogicalErrorDetectionNode = /*#__PURE__*/function (_Node) {
   _inherits(LogicalErrorDetectionNode, _Node);
   var _super = _createSuper(LogicalErrorDetectionNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Input text to analyze for logical errors.
    */
   function LogicalErrorDetectionNode(name, text) {
     var _this;

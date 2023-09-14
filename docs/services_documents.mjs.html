@@ -63,16 +63,53 @@ class DocumentsIngestService extends SoffosAIService {
      * This allows document filtering based on the meta fields. Due to name being a mandatory field 
      * provided independently, if a name field is included in meta it will be ignored.
      * @returns {Promise&lt;Object>} 
+     * document_id - string &lt;br>
+     * The unique id of the ingested document. It's crucial to store the document_id in order 
+     * to be able to reference this document later on when calling other modules.
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token &lt;put your api key here>";
+     * 
+     * const service = new SoffosServices.DocumentsIngestService({apiKey:my_apiKey});
+     * let response = await service.call(
+     *     "client 987654321",
+     *     'dogs',
+     *     "Genetic evidence suggests that dogs descended directly from wolves (Canis) and \
+     *     that the now-extinct wolf lineages that produced dogs branched off from the line \
+     *     that produced modern living wolves sometime between 27,000 and 40,000 years ago. \
+     *     The timing and location of dog domestication is a matter of debate. \
+     *     There is strong genetic evidence, however, that the first domestication events occurred \
+     *     somewhere in northern Eurasia between 14,000 and 29,000 years ago.",
+     * );
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns
+     * // {
+     * //     "document_id": "0d059b3bf66b4ecfa124c175a6d3cd45",
+     * //     "success": true,
+     * //     "filtered": {
+     * //       "passages": [],
+     * //       "reason": "Unable to process due to bad structure."
+     * //     },
+     * //     "cost": {
+     * //       "api_call_cost": 0.005,
+     * //       "character_volume_cost": 0.02415,
+     * //       "total_cost": 0.02915
+     * //     },
+     * //     "charged_character_count": 483,
+     * //     "unit_price": "0.000050"
+     * // }
      */
     call(user, document_name, text=null, tagged_elements=null, meta=null) {
       let payload = {
         "user": user,
         "document_name": document_name,
         "name": document_name,
-        "text": text,
-        "tagged_elements": tagged_elements,
-        "meta": meta
       };
+      if (text) payload.text = text;
+      if (tagged_elements) payload.tagged_elements = tagged_elements;
+      if (meta) payload.meta = meta;
       return super.call(payload);
     }
 }
@@ -127,20 +164,63 @@ class DocumentsSearchService extends SoffosAIService {
      * @param {string} [date_from] - Filters passages to those ingested at or after the specified ISO-8601 formatted date.
      * @param {string} [date_until] - Filters passages to those ingested before the specified ISO-8601 formatted date.
      * @returns {Promise&lt;Object>} 
+     * passages - dictionary list &lt;br>
+     * List of passages. Each passage contains the following data: &lt;br>
+     * content: The raw text of the passage. &lt;br>
+     * document_id: Origin document's ID. &lt;br>
+     * created_at: Ingestion datetime. &lt;br>
+     * name: Origin document's name. &lt;br>
+     * scores: Dictionary containing the matching score of this passage to the query for each method that matched it. &lt;br>
+     * meta: Dictionary with the metadata that were provided when the passage's origin document was ingested. &lt;br>
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token &lt;put your api key here>";
+     * const service = new SoffosServices.DocumentsSearchService({apiKey:my_apiKey});
+     * let response = await service.call(
+     *     "client 987654321", null, null, ["0d059b3bf66b4ecfa124c175a6d3cd45"]
+     * );
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns this if document_id exists and you own the document
+     * // {
+     * //     "passages": [
+     * //       {
+     * //         "content": "Genetic evidence suggests that dogs descended directly from wolves (Canis) and     that the now-extinct wolf lineages that produced dogs branched off from the line     that produced modern living wolves sometime between 27,000 and 40,000 years ago. The timing and location of dog domestication is a matter of debate. There is strong genetic evidence, 
+     * //   however, that the first domestication events occurred     somewhere in northern Eurasia between 14,000 and 29,000 years ago.",
+     * //         "created_at": "2023-09-13T09:38:00.807895",
+     * //         "document_id": "0d059b3bf66b4ecfa124c175a6d3cd45",
+     * //         "name": "dogs",
+     * //         "scores": [
+     * //           {
+     * //             "keyword": 0.5312093733737563
+     * //           }
+     * //         ],
+     * //         "meta": {}
+     * //       }
+     * //     ],
+     * //     "cost": {
+     * //       "api_call_cost": 0,
+     * //       "character_volume_cost": 0,
+     * //       "total_cost": 0
+     * //     },
+     * //     "charged_character_count": 0,
+     * //     "unit_price": "0.000000"
+     * // }
      */
     call(user, query=null, filters=null, document_ids=null, top_n_keywords=5,
         top_n_natural_language=5, date_from=null, date_until=null) 
     {
       let payload = {
         "user": user,
-        "query": query,
-        "filters": filters,
-        "document_ids": document_ids,
         "top_n_keywords": top_n_keywords,
         "top_n_natural_language": top_n_natural_language,
-        "date_from": date_from,
-        "date_until": date_until
       };
+      if (query) payload.query = query;
+      if (filters) payload.filters = filters;
+      if (document_ids) payload.document_ids = document_ids;
+      if (date_from) payload.date_from = date_from;
+      if (date_until) payload.date_until = date_until;
 
       let response = super.call(payload);
       let text = "";
@@ -171,8 +251,21 @@ class DocumentsDeleteService extends SoffosAIService {
     /**
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {Array.&lt;string>} [document_ids] - A list of the document_ids of the documents to be deleted.
+     * @param {Array.&lt;string>} document_ids - A list of the document_ids of the documents to be deleted.
      * @returns {Promise&lt;Object>} 
+     * success = true if operation succeded
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token &lt;put your api key here>";
+     * const service = new SoffosServices.DocumentsDeleteService({apiKey:my_apiKey});
+     * let  response = await service.call('client 987654321', ["0d059b3bf66b4ecfa124c175a6d3cd45"]);
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns this if document_id exists and you own the document
+     * // {
+     * //     "success": true
+     * // }
      */
     call(user, document_ids) {
       let payload = {
@@ -201,7 +294,7 @@ export {DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService}
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Sep 13 2023 16:41:32 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Sep 14 2023 22:23:03 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

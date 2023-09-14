@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Pipeline = void 0;
-var _app = require("../../app.js");
 var _node = require("../nodes/node.js");
 var _type_classifications = require("../../utils/type_classifications.js");
 var _pipeline_preprocesses = require("../../utils/pipeline_preprocesses.js");
@@ -34,6 +33,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
  * If the previous Nodes does not have it, it will take from the
  * pipeline's user_input.  Also, the Nodes will only be supplied with the required fields + default
  * of the require_one_of_choices fields.
+ * 
  */
 var Pipeline = /*#__PURE__*/function () {
   /**
@@ -48,7 +48,7 @@ var Pipeline = /*#__PURE__*/function () {
     var kwargs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     _classCallCheck(this, Pipeline);
     var api_key = kwargs.apiKey;
-    this.apiKey = _app.apiKey || api_key;
+    this.apiKey = api_key;
     this._stages = nodes;
     this._input = {};
     this._infos = {};

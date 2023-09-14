@@ -25,7 +25,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * Paraphrase and Simplify are available as two different flavors of the same module. 
  * While the Paraphrase module attempts to change the wording while keeping the same level of complexity, 
- * the Simplify module outputs more commonly used words without altering the meaning of the original text. 
+ * the Simplify module outputs more commonly used words without altering the meaning of the original text.
+ * @class
+ * @alias SoffosServices.ParaphraseService 
  */
 var ParaphraseService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(ParaphraseService, _SoffosAIService);
@@ -43,8 +45,32 @@ var ParaphraseService = /*#__PURE__*/function (_SoffosAIService) {
   /**
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
-   * @param {string} text
+   * @param {string} text - Text to be paraphrased/simplified.
    * @returns {Promise<Object>} 
+   * paraphrase
+   * @example
+   * import { SoffosServices } from "soffosai";
+   * 
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.ParaphraseService({apiKey:my_apiKey});
+   * let response = await service.call(
+   *     "sample client id", 
+   *     "Soffosai provides a very easy and economical way to integrate AI into your systems"
+   * );
+   * console.log(JSON.stringify(response, null, 2));
+   *     
+   * // returns
+   * // {
+   * //     "paraphrase": "Soffosai offers a simple and cost-effective method for incorporating AI into your systems",
+   * //     "simplify": false,
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.005,
+   * //       "total_cost": 0.01
+   * //     },
+   * //     "charged_character_count": 100,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(ParaphraseService, [{
     key: "call",

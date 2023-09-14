@@ -22,15 +22,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for NamedEntityRecognitionService for Pipeline use.
  * @class
- * @alias SoffosNodes.NamedEntityRecognitionNode
+ * @alias _SoffosNodes.NamedEntityRecognitionNode
  */
 var NamedEntityRecognitionNode = /*#__PURE__*/function (_Node) {
   _inherits(NamedEntityRecognitionNode, _Node);
   var _super = _createSuper(NamedEntityRecognitionNode);
   /**
-   * @param {string} name
-   * @param {string} text
-   * @param {Object.<string, string>} labels
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Input text to be analyzed for named entities.
+   * @param {Object.<string, string>} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
    */
   function NamedEntityRecognitionNode(name, text) {
     var _this;

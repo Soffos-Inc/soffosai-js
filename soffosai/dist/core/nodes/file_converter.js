@@ -22,15 +22,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for FileConverterService for Pipeline use.
  * @class
- * @alias SoffosNodes.FileConverterNode
+ * @alias _SoffosNodes.FileConverterNode
  */
 var FileConverterNode = /*#__PURE__*/function (_Node) {
   _inherits(FileConverterNode, _Node);
   var _super = _createSuper(FileConverterNode);
   /**
-   * @param {string} name
-   * @param {Blob} file
-   * @param {number} normalize
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
+   * @param {number} normalize - Whether to perform normalization.
    */
   function FileConverterNode(name, file) {
     var _this;

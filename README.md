@@ -77,7 +77,22 @@ console.log(JSON.stringify(response, null, 2));
 // The only difference is the declaration of the service. You must append soffosai.
 let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
 ```
+## Important
+- use 
+```
+import { SoffosServices } from "soffosai";
+let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
+```
+if you are using a javascript library like React.js or Framework like Angular.
 
+- use 
+```
+<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>
+<script>
+    let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+</script>
+```
+if you are using the soffosai package directly into an html file.
 
 ## Nodes 
 Nodes are the configuration of Services for Pipeline use.

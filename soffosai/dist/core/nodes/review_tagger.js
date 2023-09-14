@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for ReviewTaggerService for Pipeline use.
  * @class
- * @alias SoffosNodes.ReviewTaggerNode
+ * @alias _SoffosNodes.ReviewTaggerNode
  */
 var ReviewTaggerNode = /*#__PURE__*/function (_Node) {
   _inherits(ReviewTaggerNode, _Node);
   var _super = _createSuper(ReviewTaggerNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - The review text.
    */
   function ReviewTaggerNode(name, text) {
     var _this;

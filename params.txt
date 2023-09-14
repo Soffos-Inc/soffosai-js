@@ -1,2 +1,681 @@
 Item 1: Getting Started
 Item 2: Ambiguity Detection
+docs: {
+    "description": "This module finds statements or sentences in text that are not coherent, or can be\ninterpreted in multiple ways while also taking in account the surrounding context. For\nexample, \"The fisherman went to the bank\" would be identified as ambiguous, but \"The\nfisherman went to the bank to draw money\" won't.It accepts parameters to control the way\nthe text is segmented for processing.It gives an explanation as to why a span of text is\nconsidered ambiguous. Despite taking in account the context of each span, the module may\nsometimes be strict in what it considers ambiguous, even if the combination of words mean\nsomething very specific most of the time.A very fascinating tool for writers that can be\nused to inspire, write more understandable content, or even to just delve into the\nremarkable nuances and complexities hidden in human language and thought.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be analyzed for ambiguitites."
+        },
+        "sentence_split": {
+            "type": "integer",
+            "optional": true,
+            "default": "4",
+            "description": "The number of sentences of each chunk when splitting the input text."
+        },
+        "sentence_overlap": {
+            "type": "boolean",
+            "optional": true,
+            "default": "false",
+            "description": "Whether to overlap adjacent chunks by 1 sentence.\nFor example, with sentence_split 3 and sentence_overlap=true :\n[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]"
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * ambiguities - dictionary list<br>\n* A list of dictionaries. Each dictionary represents an ambiguity and contains the following fields: <br>\n* text: The text classified as ambiguous.<br>\n* span_start: The starting character index of the ambiguous text in the original text.<br>\n* span_end: The ending character index of the ambiguous text in the original text.<br>\n* reason: An explanation on why the span is considered ambiguous.<br>\n"
+}Item 8: Answer Scoring
+docs: {
+    "description": "This module will mark the user's answer based on the provided context, the question and,\noptionally, the expected correct answer. Typical string similarity methods often fail to\naccurately capture the similarity in meaning and semantics, especially in cases where a\nsingle word can alter the entire meaning of a sentence. This module not only addresses\nthis issue, but the fact that the underlying AI understands the context and question also\nenables it to evaluate an answer even if the expected correct answer is not provided.\nHowever, when provided, the evaluation will give it more weight than the information in\nthe context.The score is a value between 0 and 1, with 0 being completely wrong and 1\nbeing perfectly accurate. Additionally, the reasoning behind the score is provided.The\nAnswer Scoring module is a perfect fit to supplement the Q&A generation module by marking\nusers' answers to AI-generated question-answer pairs. Together they can power a wide range\nof educational and retention-assessment applications.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "context": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "This should be the passage with the information that is related to the question and answer."
+        },
+        "question": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The question to answer."
+        },
+        "answer": {
+            "type": "string",
+            "optional": true,
+            "default": "not applicable",
+            "description": "Optionally provide the expected answer."
+        },
+        "user_answer": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The user's answer which will be marked."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * score - float<br>\n* A value between0and1indicating the correctness of the answer.*  <br>\n* reasoningstring* A concise explanation of how the AI arrived to the predicted score. <br>\n"
+}Item 9: Chatbot
+docs: {
+    "description": "The Chatbot module enables you to create custom chatbots. You can give it a name, a\npurpose and connect it to your document repository so that it informs its responses to\nusers from your ingested documents.",
+    "arguments": {
+        "null": {}
+    },
+    "output_fields": null
+}Item 10: Contradiction Detection
+docs: {
+    "description": "This module finds conflicting information in a body of text and returns a description of\nthe contradiction along with the relevant sentences and their offsets within the original\ntext.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be analyzed for contradictions."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * contradictions - dictionary list<br>\n* A list of dictionaries representing detected contradictions. Each dictionary contains the following fields: <br>\n* contradiction: A description of the contradiction.<br>\n* sentences: A list of sentences related to the contradiction. Each sentence is a dictionary with the sentence's text, starting offset and ending offset within the original text.<br>\n"
+}Item 11: Documents (Natural Language Search)
+docs: {
+    "description": "The Documents module enables ingestion of contnent into Soffos. The content is pre-\nprocessed and stored alongside its representations and metadata required for searching\nusing natural language. Queries can be as simple as questions that someone would ask a\nhuman. Additionally, content can be filtered based on the metadata provided by the user\nwhen ingesting a document. The combination of basic filtering similar to how most\ndatabases work in combination with natural language search, both keyword-based and\nsemantic using machine learning, makes this module a very useful tool for any type of use-\ncase that requires lighning fast information extraction from large knowledge bases.",
+    "arguments": {
+        "null": {}
+    },
+    "output_fields": null
+}Item 12: E-mail Analysis
+docs: {
+    "description": "This module extracts key information from the body of an e-mail.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The e-mail body text."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * analysis - dictionary<br>\n* A dictionary containing the following key information: <br>\n* key pointsstring listtopicsstring listsenderstringreceiverstring listmentionsstring listsentimentstringurgencystringdatesstring list<br>\n"
+}Item 13: Emotion Detection
+docs: {
+    "description": "The Emotion Detection module can detect selected emotions within the provided text. The\noriginal text is chunked to passages of a specified sentence length. Smaller chunks yield\nbetter accuracy.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to detect emotions from."
+        },
+        "sentence_split": {
+            "type": "integer",
+            "optional": true,
+            "default": "4",
+            "description": "The number of sentences of each chunk when splitting the input text."
+        },
+        "sentence_overlap": {
+            "type": "boolean",
+            "optional": true,
+            "default": "false",
+            "description": "Whether to overlap adjacent chunks by 1 sentence.\nFor example, with sentence_split 3 and sentence_overlap=true :\n[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]"
+        },
+        "emotion_choices": {
+            "type": "string",
+            "optional": true,
+            "default": "[\"joy\", \"trust\", \"fear\", \"surprise\", \"sadness\", \"disgust\", \"anger\", \"anticipation\"]",
+            "description": "List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * spans - dictionary list<br>\n* A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>\n* text: The text of the span.<br>\n* detected_emotions: A list of the emotions detected for the specific span.<br>\n* span_start: The starting character index of the span in the original input text.<br>\n* span_end: The ending character index of the span in the original input text.<br>\n"
+}Item 14: File Converter
+docs: {
+    "description": "The File Converter extracts text from various types of files. It tags elements within\nstructured DOCX documents and provides a list of labelled text spans. Additionally, the\nnormalize feature is available which uses a machine learning approach to organize messy\noutputs as well as tag and label document elements based on the whitespace formatting (new\nlines, spaces, etc.) and the content itself. The normalize feature is more suited for\nunstructured documents such as plain text or PDFs (scanned and searchable) that are almost\nimpossible to process reliably with a single rule-based approach due to their inconsistent\nand often complicated formatting.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "file": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The byte stream of the file. The file should not exceed 50Mb in size."
+        },
+        "normalize": {
+            "type": "string",
+            "optional": true,
+            "default": "\"0\" Must be \"0\" or \"1\".",
+            "description": "Whether to perform normalization."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * text - string<br>\n* Raw text extracted from the document. <br>\n*  <br>\n* tagged_elementsdictionary list* A list of dictionaries of all the extracted text snippets and their tags. Each dictionary has the following fields: <br>\n* text: The text of the snippet.<br>\n* tag: A tag. Detectable elements:paragraph,heading,bullet_list,table_of_contents.<br>\n* headings: A list of dictionaries representing the headings which this element is under. Each dictionary contains thetextandtagfields of each heading. This is useful for sorting and labelling the content.<br>\n* Other element-specific fields: <br>\n* bullets: Available onlybullet_listelements. Contains all bullets and their sub-bullets in a nested structure.<br>\n* contents: Available only intable_of_contentelements. Contains the headings and sub-headings of the document's table of contents.<br>\n* heading: Available only intable_of_contentelements. It is the heading of the document's table of contents.<br>\n*  <br>\n* normalized_textstring<br>\n* Resulting text after normalization. <br>\n*  <br>\n* normalized_tagged_elementsdictionary list<br>\n* Similar to the standardtagged_elements. Detectable elements:paragraph,heading,bullet_list,quote.<br>\n"
+}Item 15: Language Detection
+docs: {
+    "description": "The Language Detection module detects the dominant language in the provided text.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be classified under a language."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * language - string<br>\n* The language code of the detected language. <br>\n"
+}Item 16: Let's Discuss
+docs: {
+    "description": "The Let's Discuss module allows the user to have a conversation with the AI about the\ncontent provided by the user. The main difference between this module and the Question\nAnswering module is that Let's Discuss keeps a history of the interactions, allowing it to\ntake in account what was previously discussed when generating a response. Unlike Question\nAnswering which is mainly used for information retrieval, the Let's Discuss module creates\na more natural experience similar to having a conversation with a person at the expense of\nthe size of the content it can process at a time.The module requires the creation of a\nsession by providing a limited amount of content. It then returns a session ID which is\nused to send and receive messages.It is also possible to retrieve session details and\nmessages and delete them to free up memory usage.",
+    "arguments": {
+        "null": {}
+    },
+    "output_fields": null
+}Item 17: Logical Error Detection
+docs: {
+    "description": "Identifies illogical statements in text and explains why they are illogical.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Input text to analyze for logical errors."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * logical_errors - dictionary list<br>\n* A list of dictionaries representing detected logical errors. Each dictionary contains the following fields: <br>\n* text: The illogical text.<br>\n* start: Starting character index in the original text.<br>\n* end: Ending chracter index in the original text.<br>\n* explanation: The reasoning behind why the text span is illogical.<br>\n"
+}Item 18: Microlesson
+docs: {
+    "description": "Accepts a list of texts, each one labelled with its source and creates a concise\nmicrolesson including a short summary, key points, learning objectives and tasks that aim\nto help the learner achieve the learning objectives.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "content": {
+            "type": "dictionary",
+            "optional": false,
+            "default": "not applicable",
+            "description": "A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * microlesson - string<br>\n* A concise, structured microlesson containing a summary, key points, learning objectives and tasks. <br>\n"
+}Item 19: Named Entity Recognition
+docs: {
+    "description": "Identifies named entities in text. It supports custom labels. Below are the default\nentities and their labels:However, this module is extremely versatile as the labels can be\ndefined by the user. See the below example on how this can be applied to a medical use-\ncase.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Input text to be analyzed for named entities."
+        },
+        "labels": {
+            "type": "dictionary",
+            "optional": true,
+            "default": "not applicable",
+            "description": "When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * named_entities - dictionary list<br>\n* A list of dictionaries representing identified named entities. Each dictionary contains the following fields: <br>\n* text: The text of the entity.tag: Label of the entity.span: A list with the start and end offset of the entity in the original text.<br>\n*  <br>\n* entity_countsdictionary list<br>\n* A list of dictionaries with entities and their counts. The dictionaries contain the following fields: <br>\n* text: The name of the entity.tag: Label of the entity.count: Number of occurrences of the entity in the text.<br>\n"
+}Item 20: Natural SQL Generation
+docs: {
+    "description": "The Natural SQL Generation module converts your natural language messages into SQL queries\nthat can be used to query your database. All you need to do is ingest the schema of your\ndatabase in a defined format described below and then ask it to give you the data you\nneed. The output of the module is a raw SQL snippet that can be executed immediately. In\ncases where the system cannot generate a relevant SQL query, it will ask for\nclarifications. The module can be set up as an interactive session by providing it all\nprevious interactions, informing it better how to respond. However, unlike our chatbot\nmodule, it does not store the session history internally - that's something that needs to\nbe done on the application level.",
+    "arguments": {
+        "null": {}
+    },
+    "output_fields": null
+}Item 21: Paraphrase Simplify
+docs: {
+    "description": "Paraphrase and Simplify are available as two different flavors of the same module. While\nthe Paraphrase module attempts to change the wording while keeping the same level of\ncomplexity, the Simplify module outputs more commonly used words without altering the\nmeaning of the original text.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be paraphrased/simplified."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": null
+}Item 22: Inappropriate Content Detection
+docs: {
+    "description": "This module detects profanities and the level of offensiveness in a body of text.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Input text."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * offensive_probability - float<br>\n* A float value between0and1indicating the degree of offensiveness.*  <br>\n* offensive_predictionboolean* Boolean value indicating whether the probability exceeds the threshold of what is definitely considered offensive for the underlying model. <br>\n*  <br>\n* profanitiesdictionary list* List of dictionaries resembling detected profanities. Each dictionary contains the following fields: <br>\n* text: The text of the profanity.<br>\n* span_start: The starting character index of the profanity in the original text.<br>\n* span_end: The ending character index of the profanity in the original text.<br>\n"
+}Item 23: Q&A Generation
+docs: {
+    "description": "The Q&A Generation module splits large documents in chunks from which it generates\nmultiple question-answer pairs. The chunk length is configurable. Usually more questions\ncan be generated when segmenting the text to smaller chunks, while longer chunks help\nretain more context, in cases where a topic is discussed over multiple sentences in the\ncontext. To address cases where the topic is split mid-way, the module supports\noverlapping the chunks by a configurable amount of sentences. This gives a lot of\nflexibility to cater to your specific use case.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The input text from which the question-answer pairs will be generated."
+        },
+        "sentence_split": {
+            "type": "integer",
+            "optional": true,
+            "default": "3",
+            "description": "The number of sentences of each chunk when splitting the input text."
+        },
+        "sentence_overlap": {
+            "type": "boolean",
+            "optional": true,
+            "default": "false",
+            "description": "Whether to overlap adjacent chunks by 1 sentence.\nFor example, with sentence_split 3 and sentence_overlap=true :\n[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]"
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * qna_list - dictionary list<br>\n* A list of dictionaries representing question-answer pairs. Each dictionary contains the fieldsquestion,answerandchunk_indexwhich is the index of the chunk the question-answer pair was generated from.chunk_indexmaps to the chunk with the same value in the keyindex.*  <br>\n* chunksdictionary list* A list of dictionaries representing the chunks as they were split from the original according to the splitting parameters given in the request. Each dictionary contains the fieldstext,indexas well as thespan_startandspan_endfields which are the starting and ending position of the chunk in the originally provided text."
+}Item 24: Question Answering
+docs: {
+    "description": "This module is a combination of various sub-modules that enable users to get accurate\nanswers on questions posed on a large amount of content. It includes basic intent\nrecognition capabilities to enable appropriate responses to incorrect or profane language,\nor typical personal questions like \"How are you?\" and greetings.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "message": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "A natural language query/question."
+        },
+        "document_ids": {
+            "type": "string",
+            "optional": true,
+            "default": "not applicable",
+            "description": "A list of unique IDs referencing pre-ingested documents to be used as the context to formulate the answer."
+        },
+        "document_text": {
+            "type": "string",
+            "optional": true,
+            "default": "not applicable",
+            "description": "The text to be used as the context to formulate the answer."
+        },
+        "check_ambiguity": {
+            "type": "boolean",
+            "optional": true,
+            "default": "true",
+            "description": "When true, it checks whether the message contains a pronoun which is impossible to resolve and responds appropriately to avoid low quality or inaccurate answers. This is most useful when this module is used for conversational agents. For example:\n\"What was his most famous invention?\"\nQueries with pronouns that also contain the entity that the pronoun refers to are not rejected. For example:\n\"What was Tesla's most famous invention and when did he create it?\"\nIn this case, the AI can infer that he refers to Tesla.\nSet this to false only when getting the most relevant content as the answer has equal or higher importance than the question being rejected or the answer being ambiguous/inaccurate."
+        },
+        "check_query_type": {
+            "type": "boolean",
+            "optional": true,
+            "default": "true",
+            "description": "When true, it will check whether the message is a natural language question, or whether it is a keyword query or a statement and respond appropriately if the message is not a question. The module is capable of returning a relevant answer to keyword or poorly formulated queries, but this option can help restrict the input.\nSet to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality."
+        },
+        "generic_responses": {
+            "type": "boolean",
+            "optional": true,
+            "default": "false",
+            "description": "In addition to checking for ambiguity or query type, this module performs other checks such as profanity, language, etc.. If the input query fails in one of these checks, it will reject the query by responding with a message that points out the issue.\nWhen true, the module will respond with a generic message without giving the reason as to why the message was rejected, which is the same behavior as when it cannot find an answer to the query in the provided context."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * answer - string<br>\n* The answer to the query. In cases where the query failed a check, and depending on the above explained parameters, this will be a message that indicates that an answer could not be retrieved. <br>\n*  <br>\n* valid_queryboolean* Boolean flag denoting whether the query failed a check. <br>\n*  <br>\n* no_answerboolean* Boolean flag denoting that the query has passed the checks, but no answer for it was found in the context. <br>\n*  <br>\n* message_idstring* A unique ID representing the message and its associated prediction. <br>\n*  <br>\n* passagesdictionary list* A list of dictionaries representing the most relevant passages of the queried documents. The first step for generating an answer is finding the most relevant passages from a big knowledge base. The passages are matched with a combination of keyword and semantic similarity. Each passage has the following fields: <br>\n* textdocument_namedocument_idscores: A dictionary containing the matching scores for either or bothkeyword,semantic.<br>\n*  <br>\n* contextstring<br>\n* The mergedpassagestext.<br>\n*  <br>\n* highlightsdictionary list<br>\n* A list of dictionaries representing sentences within thecontextwhich are highly similar to theanswer. Each dictionary has the following fields:<br>\n* span: A list with the start and end character index of the sentence withincontext.sentence: The sentence text.<br>\n"
+}Item 25: Review Tagger
+docs: {
+    "description": "This module extracts key information from negative product reviews. It attempts to find\nthe referred object, it's fault and an action/verb that is associated with it. If any of\nthe information is not present, it returns \"n/a\". This is useful for organizations who\nwant to analyze product reviews in order to identify and prioritize the most important\nissues.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The review text."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * object - string<br>\n* The faulty object. This could be the product itself, or a component, e.g. \"door handle\". If 'n/a' is returned, it's assumed that the object is the product itself. <br>\n*  <br>\n* actionstring* The action/verb associated with that object, e.g. \"squeaks\" <br>\n*  <br>\n* faultstring* The fault (or strength) of the object, e.g. \"loose\" or \"broken\". <br>\n"
+}Item 26: Sentiment Analysis
+docs: {
+    "description": "This module processes the text to measure whether it is negative, positive or neutral. The\ntext is processed in segments of user-defined length and it provides scores for each\nsegment as well as the overall score of the whole text.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be analyzed for sentiment."
+        },
+        "sentence_split": {
+            "type": "integer",
+            "optional": true,
+            "default": "4",
+            "description": "The number of sentences of each chunk when splitting the input text."
+        },
+        "sentence_overlap": {
+            "type": "boolean",
+            "optional": true,
+            "default": "false",
+            "description": "Whether to overlap adjacent chunks by 1 sentence.\nFor example, with sentence_split 3 and sentence_overlap=true :\n[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]"
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * sentiment_breakdown - dictionary list<br>\n* A list of dictionaries representing the score of each segment of text. Each dictionary contains the following fields: <br>\n* text: The text of the segment.start: The starting character index of the segment in the original text.end: The ending character index of the segment in the original text.sentiment: A dictionary containing the scores fornegative,neutralandpositive.<br>\n*  <br>\n* sentiment_overalldictionary<br>\n* Contains the overallnegative,neutralandpositivescore for the provided text.<br>\n"
+}Item 27: Summarization
+docs: {
+    "description": "The summarization module utilizes Natural Language Generation (NLG) to generate an\nabstractive summary of a specified length. In contrast to extractive summarization\nmethods, which simply calculate the centrality of sentences or passages in the original\ntext and concatenate the highest rated ones, abstractive summaries are often more concise\nand accurate. The end result isn't necessarily a sum of word-for-word copies of passages\nfrom the original text, but a combination of all key points formulated as a new text.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be summarized."
+        },
+        "sent_length": {
+            "type": "integer",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text."
+        }
+    },
+    "output_fields": "     * summary - string<br>\n* The summary. <br>\n* errorstring* When the specifiedsent_lengthis larger than the number of sentences, the service will return a 403 error along with a json with theerrorfield and the error message."
+}Item 28: Table Generator
+docs: {
+    "description": "The table generator module enables applications to extract numerical and statistical data\nfrom raw text in a tabular format. For use-cases where data has to be manually reviewed\nand cross-referenced, this module can bring enormous value.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to extract tables from."
+        },
+        "table_format": {
+            "type": "string",
+            "optional": true,
+            "default": "markdown",
+            "description": "A string indicating the table output format.\nFormats supported:"
+        }
+    },
+    "output_fields": "     * tables - dictionary list<br>\n* A list of dictionaries representing tables. Each dictionary contains the following fields: <br>\n* titleA descriptive title for the tabletableThe table in a raw markdown or CSV formatted string.noteUseful notes for table interpretation.<br>\n"
+}Item 29: Tag Generation
+docs: {
+    "description": "This module can generate tags for a piece of text that can aid with content search in\ncertain use-cases. It allows to specify a number of tags to be generated for each of the\ncategories \"topic\", \"domain\", \"audience\", \"entity\".",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to extract keywords from."
+        },
+        "types": {
+            "type": "string",
+            "optional": true,
+            "default": "[\"topic\"]",
+            "description": "List of types of keywords to extract. Supported types:\ntopic: Tags relating to the subject matter of the text.\ndomain: Tags relating to the domain of the text. For example, \"AI\", or \"Science fiction\". In some cases, domain tags might be similar to topic tags.\naudience: Tags relating to the type of audience the text is intended for.\nentity: Entities such as people, places, products, etc. mentioned in the text."
+        },
+        "n": {
+            "type": "integer",
+            "optional": true,
+            "default": "10",
+            "description": "The number of tags to be generated for each of the specified tag types."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * tags - dictionary dictionary<br>\n* A dictionary containing the tags grouped by the type of tag. A confidence score is provided also for each tag. <br>\n"
+}Item 30: Transcript Correction
+docs: {
+    "description": "This module cleans up and corrects poorly transcribed text from Speech-To-Text (STT)\nsystems. It can handle cases where STT produced the wrong word or phrase by taking into\naccount the surrounding context and choosing the most fitting replacement. Although this\nis meant for correcting STT outpus, it can also be used to correct grammar, misspellings\nand syntactical errors.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "text": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Text to be corrected."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * corrected - string<br>\n* Corrected text. <br>\n"
+}Item 31: Website Converter
+docs: {
+    "description": "The Website Converter module offers basic functionality for extracting meaningful text\nfrom websites. This can be a useful tool for processing website content with other\nmodules.",
+    "arguments": {
+        "null": {},
+        "user": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "Unique ID representing the end-user for security and rate-limiting purposes."
+        },
+        "url": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The url to extract text from."
+        },
+        "name": {
+            "type": "string",
+            "optional": false,
+            "default": "not applicable",
+            "description": "The name of this Node.\nIt will be used by the Pipeline to reference this Node."
+        }
+    },
+    "output_fields": "     * text - string<br>\n* Raw text extracted from the website. <br>\n*  <br>\n* linkslist dictionary* A dictionary containing a list ofinternaland a list ofexternallinks found on the website.* internal: Links found on the page that are under the same domain as the provided url.<br>\n* external: Links found on the page that belong to different domains.<br>\n"
+}

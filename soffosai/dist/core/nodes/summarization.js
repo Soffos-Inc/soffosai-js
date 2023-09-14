@@ -22,15 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for SummarizationService for Pipeline use.
  * @class
- * @alias SoffosNodes.SummarizationNode
+ * @alias _SoffosNodes.SummarizationNode
  */
 var SummarizationNode = /*#__PURE__*/function (_Node) {
   _inherits(SummarizationNode, _Node);
   var _super = _createSuper(SummarizationNode);
   /**
    * @param {string} name
-   * @param {string} text
-   * @param {number} sent_length
+   * @param {string} text - Text to be summarized.
+   * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
    */
   function SummarizationNode(name, text, sent_length) {
     var _this;

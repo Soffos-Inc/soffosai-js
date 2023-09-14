@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for LetsDiscussCreateService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussCreateNode
+ * @alias _SoffosNodes.LetsDiscussCreateNode
  */
 var LetsDiscussCreateNode = /*#__PURE__*/function (_Node) {
   _inherits(LetsDiscussCreateNode, _Node);
   var _super = _createSuper(LetsDiscussCreateNode);
   /**
-   * @param {string} name
-   * @param {string} context
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} context - The content to discuss about.
    */
   function LetsDiscussCreateNode(name, context) {
     var _this;
@@ -45,17 +46,17 @@ var LetsDiscussCreateNode = /*#__PURE__*/function (_Node) {
 /**
  * A service configuration for LetsDiscussService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussNode
+ * @alias _SoffosNodes.LetsDiscussNode
  */
 exports.LetsDiscussCreateNode = LetsDiscussCreateNode;
 var LetsDiscussNode = /*#__PURE__*/function (_Node2) {
   _inherits(LetsDiscussNode, _Node2);
   var _super2 = _createSuper(LetsDiscussNode);
   /**
-   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-   * the api is an application (app) and that app has users. Soffos API will accept any string.
-   * @param {string} session_id
-   * @param {string} query
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
+   * @param {string} query - User's message.
    * @returns {Promise<Object>} 
    */
   function LetsDiscussNode(name, session_id, query) {
@@ -73,15 +74,17 @@ var LetsDiscussNode = /*#__PURE__*/function (_Node2) {
 /**
  * A service configuration for LetsDiscussRetrieveService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussRetrieveNode
+ * @alias _SoffosNodes.LetsDiscussRetrieveNode
  */
 exports.LetsDiscussNode = LetsDiscussNode;
 var LetsDiscussRetrieveNode = /*#__PURE__*/function (_Node3) {
   _inherits(LetsDiscussRetrieveNode, _Node3);
   var _super3 = _createSuper(LetsDiscussRetrieveNode);
   /**
-   * @param {string} name
-   * @param {boolean} [return_messages=true]
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {boolean} [return_messages=true] - When set to true, in addition to returning 
+   * all the session records, it will also return all the messages associated with each session.
    */
   function LetsDiscussRetrieveNode(name) {
     var _this3;
@@ -98,7 +101,7 @@ var LetsDiscussRetrieveNode = /*#__PURE__*/function (_Node3) {
 /**
  * A service configuration for LetsDiscussDeleteService for Pipeline use.
  * @class
- * @alias SoffosNodes.LetsDiscussDeleteNode
+ * @alias _SoffosNodes.LetsDiscussDeleteNode
  */
 exports.LetsDiscussRetrieveNode = LetsDiscussRetrieveNode;
 var LetsDiscussDeleteNode = /*#__PURE__*/function (_Node4) {
@@ -106,7 +109,7 @@ var LetsDiscussDeleteNode = /*#__PURE__*/function (_Node4) {
   var _super4 = _createSuper(LetsDiscussDeleteNode);
   /**
    * @param {string} name
-   * @param {Array.<string>} session_ids
+   * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
    */
   function LetsDiscussDeleteNode(name, session_ids) {
     var _this4;

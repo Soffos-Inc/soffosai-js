@@ -24,17 +24,20 @@ var _EMOTION_LIST = ["joy", "trust", "fear", "surprise", "sadness", "disgust", "
 /**
  * A service configuration for EmotionDetectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.EmotionDetectionNode
+ * @alias _SoffosNodes.EmotionDetectionNode
  */
 var EmotionDetectionNode = /*#__PURE__*/function (_Node) {
   _inherits(EmotionDetectionNode, _Node);
   var _super = _createSuper(EmotionDetectionNode);
   /**
-   * @param {string} name
-   * @param {string} text
-   * @param {number} sentence_split
-   * @param {boolean} sentence_overlap
-   * @param {Array.<string>} emotion_choices
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to detect emotions from.
+   * @param {number} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
+   * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+   * For example, with sentence_split 3 and sentence_overlap=true :
+   * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+   * @param {Array.<string>} [emotion_choices=_EMOTION_LIST] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
    */
   function EmotionDetectionNode(name, text) {
     var _this;

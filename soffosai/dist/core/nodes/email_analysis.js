@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for EmailAnalysisService for Pipeline use.
  * @class
- * @alias SoffosNodes.EmailAnalysisNode
+ * @alias _SoffosNodes.EmailAnalysisNode
  */
 var EmailAnalysisNode = /*#__PURE__*/function (_Node) {
   _inherits(EmailAnalysisNode, _Node);
   var _super = _createSuper(EmailAnalysisNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - The e-mail body text.
    */
   function EmailAnalysisNode(name, text) {
     var _this;

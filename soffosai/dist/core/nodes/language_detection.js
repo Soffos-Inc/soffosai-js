@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for LanguageDetectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.LanguageDetectionNode
+ * @alias _SoffosNodes.LanguageDetectionNode
  */
 var LanguageDetectionNode = /*#__PURE__*/function (_Node) {
   _inherits(LanguageDetectionNode, _Node);
   var _super = _createSuper(LanguageDetectionNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to be classified under a language.
    */
   function LanguageDetectionNode(name, text) {
     var _this;

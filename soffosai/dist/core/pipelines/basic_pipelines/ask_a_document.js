@@ -29,7 +29,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  * The document search service provides "passages" which is a list of contents plus some more description.
  * In order to get the content, iterate through the passages and concatenate it.
  * @param {Array.<object>} value 
- * @returns 
+ * @returns {string}
  */
 function getContent(value) {
   var combined_text = "";
@@ -51,7 +51,7 @@ function getContent(value) {
 /**
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
  * @class
- * @alias SoffosPipelines.AskADocumentPipeline
+ * @alias _SoffosPipelines.AskADocumentPipeline
  */
 var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
   _inherits(AskADocumentPipeline, _Pipeline);

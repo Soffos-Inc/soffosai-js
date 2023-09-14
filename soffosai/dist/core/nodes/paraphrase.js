@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for ParaphraseService for Pipeline use.
  * @class
- * @alias SoffosNodes.ParaphraseNode
+ * @alias _SoffosNodes.ParaphraseNode
  */
 var ParaphraseNode = /*#__PURE__*/function (_Node) {
   _inherits(ParaphraseNode, _Node);
   var _super = _createSuper(ParaphraseNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   * It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to be paraphrased/simplified.
    */
   function ParaphraseNode(name, text) {
     var _this;

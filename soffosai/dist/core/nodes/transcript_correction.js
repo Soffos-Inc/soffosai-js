@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for TranscriptCorrectionService for Pipeline use.
  * @class
- * @alias SoffosNodes.TranscriptCorrectionIO
+ * @alias _SoffosNodes.TranscriptCorrectionIO
  */
 var TranscriptCorrectionNode = /*#__PURE__*/function (_Node) {
   _inherits(TranscriptCorrectionNode, _Node);
   var _super = _createSuper(TranscriptCorrectionNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to be corrected.
    */
   function TranscriptCorrectionNode(name, text) {
     var _this;

@@ -22,15 +22,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for TableGeneratorService for Pipeline use.
  * @class
- * @alias SoffosNodes.TableGeneratorNode
+ * @alias _SoffosNodes.TableGeneratorNode
  */
 var TableGeneratorNode = /*#__PURE__*/function (_Node) {
   _inherits(TableGeneratorNode, _Node);
   var _super = _createSuper(TableGeneratorNode);
   /**
    * @param {string} name
-   * @param {string} text
-   * @param {string} [table_format='markdown']
+   * @param {string} text - Text to extract tables from.
+   * @param {string} [table_format='markdown'] - A string indicating the table output format.
+   * Formats supported:
    */
   function TableGeneratorNode(name, text) {
     var _this;

@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for MicrolessonService for Pipeline use.
  * @class
- * @alias SoffosNodes.MicrolessonNode
+ * @alias _SoffosNodes.MicrolessonNode
  */
 var MicrolessonNode = /*#__PURE__*/function (_Node) {
   _inherits(MicrolessonNode, _Node);
   var _super = _createSuper(MicrolessonNode);
   /**
-   * @param {string} name
-   * @param {Array.<object>} content
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
    */
   function MicrolessonNode(name, content) {
     var _this;

@@ -24,6 +24,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * The Language Detection module detects the dominant language in the provided text.
+ * @class
+ * @alias SoffosServices.LanguageDetectionService
  */
 var LanguageDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(LanguageDetectionService, _SoffosAIService);
@@ -41,8 +43,29 @@ var LanguageDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   /**
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
-   * @param {string} text
+   * @param {string} text - Text to be classified under a language.
    * @returns {Promise<Object>} 
+   * language - string<br>
+   * The language code of the detected language. <br>
+   * @example
+   * import { SoffosServices } from "soffosai";
+   * 
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.LanguageDetectionService({apiKey:my_apiKey});
+   * let response = await service.call("me again", "空港はどこですか");
+   * console.log(JSON.stringify(response, null, 2));
+   * 
+   * // returns
+   * // {
+   * //     "language": "ja",
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.005,
+   * //       "total_cost": 0.01
+   * //     },
+   * //     "charged_character_count": 100,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(LanguageDetectionService, [{
     key: "call",

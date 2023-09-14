@@ -37,7 +37,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
  * A very fascinating tool for writers that can be used to inspire, write more understandable content, 
  * or even to just delve into the remarkable nuances and complexities hidden in human language and thought
  * @class
- * @alias _SoffosServices.AmbiguityDetectionService
+ * @alias SoffosServices.AmbiguityDetectionService
 */
 var AmbiguityDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(AmbiguityDetectionService, _SoffosAIService);
@@ -63,30 +63,38 @@ var AmbiguityDetectionService = /*#__PURE__*/function (_SoffosAIService) {
    *                                            For example, with sentence_split=3 and sentence_overlap=true : <br>
    *                                            [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
    * @returns {Promise<Object>}
+   * ambiguities - dictionary list<br>
+   * A list of dictionaries. Each dictionary represents an ambiguity and contains the following fields: <br>
+   * text: The text classified as ambiguous.<br>
+   * span_start: The starting character index of the ambiguous text in the original text.<br>
+   * span_end: The ending character index of the ambiguous text in the original text.<br>
+   * reason: An explanation on why the span is considered ambiguous.<br>
    * @example
    * import { SoffosServices } from "soffosai";
    * 
-   * const service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
-   * let output = await service.call("Client1234567","I saw the signs");
-   * console.log(JSON.stringify(output, null, 2));
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.AmbiguityDetectionService({apiKey:my_apiKey});
+   * let response = await service.call("Client 1234567", "I saw the signs");
+   * console.log(JSON.stringify(response, null, 2));
    * 
-   * // returns {
-   * // "ambiguities": [
-   * //   {
-   * //     "text": "I saw the signs",
-   * //     "span_start": 0,
-   * //     "spane_end": 15,
-   * //     "reason": "It is unclear if the signs refer to literal signs or figurative signs."
-   * //   }
-   * // ],
-   * // "cost": {
-   * //     "api_call_cost": 0.005,
-   * //     "character_volume_cost": 0.005,
-   * //     "total_cost": 0.01
-   * // },
-   * // "charged_character_count": 100,
-   * // "unit_price": "0.000050"
-   * //}
+   * // returns
+   * // {
+   * //     "ambiguities": [
+   * //       {
+   * //         "text": "I saw the signs",
+   * //         "span_start": 0,
+   * //         "spane_end": 15,
+   * //         "reason": "It is unclear what type of signs were seen (e.g. warning signs, street signs, etc.)."
+   * //       }
+   * //     ],
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.005,
+   * //       "total_cost": 0.01
+   * //     },
+   * //     "charged_character_count": 100,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(AmbiguityDetectionService, [{
     key: "call",

@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for Ambiguity Detection Service for Pipeline use.
  * @class
- * @alias SoffosNodes.ContradictionDetectionNode
+ * @alias _SoffosNodes.ContradictionDetectionNode
  */
 var ContradictionDetectionNode = /*#__PURE__*/function (_Node) {
   _inherits(ContradictionDetectionNode, _Node);
   var _super = _createSuper(ContradictionDetectionNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to be analyzed for contradictions.
    * @returns {Promise<Object>} 
    */
   function ContradictionDetectionNode(name, text) {

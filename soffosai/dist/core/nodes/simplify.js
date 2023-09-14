@@ -22,14 +22,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for SimplifyService for Pipeline use.
  * @class
- * @alias SoffosNodes.SimplifyNode
+ * @alias _SoffosNodes.SimplifyNode
  */
 var SimplifyNode = /*#__PURE__*/function (_Node) {
   _inherits(SimplifyNode, _Node);
   var _super = _createSuper(SimplifyNode);
   /**
-   * @param {string} name
-   * @param {string} text
+   * @param {string} name - The name of this Node.
+   * It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to be paraphrased/simplified.
    */
   function SimplifyNode(name, text) {
     var _this;

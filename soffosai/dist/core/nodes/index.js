@@ -120,7 +120,7 @@ Object.defineProperty(exports, "ProfanityNode", {
 Object.defineProperty(exports, "QuestionAndAnswerGenerationNode", {
   enumerable: true,
   get: function get() {
-    return _question_and_answer_generation["default"];
+    return _qna_generation["default"];
   }
 });
 Object.defineProperty(exports, "QuestionAnsweringNode", {
@@ -185,7 +185,7 @@ var _microlesson = _interopRequireDefault(require("./microlesson.js"));
 var _named_entity_recognition = _interopRequireDefault(require("./named_entity_recognition.js"));
 var _paraphrase = _interopRequireDefault(require("./paraphrase.js"));
 var _profanity = _interopRequireDefault(require("./profanity.js"));
-var _question_and_answer_generation = _interopRequireDefault(require("./question_and_answer_generation.js"));
+var _qna_generation = _interopRequireDefault(require("./qna_generation.js"));
 var _question_answering = _interopRequireDefault(require("./question_answering.js"));
 var _review_tagger = _interopRequireDefault(require("./review_tagger.js"));
 var _sentiment_analysis = _interopRequireDefault(require("./sentiment_analysis.js"));

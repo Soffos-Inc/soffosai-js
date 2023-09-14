@@ -22,6 +22,31 @@ class SimplifyService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text - Text to be paraphrased/simplified.
      * @returns {Promise<Object>} 
+     * paraphrase - the paraphrased text <br>
+     * "simplify": true
+     * @example:
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.SimplifyService({apiKey:my_apiKey});
+     * let response = await service.call(
+     *     "sample client id", 
+     *     "Soffosai provides a very easy and economical way to integrate AI into your systems."
+     * );
+     * console.log(JSON.stringify(response, null, 2));
+     *     
+     * // returns
+     * // {
+     * //     "paraphrase": "Soffosai makes it super simple and cheap to add AI to your systems.",
+     * //     "simplify": true,
+     * //     "cost": {
+     * //       "api_call_cost": 0.005,
+     * //       "character_volume_cost": 0.005,
+     * //       "total_cost": 0.01
+     * //     },
+     * //     "charged_character_count": 100,
+     * //     "unit_price": "0.000050"
+     * // }
      */
     call(user, text) {
       let payload = {

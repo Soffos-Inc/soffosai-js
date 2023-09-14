@@ -24,6 +24,28 @@ class LetsDiscussCreateService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} context - The content to discuss about.
      * @returns {Promise<Object>} 
+     * session_id - string
+     * The unique id of the conversation session. It's crucial to store the session_id in order to make queries.
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.LetsDiscussCreateService({apiKey:my_apiKey});
+     * let response = await service.call(
+     *     "me again",
+     *     "The James Webb Space Telescope is the largest, most powerful space telescope ever built. \
+     *     It will allow scientists to look at what our universe was like about 200 million years \
+     *     after the Big Bang. The telescope will be able to capture images of some of the first \
+     *     galaxies ever formed. It will also be able to observe objects in our solar system from \
+     *     Mars outward, look inside dust clouds to see where new stars and planets are forming \
+     *     and examine the atmospheres of planets orbiting other stars."
+     * );
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns the session id of the conversation
+     * // {
+     * //     "session_id": "b658686f8b834b3f86d5218a4549e1c4"
+     * // }
      */
     call(user, context) {
       let payload = {
@@ -57,6 +79,57 @@ class LetsDiscussService extends SoffosAIService {
      * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
      * @param {string} query - User's message.
      * @returns {Promise<Object>} 
+     * response - string <br>
+     * Module's response to the user's query. <br>
+     * context - string <br>
+     * The context discussed about provided by the user during session creation. <br>
+     * messages -  dictionary list <br>
+     * A list of dictionaries representing all the messages exchanged between the user and the system for the specific session. The messages are sorted in chronological order. <br>
+     * Each dictionary contains the following fields: text: The message. source: The source of the message, which is either the user or Soffos.
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.LetsDiscussService({apiKey:my_apiKey});
+     * let response = await service.call(
+     *     "me again",
+     *     "b658686f8b834b3f86d5218a4549e1c4",
+     *     "What is the purpose of observing this?"
+     * );
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns
+     * // {
+     * //     "response": "The James Webb Space Telescope will allow scientists to look at what our universe was like about 200 million years after the Big Bang. It will also be able to observe objects in our solar system from Mars outward, look inside dust 
+     * //   clouds to see where new stars and planets are forming and examine the atmospheres of planets orbiting other stars.",       
+     * //     "context": "The James Webb Space Telescope is the largest, most powerful space telescope ever built.     It will allow scientists to look at what our universe was like about 200 million years     after the Big Bang. The telescope will be able to capture images of some of the first     galaxies ever formed. It will also be able to observe objects in our solar system from     Mars outward, look inside dust clouds to see where new stars and planets are forming     and examine the atmospheres of planets orbiting other stars.",
+     * //     "messages": [
+     * //       {
+     * //         "text": "Where can I see the photos taken by this telescope?",
+     * //         "source": "user"
+     * //       },
+     * //       {
+     * //         "text": "The photos taken by the James Webb Space Telescope will be available to the public on the official website of the telescope.",
+     * //         "source": "soffos"
+     * //       },
+     * //       {
+     * //         "text": "What is the purpose of observing this?",
+     * //         "source": "user"
+     * //       },
+     * //       {
+     * //         "text": "The James Webb Space Telescope will allow scientists to look at what our universe was like about 200 million years after the Big Bang. It will also be able to observe objects in our solar system from Mars outward, look inside dust 
+     * //   clouds to see where new stars and planets are forming and examine the atmospheres of planets orbiting other stars.",       
+     * //         "source": "soffos"
+     * //       }
+     * //     ],
+     * //     "cost": {
+     * //       "api_call_cost": 0.005,
+     * //       "character_volume_cost": 0.07085,
+     * //       "total_cost": 0.07585
+     * //     },
+     * //     "charged_character_count": 1417,
+     * //     "unit_price": "0.000050"
+     * // }
      */
     call(user, session_id, query) {
       let payload = {
@@ -91,6 +164,41 @@ class LetsDiscussRetrieveService extends SoffosAIService {
      * @param {boolean} return_messages - When set to true, in addition to returning 
      * all the session records, it will also return all the messages associated with each session.
      * @returns {Promise<Object>} 
+     * sessions - dictionary list <br>
+     * List of sessions. Each session contains the following data: <br>
+     * context: The content discussed in the session. <br>
+     * session_id: Session's ID. <br>
+     * messages: If return_messages is true, this list will contain a list of dictionaries representing the interactions between the system and the user. Each dictionary contains the user's query, the system's response and the interaction's ID as message_id, which is an integer indicating their order.
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.LetsDiscussRetrieveService({apiKey:my_apiKey});
+     * let response = await service.call('me again', true);
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns
+     * // {
+     * //     "sessions": [
+     * //       {
+     * //         "context": "The James Webb Space Telescope is the largest, most powerful space telescope ever built.     It will allow scientists to look at what our universe was like about 200 million years     after the Big Bang. The telescope will be able to capture images of some of the first     galaxies ever formed. It will also be able to observe objects in our solar system from     Mars outward, look inside dust clouds to see where new stars and planets are forming     and examine the atmospheres of planets orbiting other stars.",
+     * //         "session_id": "b658686f8b834b3f86d5218a4549e1c4",
+     * //         "messages": [
+     * //           {
+     * //             "query": "Where can I see the photos taken by this telescope?",
+     * //             "response": "The photos taken by the James Webb Space Telescope will be available to the public on the official website of the telescope.",
+     * //             "message_id": 0
+     * //           },
+     * //           {
+     * //             "query": "What is the purpose of observing this?",
+     * //             "response": "The James Webb Space Telescope will allow scientists to look at what our universe was like about 200 million years after the Big Bang. It will also be able to observe objects in our solar system from Mars outward, look inside dust clouds to see where new stars and planets are forming and examine the atmospheres of planets orbiting other stars.",
+     * //             "message_id": 1
+     * //           }
+     * //         ]
+     * //       }
+     * //     ],
+     * //     "session_count": 1
+     * // }
      */
     call(user, return_messages) {
       let payload = {
@@ -123,6 +231,20 @@ class LetsDiscussDeleteService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
      * @returns {Promise<Object>} 
+     * success - boolean <br>
+     * Indicates whether the sessions have been successfuly deleted.
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.LetsDiscussDeleteService({apiKey:my_apiKey});
+     * let response = await service.call('me again', ["b658686f8b834b3f86d5218a4549e1c4"]);
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns
+     * // {
+     * //     "success": true
+     * // }
      */
     call(user, session_ids) {
       let payload = {

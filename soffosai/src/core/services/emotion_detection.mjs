@@ -28,6 +28,40 @@ class EmotionDetectionService extends SoffosAIService {
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
      * @param {Array.<string>} [emotion_choices] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
      * @returns {Promise<Object>} 
+     * spans - dictionary list<br>
+     * A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>
+     * text: The text of the span.<br>
+     * detected_emotions: A list of the emotions detected for the specific span.<br>
+     * span_start: The starting character index of the span in the original input text.<br>
+     * span_end: The ending character index of the span in the original input text.<br>
+     * @example
+     * import { SoffosServices } from "soffosai";
+     * 
+     * const my_apiKey = "Token <put your api key here>";
+     * const service = new SoffosServices.EmotionDetectionService({apiKey:my_apiKey});
+     * let response = await service.call("client_a_happy_one", "I am excited about my birthday!");
+     * console.log(JSON.stringify(response, null, 2));
+     * 
+     * // returns
+     * // {
+     * //     "spans": [
+     * //       {
+     * //         "detected_emotions": [
+     * //           "joy"
+     * //         ],
+     * //         "text": "I am excited about my birthday!",
+     * //         "span_start": 0,
+     * //         "span_end": 31
+     * //       }
+     * //     ],
+     * //     "cost": {
+     * //       "api_call_cost": 0.005,
+     * //       "character_volume_cost": 0.005,
+     * //       "total_cost": 0.01
+     * //     },
+     * //     "charged_character_count": 100,
+     * //     "unit_price": "0.000050"
+     * // }
      */
     call(user, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST) {
       for (let emotion of emotion_choices) {

@@ -22,16 +22,21 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for TagGenerationService for Pipeline use.
  * @class
- * @alias SoffosNodes.TagGenerationNode
+ * @alias _SoffosNodes.TagGenerationNode
  */
 var TagGenerationNode = /*#__PURE__*/function (_Node) {
   _inherits(TagGenerationNode, _Node);
   var _super = _createSuper(TagGenerationNode);
   /**
-   * @param {string} name
-   * @param {string} text
-   * @param {Array.<?>} [types=["topic"]]
-   * @param {number} n
+   * @param {string} name - The name of this Node.
+   *  It will be used by the Pipeline to reference this Node.
+   * @param {string} text - Text to extract keywords from.
+   * @param {Array.<?>} [types=["topic"]] - List of types of keywords to extract. Supported types:
+   * topic: Tags relating to the subject matter of the text.
+   * domain: Tags relating to the domain of the text. For example, "AI", or "Science fiction". In some cases, domain tags might be similar to topic tags.
+   * audience: Tags relating to the type of audience the text is intended for.
+   * entity: Entities such as people, places, products, etc. mentioned in the text.
+   * @param {number} n - The number of tags to be generated for each of the specified tag types.
    */
   function TagGenerationNode(name, text) {
     var _this;
