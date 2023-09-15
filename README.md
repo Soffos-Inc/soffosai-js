@@ -22,6 +22,9 @@
 ## CDN package:
 `<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>`
 
+## EXAMPLES/TESTS:
+[Soffosai SDK Examples](https://github.com/Soffos-Inc/soffosai-js/tree/master/tests)
+
 ## SoffosAIService
 The SoffosAIService class handles validation and execution of specified endpoint vs payload.
 Here is the list of SoffosAIService Subclasses:
@@ -77,15 +80,16 @@ console.log(JSON.stringify(response, null, 2));
 // The only difference is the declaration of the service. You must append soffosai.
 let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
 ```
+
 ## Important
-- use 
+- use:
 ```
 import { SoffosServices } from "soffosai";
 let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
 ```
 if you are using a javascript library like React.js or Framework like Angular.
 
-- use 
+- use:
 ```
 <script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>
 <script>
@@ -158,8 +162,7 @@ In order to create a Pipeline a service Node should be defined as stated above t
 import { SoffosPipeline } from "soffosai";
 
 const nodes = [file_converter, summarize, ingestor];
-// The pipeline needs a name so it can be referred to in a pipeline (pipeline inside a pipeline).
-const pipe = new SoffosPipeline(nodes, false, "name_of_this_pipeline", {apiKey: my_apiKey});
+const pipe = new SoffosPipeline(nodes, false, "my_pipeline", {apiKey: my_apiKey});
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
 ```
@@ -194,7 +197,7 @@ function get_filename(file) {
  * Given a file upload the file to Soffos and get its reference document_id.
  */
 export class FileIngestPipeline extends SoffosPipeline {
-    constructor(name, kwargs) {
+    constructor(name=null, kwargs) {
         const file_converter = new SoffosNodes.FileConverterNode(
             "file_converter",
             {
@@ -249,7 +252,7 @@ When you do this, you can easily reuse your pipeline like this:
 ```
 import { FileIngestPipeline } from "./your_directory/your_file.js";
 
-let pipe = new FileIngestPipeline("name_of_this_pipe", {apiKey: my_apiKey});
+let pipe = new FileIngestPipeline("myPipe", {apiKey: my_apiKey});
 
 // provided you have a <input type="file" id="file">
 let the_file = document.getElementById("file").files[0];
@@ -288,7 +291,7 @@ const AskFromDocument = new SoffosPipeline(
         )
     ],
     false,
-    "name_of_the_pipeline",
+    "myPipe",
     {apiKey: my_apiKey}
 );
 
@@ -337,6 +340,7 @@ const AskFromDocument = new SoffosPipeline(
     true, // this is the **use_defaults** argument. defaults to **false** if not provided. 
          // You can only use the "**default**" keyword on arguments to mean "default this value" if this 
          //is **true**.  if use_defaults is false, it will be taken as literal string "default".
+    "myPipe",
     {apiKey: my_apiKey}
 );
 
@@ -355,7 +359,7 @@ You can use them like this:
 ```
 import { SoffosPipelines } from "soffosai";
 
-let pipe = new SoffosPipelines.FileIngestPipeline({apiKey: my_apiKey});
+let pipe = new SoffosPipelines.FileIngestPipeline("myPipe", {apiKey: my_apiKey});
 result = await pipe.call("client_id2", the_file)
 console.log(JSON.stringify(result, null, 2));
 ```

@@ -32,14 +32,25 @@ class FileConverterService extends SoffosAIService {
      * bullets: Available only bullet_list elements. Contains all bullets and their sub-bullets in a nested structure.<br>
      * contents: Available only in table_of_content elements. Contains the headings and sub-headings of the document's table of contents.<br>
      * heading: Available only in table_of_content elements. It is the heading of the document's table of contents.<br>
-     *  <br>
-     * normalized_text string<br>
+     * normalized_text - string<br>
      * Resulting text after normalization. <br>
-     *  <br>
-     * normalized_tagged_elements dictionary list<br>
+     * normalized_tagged_elements - dictionary list<br>
      * Similar to the standard tagged_elements. Detectable elements: paragraph, heading, bullet_list, quote.<br>
      * @example
      * // needs React.js or other frontend js library or framework
+     * // assuming you have a file field with id="my_file" and a button with id="sendFileBtn"
+     * import { SoffosServices } from 'soffosai'; // will not work if used directly to html. Please use the soffosai.bundle.js if you need to use soffosai directly to html.
+     * const my_apiKey = 'Token <put your api key here>';
+     * 
+     * async function sendFile() {
+     *     const theFile = document.getElementById("myFile").files[0];
+     *     let service = new SoffosServices.FileConverterService({apiKey: my_apiKey});
+     *     let response = await service.call("client_id", theFile);
+     *     console.log(SON.stringify(response, null, 2));
+     * }
+     * 
+     * document.querySelector('#sendFileBtn').addEventListener('click', sendFile);
+     * 
      */
     call(user, file, normalize=0) {
         if ( ![ 0, 1 ].includes(normalize)) {
