@@ -1,6 +1,6 @@
 var SoffosServices = require("soffosai").SoffosServices;
 
-var my_apiKey = "Token 3bfc2547-145c-4e55-902a-b33ea70db37a";
+var my_apiKey = "Token <put your api key here>";
 var service = new SoffosServices.AmbiguityDetectionService({apiKey:my_apiKey});
 service.call("Client 1234567", "I saw the signs")
 .then(function (response) {

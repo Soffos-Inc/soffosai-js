@@ -1,23 +1,24 @@
 import { SoffosServices } from "soffosai";
 
 const my_apiKey: string = "Token <put your api key here>";
-const service = new SoffosServices.AmbiguityDetectionService({apiKey:my_apiKey});
+const service = new SoffosServices.ProfanityService({apiKey:my_apiKey});
 async function main() {
-    let response: Object = await service.call("Client 1234567", "I saw the signs");
+    let response: Object = await service.call("client123", "Don't give me this shit.");
     console.log(JSON.stringify(response, null, 2));
 }
 
-main();
+main();    
 // returns
 // {
-//     "ambiguities": [
+//     "profanities": [
 //       {
-//         "text": "I saw the signs",
-//         "span_start": 0,
-//         "spane_end": 15,
-//         "reason": "It is unclear what type of signs were seen (e.g. warning signs, street signs, etc.)."
+//         "text": "shit",
+//         "span_start": 19,
+//         "span_end": 23
 //       }
 //     ],
+//     "offensive_probability": 0.8668110370635986,
+//     "offensive_prediction": true,
 //     "cost": {
 //       "api_call_cost": 0.005,
 //       "character_volume_cost": 0.005,

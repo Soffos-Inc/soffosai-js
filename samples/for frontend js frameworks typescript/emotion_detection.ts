@@ -1,21 +1,23 @@
 import { SoffosServices } from "soffosai";
 
 const my_apiKey: string = "Token <put your api key here>";
-const service = new SoffosServices.AmbiguityDetectionService({apiKey:my_apiKey});
+const service = new SoffosServices.EmotionDetectionService({apiKey:my_apiKey});
 async function main() {
-    let response: Object = await service.call("Client 1234567", "I saw the signs");
+    let response: Object = await service.call("client_a_happy_one", "I am excited about my birthday!");
     console.log(JSON.stringify(response, null, 2));
 }
 
 main();
 // returns
 // {
-//     "ambiguities": [
+//     "spans": [
 //       {
-//         "text": "I saw the signs",
+//         "detected_emotions": [
+//           "joy"
+//         ],
+//         "text": "I am excited about my birthday!",
 //         "span_start": 0,
-//         "spane_end": 15,
-//         "reason": "It is unclear what type of signs were seen (e.g. warning signs, street signs, etc.)."
+//         "span_end": 31
 //       }
 //     ],
 //     "cost": {

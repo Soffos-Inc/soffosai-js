@@ -3,6 +3,9 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.1.9
+- documentation: sample codes for ES5, ES6, html script tag (soffosai.bundle.js), typescript
+
 ## 0.1.8
 - bugfixes
 - documentation: response fields, example, sample output

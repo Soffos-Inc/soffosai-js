@@ -1,13 +1,8 @@
 import { SoffosServices } from "soffosai";
-
-const my_apiKey: string = "Token <put your api key here>";
-const service = new SoffosServices.AmbiguityDetectionService({apiKey:my_apiKey});
-async function main() {
-    let response: Object = await service.call("Client 1234567", "I saw the signs");
-    console.log(JSON.stringify(response, null, 2));
-}
-
-main();
+const my_apiKey = "Token <put your api key here>";
+const service = new SoffosServices.AmbiguityDetectionService({ apiKey: my_apiKey });
+let response = await service.call("Client 1234567", "I saw the signs");
+console.log(JSON.stringify(response, null, 2));
 // returns
 // {
 //     "ambiguities": [
