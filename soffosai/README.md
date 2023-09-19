@@ -23,7 +23,7 @@
 `<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>`
 
 ## EXAMPLES/TESTS:
-[Soffosai SDK Examples](https://github.com/Soffos-Inc/soffosai-js/tree/master/tests)
+[Soffosai SDK Examples](https://github.com/Soffos-Inc/soffosai-js/tree/master/samples)
 
 ## SoffosAIService
 The SoffosAIService class handles validation and execution of specified endpoint vs payload.

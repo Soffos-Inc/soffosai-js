@@ -163,6 +163,11 @@ declare module 'soffosai' {
     export class NamedEntityRecognitionService {
         constructor(kwargs?: {});
         call(user: string, text: string, labels:object): Promise<object>;
+        /**
+         * Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
+         * @param {string} label - The identifier of the label
+         * @param {string} definition - The definition of the label
+         */
         add_label(label:string, definition:string): null;
     }
 
@@ -1229,10 +1234,11 @@ declare module 'soffosai' {
              * // }
              */
             call(user: string, text: string, labels:object): Promise<object>;
+            
             /**
              * Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
-             * @param {string} label 
-             * @param {string} definition 
+             * @param {string} label - The identifier of the label
+             * @param {string} definition - The definition of the label
              */
             add_label(label:string, definition:string): null;
         }

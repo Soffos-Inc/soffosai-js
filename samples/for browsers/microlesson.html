@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        #output {
+            margin-top: 20px;
+            font-weight: 500;
+            min-height: 50px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            padding: .375rem .75rem;
+            background: #ffffff;
+        }
+    </style>
+    <title>Soffosai Bundle Package Example</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="my-4 text-center">Soffosai Bundle Package Example</h1>
+                <h2 class="my-4 text-center">Microlesson Service</h2>
+                <div class="form-group">
+                    <label for="source">Source:</label>
+                    <input type="text" class="form-control" id="source" placeholder="Enter context here">
+                    <br>
+                    <label for="context">Context:</label>
+                    <input type="text" class="form-control" id="context" placeholder="Enter context here">
+                </div>
+                <button class="btn btn-primary" id="processButton">Call Soffosai's Microlesson Service</button>
+                <pre id="output" class="my-2">Soffosai's Response will appear here.</pre>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/soffosai@0.1.8/dist/soffosai.bundle.js"></script>
+<script>
+document.querySelector('#processButton').addEventListener('click', sendText);
+
+const my_apiKey = "Token 3bfc2547-145c-4e55-902a-b33ea70db37a";
+const output = document.getElementById("output");
+async function sendText() {
+    const service = new soffosai.SoffosServices.MicrolessonService({apiKey:my_apiKey});
+    let source = document.getElementById('source').value;
+    let context = document.getElementById('context').value;
+    let content = {
+        "source": source,
+        "text": context
+    };
+    let response = await service.call("client1234567", [content]);
+    console.log(JSON.stringify(response, null, 2));
+    output.textContent = JSON.stringify(response, null, 2);
+}
+
+// returns
+// {
+//     "microlesson": {
+//       "summary": "The James Webb Space Telescope is the largest, most powerful space telescope ever built and will allow scientists to observe objects in our solar system from Mars outward. Genetic evidence suggests that dogs descended directly from wolves and that the first domestication events occurred somewhere in northern Eurasia between 14,000 and 29,000 years ago.",
+//       "key_points": [
+//         {
+//           "key_point": "The James Webb Space Telescope is the largest, most powerful space telescope ever built.",
+//           "source": "Telescope.docx"
+//         },
+//         {
+//           "key_point": "Dogs descended directly from wolves  and the first domestication events occurred somewhere in northern Eurasia between 14,000 and 29,000 years ago (dogs.docx)..",
+//           "source": "Canis"
+//         }
+//       ],
+//       "learning_objectives": [
+//         "Understand the capabilities of the James Webb Space Telescope.",
+//         "Understand the history of dog domestication."
+//       ],
+//       "tasks": [
+//         "Research the James Webb Space Telescope and list its capabilities.",
+//         "Research the history of dog domestication and list the key points."
+//       ]
+//     },
+//     "cost": {
+//       "api_call_cost": 0.005,
+//       "character_volume_cost": 0.049,
+//       "total_cost": 0.054
+//     },
+//     "charged_character_count": 980,
+//     "unit_price": "0.000050"
+// }
+</script>
+</body>
+</html>

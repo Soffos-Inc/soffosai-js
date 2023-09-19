@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        #output {
+            margin-top: 20px;
+            font-weight: 500;
+            min-height: 50px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            padding: .375rem .75rem;
+            background: #ffffff;
+        }
+    </style>
+    <title>Soffosai Bundle Package Example</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="my-4 text-center">Soffosai Bundle Package Example</h1>
+                <h2 class="my-4 text-center">Summarization Service</h2>
+                <div class="form-group">
+                    <label for="textInput">Input Text:</label>
+                    <input type="text" class="form-control" id="textInput" placeholder="Enter input text here">
+                    <br>
+                    <label for="numSentences">Number of sentences of summary:</label>
+                    <input type="number" class="form-control" id="numSentences" placeholder="Enter input text here">
+                </div>
+                <button class="btn btn-primary" id="processButton">Call Soffosai's Summarization Service</button>
+                <pre id="output" class="my-2">Soffosai's Response will appear here.</pre>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/soffosai@0.1.8/dist/soffosai.bundle.js"></script>
+<script>
+document.querySelector('#processButton').addEventListener('click', sendText);
+
+const my_apiKey = "Token <put your api key here>";
+const output = document.getElementById("output");
+async function sendText() {
+    const service = new soffosai.SoffosServices.SummarizationService({apiKey:my_apiKey});
+    let textInput = document.getElementById('textInput').value;
+    let numSentences = parseInt(document.getElementById('numSentences').value);
+    let response = await service.call("client1234567", textInput, numSentences);
+    console.log(JSON.stringify(response, null, 2));
+    output.textContent = JSON.stringify(response, null, 2);
+}
+    
+// returns
+// {
+//     "summary": "Ludwig van Beethoven was a German composer and pianist. He composed many works that remain mainstays of the classical music repertoire. After a period of illness, he died in 1827.",
+//     "cost": {
+//       "api_call_cost": 0.005,
+//       "character_volume_cost": 0.0119,
+//       "total_cost": 0.0169
+//     },
+//     "charged_character_count": 238,
+//     "unit_price": "0.000050"
+// }
+</script>
+</body>
+</html>
