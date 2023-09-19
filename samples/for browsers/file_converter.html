@@ -47,6 +47,10 @@ const my_apiKey = "Token <put your api key here>";
 const output = document.getElementById("output");
 
 async function sendFile() {
+    if (my_apiKey == "Token <put your api key here>") {
+        output.textContent = 'Please change the API Key inside the script tag provided in the html sample. The code is: const my_apiKey == "Token <put your api key here>";'
+        return
+    }
     let theFile = document.getElementById("myFile").files[0];
     let service = new soffosai.SoffosServices.FileConverterService({apiKey:my_apiKey});
     let response = await service.call("client1234567", theFile);

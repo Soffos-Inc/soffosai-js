@@ -46,6 +46,11 @@ document.querySelector('#processButton').addEventListener('click', sendText);
 const my_apiKey = "Token <put your api key here>";
 const output = document.getElementById("output");
 async function sendText() {
+    if (my_apiKey == "Token <put your api key here>") {
+        output.textContent = 'Please change the API Key inside the script tag provided in the html sample. The code is: const my_apiKey == "Token <put your api key here>";'
+        return
+    }
+
     const service = new soffosai.SoffosServices.EmailAnalysisService({apiKey:my_apiKey});
     let textInput = document.getElementById('textInput').value;
     let response = await service.call("client1234567", textInput);
