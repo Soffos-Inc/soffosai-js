@@ -44,6 +44,12 @@ const ServiceString = {
   */
    AMBIGUITY_DETECTION : 'ambiguity-detection',
    ANSWER_SCORING : 'answer-scoring',
+   CHATBOT: 'chatbot',
+   CHATBOT_CREATE: 'chatbot/create',
+   CHATBOT_GET: 'chatbot/get',
+   CHATBOT_DELETE: 'chatbot/delete',
+   CHATBOT_SESSIONS_GET: 'chatbot/sessions/get',
+   CHATBOT_SESSIONS_DELETE: 'chatbot/sessions/delete',
    CONTRADICTION_DETECTION : 'contradiction-detection',
    LETS_DISCUSS_CREATE : 'discuss/create',
    LETS_DISCUSS : 'discuss',

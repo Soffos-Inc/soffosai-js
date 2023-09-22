@@ -142,7 +142,7 @@ var DocumentsDeleteNode = /*#__PURE__*/function (_Node3) {
   _inherits(DocumentsDeleteNode, _Node3);
   var _super3 = _createSuper(DocumentsDeleteNode);
   /**
-   * @param {string} name
+   * @param {string} name - The name of this Node.
    * @param {Array.<string>} document_ids - A list of the document_ids of the documents to be deleted.
    */
   function DocumentsDeleteNode(name, document_ids) {

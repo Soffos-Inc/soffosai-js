@@ -191,7 +191,9 @@ class Pipeline {
 
             let response = await stage.service.getResponse(src);
             if ("error" in response || !isDictObject(response)) {
-                throw new Error(response);
+                infos[stage.name] = response;
+                console.log(response);
+                return infos;
             }
 
             // dispatch nodeStartEvent
@@ -237,10 +239,6 @@ class Pipeline {
      * @returns 
      */
     validate_pipeline(stages, user_input) {
-        /*
-        Before running the first service, the Pipeline will validate all nodes if they will all be
-        executed successfully with the exception of database and server issues.
-        */
         let error_messages = [];
     
         for(let i = 0; i < stages.length; i++) {

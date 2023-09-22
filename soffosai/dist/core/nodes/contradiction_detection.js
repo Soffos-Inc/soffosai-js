@@ -31,7 +31,6 @@ var ContradictionDetectionNode = /*#__PURE__*/function (_Node) {
    * @param {string} name - The name of this Node.
    *  It will be used by the Pipeline to reference this Node.
    * @param {string} text - Text to be analyzed for contradictions.
-   * @returns {Promise<Object>} 
    */
   function ContradictionDetectionNode(name, text) {
     var _this;

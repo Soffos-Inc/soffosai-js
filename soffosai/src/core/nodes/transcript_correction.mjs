@@ -4,7 +4,7 @@ import {TranscriptCorrectionService} from "../../app.mjs";
 /**
  * A service configuration for TranscriptCorrectionService for Pipeline use.
  * @class
- * @alias _SoffosNodes.TranscriptCorrectionIO
+ * @alias _SoffosNodes.TranscriptCorrectionNode
  */
 class TranscriptCorrectionNode extends Node {
 

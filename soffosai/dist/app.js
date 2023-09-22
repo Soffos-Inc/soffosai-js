@@ -164,7 +164,7 @@ exports.SoffosNodes = void 0;
 Object.defineProperty(exports, "SoffosPipeline", {
   enumerable: true,
   get: function get() {
-    return SoffosPipelines.Pipeline;
+    return SoffosPipelines.SoffosPipeline;
   }
 });
 exports.SoffosServices = exports.SoffosPipelines = void 0;

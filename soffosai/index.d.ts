@@ -1957,10 +1957,13 @@ declare module 'soffosai' {
          */
         export class AmbiguityDetectionNode{
             /**
-             * @param {string} name 
-             * @param {string} text 
-             * @param {number} [sentence_split = 4]
-             * @param {boolean} [sentence_overlap = false]
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be analyzed for ambiguitites.
+             * @param {number} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
+             * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+             * For example, with sentence_split 3 and sentence_overlap=true :
+             * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
              */
             constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:boolean);
         }
@@ -1970,11 +1973,12 @@ declare module 'soffosai' {
          */
         export class AnswerScoringNode{
             /**
-             * @param {string} name 
-             * @param {string} context
-             * @param {string} question
-             * @param {string} user_answer
-             * @param {string} [answer=null]
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} context - This should be the passage with the information that is related to the question and answer.
+             * @param {string} question - The question to answer.
+             * @param {string} user_answer - The user's answer which will be marked.
+             * @param {string} [answer=null] - Optionally provide the expected answer.
              */
             constructor(name:string, context:string, question:string, user_answer:string, answer?:string);
         }
@@ -1984,8 +1988,9 @@ declare module 'soffosai' {
          */
         export class ContradictionDetectionNode{
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be analyzed for contradictions.
              */
             constructor(name:string, text:string);
         }
@@ -1996,21 +2001,91 @@ declare module 'soffosai' {
         export class DocumentsIngestNode {
             /**
              * @param {string} name
-             * @param {string} document_name
-             * @param {string} [text=null]
-             * @param {object} [tagged_elements=null] 
-             * @param {object} [meta=null] 
+             * @param {string} document_name - The name of the document.
+             * @param {string} [text] - Required when tagged_elements is not provided. 
+             * Only one of text and tagged_elements can be provided.
+             * The text content of the document.
+             * @param {object} [tagged_elements] - Required when text is not provided. Only one of text and tagged_elements can be provided.
+             * A list of dictionaries representing tagged spans of 
+             * text extracted from a document file. This field accepts the value of the tagged_elements or 
+             * normalized_tagged_elements field from the output of the File Converter module.
+             * Therefore, it requires each element to contain the text and tag fields and any non-heading 
+             * element to contain a headings field which is also a list of dictionaries where each dictionary 
+             * should contain the fields text and tag.
+             * @param {object} [meta] - A dictionary containing metadata fields for tagging the document. 
+             * The keys should be string and the values can be any type, such as string, integer, boolean etc. 
+             * This allows document filtering based on the meta fields. Due to name being a mandatory field 
+             * provided independently, if a name field is included in meta it will be ignored.
              */
             constructor(name:string, document_name:string, text?:string, tagged_elements?:object, meta?:object);
         }
+
+        /**
+         * A service configuration for Documents Search Service for Pipeline use.
+         */
+        export class DocumentsSearchNode {
+            /**
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {object} [query]
+             * Required when top_n_natural_language is set above 0.
+             * The text to be used to match passages from ingested documents. 
+             * This could be anything from a very specific natural language question to a simple cobination 
+             * of words for keyword search. It can also be set as null for only-filtering searches.
+             * @param {object} [filters] - The filters field can be used to narrow down the search to only 
+             * the documents meeting certain metadata-based criteria, or even returning all the filtered 
+             * documents when query is left null. It is catering only for the metadata provided in the meta 
+             * field when ingesting a document. Other important filters such as document_ids, date_from and 
+             * date_until are provided as top level fields.
+             * Filters are defined as nested dictionaries. 
+             * The keys of the dictionaries can be a logical operator ("$and", "$or", "$not"), a comparison 
+             * operator ("$eq", "$in", "$gt", "$gte", "$lt", "$lte") or a metadata field name. 
+             * Logical operator keys have a dictionary of metadata field names and/or logical operators as 
+             * their value. Metadata field names have a dictionary of comparison operators as their value. 
+             * Comparison operator keys accept a single values or lists as their values. 
+             * Lists can be compared with the with the "$in" operator against single values, or with 
+             * the "$eq" operator against other lists in which case the set of values of each list 
+             * is compared and order does not matter. If no logical operator is given, "$and" is used as 
+             * the default operation. If no comparison operator is specified, "$eq" 
+             * (or "$in" if the comparison value is a list) is used as the default operation.
+             * @param {Array.<string>} [document_ids] - Passing document IDs will confine the search to those documents.
+             * @param {number} [top_n_keywords] - The number of document passages to be retrieved using 
+             * keyword search. The relevancy is calculated algorithmically based on the frequency of the 
+             * query words in the ingested passages. Setting this to 0 disables the keyword search. 
+             * When query is left null while top_n_keywords is larger than 0, it will simply filter 
+             * the documents based on the rest of the fields like date or metadata. All matched passages will 
+             * be returned, therefore the actual value of top_n_keywords does not make a difference, 
+             * so long it is larger than 0.
+             * @param {number} [top_n_natural_language] - The number of document passages to be retrieved 
+             * using Machine Learning-based semantic search. Setting this to 0 disables the semantic search.
+             * @param {string} [date_from] - Filters passages to those ingested at or after the specified ISO-8601 formatted date.
+             * @param {string} [date_until] - Filters passages to those ingested before the specified ISO-8601 formatted date.
+             */
+            constructor(name:string, query?:Object, filters?:Object, document_ids?:string[], top_n_keywords?:number,
+                top_n_natural_language?:number, date_from?:string, date_until?:string);
+        }
         
+        /**
+         * A service configuration for DocumentsDeleteService for Pipeline use.
+         * @class
+         * @alias _SoffosNodes.DocumentsDeleteNode
+         */
+        export class DocumentsDeleteNode{
+            /**
+             * @param {string} name - The name of this Node.
+             * @param {Array.<string>} document_ids - A list of the document_ids of the documents to be deleted.
+             */
+            constructor(name:string, document_ids:string[]);
+        }
+
         /**
          * A service configuration for EmailAnalysisService for Pipeline use.
          */
         export class EmailAnalysisNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - The e-mail body text.
              */
             constructor(name:string, text:string);
         }
@@ -2020,11 +2095,14 @@ declare module 'soffosai' {
          */
         export class EmotionDetectionNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {number} sentence_split
-             * @param {boolean} sentence_overlap
-             * @param {string[]} [emotion_choices = ["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation"]]
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to detect emotions from.
+             * @param {number} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
+             * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+             * For example, with sentence_split 3 and sentence_overlap=true :
+             * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+             * @param {Array.<string>} [emotion_choices=_EMOTION_LIST] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
              */
             constructor(name:string, text:string, sentence_split:number, sentence_overlap:boolean, emotion_choices?:string[]);
         }
@@ -2034,11 +2112,12 @@ declare module 'soffosai' {
          */
         export class FileConverterNode {
             /**
-             * @param {string} name
-             * @param {Blob} file
-             * @param {number} normalize
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
+             * @param {number} [normalize] - Whether to perform normalization.
              */
-            constructor(name:string, file:Blob, normalize:number);
+            constructor(name:string, file:Blob, normalize?:number);
         }
         
         /**
@@ -2046,8 +2125,9 @@ declare module 'soffosai' {
          */
         export class LanguageDetectionNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be classified under a language.
              */
             constructor(name:string, text:string);
         }
@@ -2057,10 +2137,49 @@ declare module 'soffosai' {
          */
         export class LetsDiscussCreateNode {
             /**
-             * @param {string} name
-             * @param {string} context
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} context - The content to discuss about.
              */
             constructor(name:string, context:string);
+        }
+
+        /**
+         * A service configuration for LetsDiscussService for Pipeline use.
+         */
+        export class LetsDiscussNode {
+            /**
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
+             * @param {string} query - User's message.
+             * @returns {Promise<Object>} 
+             */
+            constructor(name:string, session_id:string, query:string);
+        }
+
+        /**
+         * A service configuration for LetsDiscussRetrieveService for Pipeline use.
+         */
+        export class LetsDiscussRetrieveNode {
+            /**
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {boolean} [return_messages=true] - When set to true, in addition to returning 
+             * all the session records, it will also return all the messages associated with each session.
+             */
+            constructor(name:string, return_messages?:boolean);
+        }
+
+        /**
+         * A service configuration for LetsDiscussDeleteService for Pipeline use.
+         */
+        class LetsDiscussDeleteNode {
+            /**
+             * @param {string} name - The name of this Node.
+             * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
+             */
+            constructor(name:string, session_ids:string[]);
         }
         
         /**
@@ -2068,8 +2187,9 @@ declare module 'soffosai' {
          */
         export class LogicalErrorDetectionNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Input text to analyze for logical errors.
              */
             constructor(name:string, text:string);
         }
@@ -2079,8 +2199,9 @@ declare module 'soffosai' {
          */
         export class MicrolessonNode {
             /**
-             * @param {string} name
-             * @param {object[]} content
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
              */
             constructor(name:string, content:object[]);
         }
@@ -2090,9 +2211,10 @@ declare module 'soffosai' {
          */
         export class NamedEntityRecognitionNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {object} labels
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Input text to be analyzed for named entities.
+             * @param {Object.<string, string>} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
              */
             constructor(name:string, text:string, labels:any);
         }
@@ -2102,8 +2224,9 @@ declare module 'soffosai' {
          */
         export class ParaphraseNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             * It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be paraphrased/simplified.
              */
             constructor(name:string, text:string);
         }
@@ -2113,8 +2236,9 @@ declare module 'soffosai' {
          */
         export class ProfanityNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Input text.
              */
             constructor(name:string, text:string);
         }
@@ -2124,10 +2248,13 @@ declare module 'soffosai' {
          */
         export class QuestionAndAnswerGenerationNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {number} [sentence_split=3]
-             * @param {string} [sentence_overlap=false]
+             * @param {string} name - The name of this Node.
+             * It will be used by the Pipeline to reference this Node.
+             * @param {string} text - The input text from which the question-answer pairs will be generated.
+             * @param {number} [sentence_split=3] - The number of sentences of each chunk when splitting the input text.
+             * @param {string} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+             * For example, with sentence_split 3 and sentence_overlap=true :
+             * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
              */
             constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:string);
         }
@@ -2137,13 +2264,20 @@ declare module 'soffosai' {
          */
         export class QuestionAnsweringNode {
             /**
-             * @param {string} name
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
              * @param {string} question
-             * @param {string} document_text
-             * @param {string[]} document_ids
-             * @param {boolean} check_ambiguity
-             * @param {boolean} check_query_type
-             * @param {boolean} generic_response
+             * @param {string} document_text - The text to be used as the context to formulate the answer.
+             * @param {string[]} document_ids - A list of unique IDs referencing pre-ingested documents to be used as the context to formulate the answer.
+             * @param {boolean} check_ambiguity - When true, it checks whether the message contains a pronoun which is impossible to resolve and responds appropriately to avoid low quality or inaccurate answers. This is most useful when this module is used for conversational agents. For example:
+             * "What was his most famous invention?"
+             * Queries with pronouns that also contain the entity that the pronoun refers to are not rejected. For example:
+             * "What was Tesla's most famous invention and when did he create it?"
+             * In this case, the AI can infer that he refers to Tesla.
+             * Set this to false only when getting the most relevant content as the answer has equal or higher importance than the question being rejected or the answer being ambiguous/inaccurate.
+             * @param {boolean} check_query_type - When true, it will check whether the message is a natural language question, or whether it is a keyword query or a statement and respond appropriately if the message is not a question. The module is capable of returning a relevant answer to keyword or poorly formulated queries, but this option can help restrict the input.
+             * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
+             * @param {boolean} generic_responses
              * @param {object} meta
              */
             constructor(name: string, question: string, document_text?: string, document_ids?: string[], 
@@ -2155,8 +2289,9 @@ declare module 'soffosai' {
          */
         export class ReviewTaggerNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - The review text.
              */
             constructor(name:string, text:string);
         }
@@ -2166,10 +2301,13 @@ declare module 'soffosai' {
          */
         export class SentimentAnalysisNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {number} [sentence_split=4]
-             * @param {string} [sentence_overlap=false]
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be analyzed for sentiment.
+             * @param {number} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
+             * @param {string} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+             * For example, with sentence_split 3 and sentence_overlap=true :
+             * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
              */
             constructor(name:string, text:string, sentence_split?:number, sentence_overlap?:string);
         }
@@ -2179,8 +2317,9 @@ declare module 'soffosai' {
          */
         export class SimplifyNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             * It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be paraphrased/simplified.
              */
             constructor(name:string, text:string);
         }
@@ -2191,8 +2330,8 @@ declare module 'soffosai' {
         export class SummarizationNode {
             /**
              * @param {string} name
-             * @param {string} text
-             * @param {number} sent_length
+             * @param {string} text - Text to be summarized.
+             * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
              */
             constructor(name:string, text:string, sent_length:number);
         }
@@ -2202,9 +2341,10 @@ declare module 'soffosai' {
          */
         export class TableGeneratorNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {string} [table_format='markdown']
+             * @param {string} name - The name of this Node.
+             * @param {string} text - Text to extract tables from.
+             * @param {string} [table_format='markdown'] - A string indicating the table output format.
+             * Formats supported: "CSV", 'markdown'
              */
             constructor(name:string, text:string, table_format:string);
         }
@@ -2214,10 +2354,15 @@ declare module 'soffosai' {
          */
         export class TagGenerationNode {
             /**
-             * @param {string} name
-             * @param {string} text
-             * @param {object[]} [types=["topic"]]
-             * @param {number} n
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to extract keywords from.
+             * @param {Array.<?>} [types=["topic"]] - List of types of keywords to extract. Supported types:
+             * topic: Tags relating to the subject matter of the text.
+             * domain: Tags relating to the domain of the text. For example, "AI", or "Science fiction". In some cases, domain tags might be similar to topic tags.
+             * audience: Tags relating to the type of audience the text is intended for.
+             * entity: Entities such as people, places, products, etc. mentioned in the text.
+             * @param {number} n - The number of tags to be generated for each of the specified tag types.
              */
             constructor(name:string, text:string, types:object[], n:number);
         }
@@ -2227,8 +2372,9 @@ declare module 'soffosai' {
          */
         export class TranscriptCorrectionNode {
             /**
-             * @param {string} name
-             * @param {string} text
+             * @param {string} name - The name of this Node.
+             *  It will be used by the Pipeline to reference this Node.
+             * @param {string} text - Text to be corrected.
              */
             constructor(name:string, text:string);
         }

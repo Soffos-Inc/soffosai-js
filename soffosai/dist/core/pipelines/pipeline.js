@@ -163,7 +163,7 @@ var Pipeline = /*#__PURE__*/function () {
               i = 0;
             case 22:
               if (!(i < stages.length)) {
-                _context.next = 82;
+                _context.next = 84;
                 break;
               }
               if (!this._termination_codes.includes(executionCode)) {
@@ -216,7 +216,7 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               infos[stage.name] = pipeOutput;
-              return _context.abrupt("continue", 79);
+              return _context.abrupt("continue", 81);
             case 43:
               // dispatch nodeStartEvent
               nodeStartEvent = new CustomEvent("soffosai:node-start", {
@@ -283,11 +283,13 @@ var Pipeline = /*#__PURE__*/function () {
             case 71:
               response = _context.sent;
               if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 74;
+                _context.next = 76;
                 break;
               }
-              throw new Error(response);
-            case 74:
+              infos[stage.name] = response;
+              console.log(response);
+              return _context.abrupt("return", infos);
+            case 76:
               // dispatch nodeStartEvent
               nodeEndEvent = new CustomEvent("soffosai:node-end", {
                 detail: response
@@ -302,11 +304,11 @@ var Pipeline = /*#__PURE__*/function () {
               console.log("Response ready for ".concat(stage.name));
               infos[stage.name] = response;
               total_cost += response.cost.total_cost;
-            case 79:
+            case 81:
               i++;
               _context.next = 22;
               break;
-            case 82:
+            case 84:
               infos.total_call_cost = total_cost;
 
               // remove the execution code from the executionCodes in effect Array.
@@ -326,7 +328,7 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               return _context.abrupt("return", infos);
-            case 88:
+            case 90:
             case "end":
               return _context.stop();
           }
@@ -347,10 +349,6 @@ var Pipeline = /*#__PURE__*/function () {
   }, {
     key: "validate_pipeline",
     value: function validate_pipeline(stages, user_input) {
-      /*
-      Before running the first service, the Pipeline will validate all nodes if they will all be
-      executed successfully with the exception of database and server issues.
-      */
       var error_messages = [];
       var _loop2 = function _loop2() {
         var stage = stages[i];

@@ -108,7 +108,7 @@ var LetsDiscussDeleteNode = /*#__PURE__*/function (_Node4) {
   _inherits(LetsDiscussDeleteNode, _Node4);
   var _super4 = _createSuper(LetsDiscussDeleteNode);
   /**
-   * @param {string} name
+   * @param {string} name - The name of this Node.
    * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
    */
   function LetsDiscussDeleteNode(name, session_ids) {

@@ -79,7 +79,7 @@ class LetsDiscussCreateNode extends Node {
  class LetsDiscussDeleteNode extends Node {
 
     /**
-     * @param {string} name
+     * @param {string} name - The name of this Node.
      * @param {Array.<string>} session_ids - A list with the IDs of the sessions to be deleted.
      */
     constructor(name, session_ids) {

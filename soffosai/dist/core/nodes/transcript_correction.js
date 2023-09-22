@@ -22,7 +22,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /**
  * A service configuration for TranscriptCorrectionService for Pipeline use.
  * @class
- * @alias _SoffosNodes.TranscriptCorrectionIO
+ * @alias _SoffosNodes.TranscriptCorrectionNode
  */
 var TranscriptCorrectionNode = /*#__PURE__*/function (_Node) {
   _inherits(TranscriptCorrectionNode, _Node);

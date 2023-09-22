@@ -107,7 +107,7 @@ class DocumentsSearchNode extends Node {
  class DocumentsDeleteNode extends Node {
 
     /**
-     * @param {string} name
+     * @param {string} name - The name of this Node.
      * @param {Array.<string>} document_ids - A list of the document_ids of the documents to be deleted.
      */
     constructor(name, document_ids) {

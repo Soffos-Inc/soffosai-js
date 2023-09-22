@@ -11,7 +11,6 @@ class ContradictionDetectionNode extends Node{
      * @param {string} name - The name of this Node.
      *  It will be used by the Pipeline to reference this Node.
      * @param {string} text - Text to be analyzed for contradictions.
-     * @returns {Promise<Object>} 
      */
     constructor(name, text) {
         let service = new ContradictionDetectionService();

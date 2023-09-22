@@ -28,10 +28,10 @@ var TableGeneratorNode = /*#__PURE__*/function (_Node) {
   _inherits(TableGeneratorNode, _Node);
   var _super = _createSuper(TableGeneratorNode);
   /**
-   * @param {string} name
+   * @param {string} name - The name of this Node.
    * @param {string} text - Text to extract tables from.
    * @param {string} [table_format='markdown'] - A string indicating the table output format.
-   * Formats supported:
+   * Formats supported: "CSV", 'markdown'
    */
   function TableGeneratorNode(name, text) {
     var _this;

@@ -2,7 +2,7 @@
 
 import { ServiceString } from './common/constants.mjs';
 import { SoffosAIService } from './core/services/service.mjs';
-import { Pipeline as SoffosPipeline } from './core/pipelines/index.mjs';
+import { SoffosPipeline } from './core/pipelines/index.mjs';
 import {
     AmbiguityDetectionService,
     AnswerScoringService, 

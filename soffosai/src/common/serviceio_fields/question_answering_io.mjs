@@ -19,7 +19,7 @@ class QuestionAnsweringIO extends ServiceIO {
       "document_text": "string", // should not be defined if document_ids field is present
       "check_ambiguity": "boolean",
       "check_query_type": "boolean",
-      "generic_response": "boolean",
+      "generic_responses": "boolean",
       "meta": {
         "session_id": "string"
       }

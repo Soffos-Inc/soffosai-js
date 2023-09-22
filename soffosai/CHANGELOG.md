@@ -3,6 +3,11 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.2.0
+- Typescript declaration updates
+- bugfixes
+- tests
+
 ## 0.1.9
 - documentation: sample codes for ES5, ES6, html script tag (soffosai.bundle.js), typescript
 
@@ -19,7 +24,7 @@ To all who installed soffosai package lower than 0.0.4, please reinstall/update 
 
 ## 0.1.5 
 - bug fixes on events
-- costs per service format in a pipeline inside a pipeline
+- Pipeline inside a pipeline feature. Pipeline now needs "name" argument
 - documentation updates
 
 

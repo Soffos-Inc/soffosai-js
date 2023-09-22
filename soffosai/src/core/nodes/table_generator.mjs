@@ -9,10 +9,10 @@ import {TableGeneratorService} from "../../app.mjs";
 class TableGeneratorNode extends Node {
 
     /**
-     * @param {string} name
+     * @param {string} name - The name of this Node.
      * @param {string} text - Text to extract tables from.
      * @param {string} [table_format='markdown'] - A string indicating the table output format.
-     * Formats supported:
+     * Formats supported: "CSV", 'markdown'
      */
     constructor(name, text, table_format='markdown') {
         let service = new TableGeneratorService();
