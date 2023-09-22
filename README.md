@@ -22,7 +22,7 @@
 ## CDN package:
 `<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>`
 
-## EXAMPLES/TESTS:
+## Examples/Tests:
 [Soffosai SDK Examples](https://github.com/Soffos-Inc/soffosai-js/tree/master/samples)
 
 ## SoffosAIService
@@ -157,10 +157,41 @@ let file_converter = new soffosai.SoffosNodes.FileConverterNode(
 
 ## Pipeline
 - A Soffos Pipeline is a series of Soffos Service working together.
-In order to create a Pipeline a service Node should be defined as stated above then supply it to the pipeline's constructor:
+In order to create a Pipeline, a service Node should be defined as stated above then supply it to the pipeline's constructor:
 ```
-import { SoffosPipeline } from "soffosai";
+import { SoffosPipeline, SoffosNodes } from "soffosai";
 
+
+const file_converter = new SoffosNodes.FileConverterNode(
+    "file_converter",
+    {
+        source: "user_input",
+        field: "file"
+    },
+    0
+);
+
+const summarize = new SoffosNodes.SummarizationNode(
+    "summarize", 
+    {
+        source: "file_converter",
+        field: "summary"
+    },
+    3
+);
+
+const document_ingest = new SoffosNodes.DocumentsIngestNode(
+    "doc_ingest",
+    {
+        source: "user_input",
+        field: "file",
+        pre_process: get_filename
+    },
+    {
+        source: "summarize",
+        field: "summary"
+    }
+);
 const nodes = [file_converter, summarize, ingestor];
 const pipe = new SoffosPipeline(nodes, false, "my_pipeline", {apiKey: my_apiKey});
 ```
@@ -194,7 +225,7 @@ function get_filename(file) {
 
 
 /**
- * Given a file upload the file to Soffos and get its reference document_id.
+ * Given a file, upload the file to Soffos and get its reference document_id.
  */
 export class FileIngestPipeline extends SoffosPipeline {
     constructor(name=null, kwargs) {
@@ -365,8 +396,8 @@ console.log(JSON.stringify(result, null, 2));
 ```
 
 Take note of the difference in names:
-- SoffosPipeline is the pipeline Superclass while:
-- SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.Pipeline.
+- SoffosPipeline is the pipeline Superclass while
+- SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.SoffosPipeline.
 
 
 ## Events
