@@ -23,6 +23,16 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
+ * Get the filename only out of the given file
+ * @private
+ * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
+ * @returns {string}
+ */
+function get_filename(file) {
+  return file.name.split('.')[0];
+}
+
+/**
  * Given a file path, upload the file to Soffos and get its reference document_id in addition to the 
  * converted text.
  * @class
@@ -51,7 +61,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
     var document_ingest = new _index.DocumentsIngestNode("doc_ingest", {
       source: "user_input",
       field: "file",
-      pre_process: _this.get_filename
+      pre_process: get_filename
     }, {
       source: "file_converter",
       field: "text"
@@ -121,16 +131,6 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
       }
       return call;
     }()
-    /**
-     * Get the filename only out of the given file
-     * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
-     * @returns {string}
-     */
-  }, {
-    key: "get_filename",
-    value: function get_filename(file) {
-      return file.name.split('.')[0];
-    }
   }]);
   return FileIngestPipeline;
 }(_pipeline.Pipeline);

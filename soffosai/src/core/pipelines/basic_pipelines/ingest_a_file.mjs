@@ -3,6 +3,17 @@ import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.mjs";
 
 
 /**
+ * Get the filename only out of the given file
+ * @private
+ * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
+ * @returns {string}
+ */
+function get_filename(file) {
+    return file.name.split('.')[0];
+}
+
+
+/**
  * Given a file path, upload the file to Soffos and get its reference document_id in addition to the 
  * converted text.
  * @class
@@ -31,7 +42,7 @@ class FileIngestPipeline extends Pipeline {
             {
                 source: "user_input",
                 field: "file",
-                pre_process: this.get_filename
+                pre_process: get_filename
             },
             {
                 source: "file_converter",
@@ -79,14 +90,6 @@ class FileIngestPipeline extends Pipeline {
         return await this.run(payload);
     }
 
-    /**
-     * Get the filename only out of the given file
-     * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
-     * @returns {string}
-     */
-    get_filename(file) {
-        return file.name.split('.')[0];
-    }
 }
 
 

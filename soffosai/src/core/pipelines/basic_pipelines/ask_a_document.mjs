@@ -1,6 +1,20 @@
 import { Pipeline } from "./../pipeline.mjs";
 import { DocumentsSearchNode, QuestionAnsweringNode } from "./../../nodes/index.mjs";
 
+/**
+ * The document search service provides "passages" which is a list of contents plus some more description.
+ * In order to get the content, iterate through the passages and concatenate it.
+ * @private
+ * @param {Array.<object>} value 
+ * @returns {string}
+ */
+function getContent(passages) {
+    let combined_text = "";
+        for (let passage of passages) {
+            combined_text += passage.content;
+        }
+    return combined_text
+}
 
 /**
  * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
@@ -20,7 +34,7 @@ class AskADocumentPipeline extends Pipeline {
             let qa_node = new QuestionAnsweringNode(
                 "qa",
                 {source: "user_input", field: "question"},
-                {source: "search", field: "passages", pre_process: this.getContent}
+                {source: "search", field: "passages", pre_process: getContent}
             );
                 
         let nodes = [d_node, qa_node];
@@ -61,19 +75,6 @@ class AskADocumentPipeline extends Pipeline {
         return await this.run(payload);
     }
 
-    /**
-     * The document search service provides "passages" which is a list of contents plus some more description.
-     * In order to get the content, iterate through the passages and concatenate it.
-     * @param {Array.<object>} value 
-     * @returns {string}
-     */
-    getContent(value) {
-        let combined_text = "";
-        for (let item of value) {
-            combined_text += item.content;
-        }
-        return combined_text
-    }
 }
 
 export default AskADocumentPipeline
