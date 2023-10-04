@@ -1,10 +1,21 @@
+# Welcome to the Soffos Platform SDK
+At Soffos Inc., our specialty is helping organizations create pioneering apps with conversational artificial intelligence (CAI) and natural language processing (NLP) at their core.
+
+NLP and conversational AI are at the heart of everything Soffos does. Using Soffos’ technology, we offer a suite of unique application programming interfaces (APIs) so businesses can choose the natural language and generative AI functionalities they would like to include in any kind of application.
+
+What sets Soffos apart is we’ve taken the most advanced technology, enhanced it with our own R&D, and made it easy to use and accessible to everyone.
+
+Our solution provides you with the ‘building blocks’ and core technologies required to build countless novel NLP applications, with minimal coding, from learning and assessment tools to knowledge management platforms and beyond. The opportunities with Soffos Platform are infinite.
+
+Sign up for a [Free Trial](https://platform.soffos.ai) and start building your first generative AI application today!
+
 # Soffosai JS
 - Javascript SDK for Soffos.ai API
 - [Detailed Documentaton](https://soffos-inc.github.io/soffosai-js/)
 
 ## API Keys
-- Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
-- After loggin in, on the left panel, click [Projects](https://platform.soffos.ai/apps-list).
+- Create an account at [Soffos platform](https://platform.soffos.ai).
+- After loggin in, on the left panel, click [Projects](https://platform.soffos.ai/projects-list).
 - Create a new project.
 - Click on the key icon in the project you created and you will find the API Keys for that project.
   - An API key will automatically be provided for you on Project creation but you can still create more when your account is no longer on trial.
