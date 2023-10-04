@@ -194,16 +194,7 @@ class DocumentsSearchService extends SoffosAIService {
       if (date_from) payload.date_from = date_from;
       if (date_until) payload.date_until = date_until;
 
-      let response = super.call(payload);
-      let text = "";
-      if (response.hasOwnProperty('passages')){
-        for (let passage of response.passages){
-        text += passage;
-        }
-      }
-      response.text = text;
-
-      return response
+      return super.call(payload);
     }
 }
 

@@ -3,6 +3,9 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
+## 0.2.3 (unpublished)
+- removed 'text' field creation from 'passage' field on document search
+
 ## 0.2.2
 - Readme updates
 
