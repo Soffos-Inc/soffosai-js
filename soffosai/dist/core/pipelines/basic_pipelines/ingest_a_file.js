@@ -42,9 +42,9 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
   _inherits(FileIngestPipeline, _Pipeline);
   var _super = _createSuper(FileIngestPipeline);
   /**
-   * @param {string} name - The name of this pipeline. Will be used to reference this pipeline
+   * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
    *  if this pipeline is used as a Node inside another pipeline.
-   * @param {Object} kwargs - Include other needed properties like apiKey
+   * @param {Object} [kwargs] - Include other needed properties like apiKey
    */
   function FileIngestPipeline() {
     var _this;
@@ -63,7 +63,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
    * @param {string} user - The ID of the user accessing the Soffos API. Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
-   * @param {number} [normalize=0] - Whether to perform normalization.
+   * @param {string} [normalize='0'] - Whether to perform normalization.
    * @param {string} [execution_code=null] - If this process should be tracked so it can be
    * terminated via terminate() method, execution_code should be provided to reference this pipeline call.
    * @returns {Promise<object>}
@@ -97,7 +97,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              normalize = _args.length > 2 && _args[2] !== undefined ? _args[2] : 0;
+              normalize = _args.length > 2 && _args[2] !== undefined ? _args[2] : '0';
               execution_code = _args.length > 3 && _args[3] !== undefined ? _args[3] : null;
               payload = {
                 "user": user,
