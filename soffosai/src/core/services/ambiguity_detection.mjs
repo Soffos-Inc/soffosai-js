@@ -1,7 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {AmbiguityDetectionIO} from '../../common/serviceio_fields/index.mjs';
-
+import {InputConfig} from './input_config.mjs';
 
 /**
  *  This module finds statements or sentences in text that are not coherent, or can be interpreted 
@@ -80,6 +80,27 @@ class AmbiguityDetectionService extends SoffosAIService {
         "sentence_overlap": sentence_overlap
       };
       return super.call(payload);
+    }
+
+    /**
+     * Prepare this Service for Pipeline use. Set the input configurations.
+     * Define here where would this Service get its input, it can be a constant,
+     * from user input, or from other Service inside the Pipeline.
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to be analyzed for ambiguitites.
+     * @param {number|InputConfig} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
+     * @param {boolean|InputConfig} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
+     * For example, with sentence_split 3 and sentence_overlap=true :
+     * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+     */
+    setInputConfigs(name, text, sentence_split=4, sentence_overlap=false) {
+      let source = {
+          text: text,
+          sentence_split: sentence_split,
+          sentence_overlap: sentence_overlap
+      }
+      return super.setInputConfigs(name, source);
     }
 }
 

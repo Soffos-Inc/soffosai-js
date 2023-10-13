@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {NamedEntityRecognitionIO} from '../../common/serviceio_fields/index.mjs';
+import {InputConfig} from './input_config.mjs';
 
 
 /**
@@ -124,6 +125,20 @@ class NamedEntityRecognitionService extends SoffosAIService {
     add_label(label, definition) {
         this.labels[label] = definition;
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Input text to be analyzed for named entities.
+     * @param {Object.<string, string>|InputConfig} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+     */
+    setInputConfigs(name, text, labels=undefined) {
+      let source = {
+        text: text
+      };
+      if (labels) source.labels = labels;
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export default NamedEntityRecognitionService

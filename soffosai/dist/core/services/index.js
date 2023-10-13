@@ -57,6 +57,12 @@ Object.defineProperty(exports, "FileConverterService", {
     return _file_converter["default"];
   }
 });
+Object.defineProperty(exports, "InputConfig", {
+  enumerable: true,
+  get: function get() {
+    return _input_config.InputConfig;
+  }
+});
 Object.defineProperty(exports, "LanguageDetectionService", {
   enumerable: true,
   get: function get() {
@@ -177,6 +183,12 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
     return _transcript_correction["default"];
   }
 });
+Object.defineProperty(exports, "create_input_config", {
+  enumerable: true,
+  get: function get() {
+    return _input_config.create_input_config;
+  }
+});
 var _ambiguity_detection = _interopRequireDefault(require("./ambiguity_detection.js"));
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
 var _contradiction_detection = _interopRequireDefault(require("./contradiction_detection.js"));
@@ -201,4 +213,5 @@ var _table_generator = _interopRequireDefault(require("./table_generator.js"));
 var _tag_generation = _interopRequireDefault(require("./tag_generation.js"));
 var _transcript_correction = _interopRequireDefault(require("./transcript_correction.js"));
 var _service = require("./service.js");
+var _input_config = require("./input_config.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

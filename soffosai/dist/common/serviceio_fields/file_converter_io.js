@@ -32,7 +32,7 @@ var FileConverterIO = /*#__PURE__*/function (_ServiceIO) {
     _this.optional_input_fields = ["normalize"];
     _this.input_structure = {
       "file": "object",
-      "normalize": "number"
+      "normalize": "string"
     };
     _this.output_structure = {
       "text": "string",

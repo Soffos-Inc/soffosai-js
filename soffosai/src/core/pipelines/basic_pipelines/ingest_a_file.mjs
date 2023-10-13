@@ -1,5 +1,5 @@
 import { Pipeline } from "../pipeline.mjs";
-import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.mjs";
+import { FileConverterService, DocumentsIngestService, InputConfig } from "../../services/index.mjs";
 
 
 /**
@@ -21,33 +21,22 @@ function get_filename(file) {
  */
 class FileIngestPipeline extends Pipeline {
     /**
-     * @param {string} name - The name of this pipeline. Will be used to reference this pipeline
+     * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
      *  if this pipeline is used as a Node inside another pipeline.
-     * @param {Object} kwargs - Include other needed properties like apiKey
+     * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
-        const file_converter = new FileConverterNode(
+        const file_converter = new FileConverterService();
+        file_converter.setInputConfigs(
             "file_converter",
-            {
-                source: "user_input",
-                field: "file"
-            },
-            {
-                source: "user_input",
-                field: "normalize"
-            }
+            new InputConfig("user_input", "file"),
+            new InputConfig("user_input", "normalize")
         );
-        const document_ingest = new DocumentsIngestNode(
+        const document_ingest = new DocumentsIngestService();
+        document_ingest.setInputConfigs(
             "doc_ingest",
-            {
-                source: "user_input",
-                field: "file",
-                pre_process: get_filename
-            },
-            {
-                source: "file_converter",
-                field: "text"
-            }
+            new InputConfig("user_input", "file", get_filename),
+            new InputConfig("file_converter", "text")
         );
         return super([file_converter, document_ingest], false, name, kwargs);
     }
@@ -57,7 +46,7 @@ class FileIngestPipeline extends Pipeline {
      * @param {string} user - The ID of the user accessing the Soffos API. Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
-     * @param {number} [normalize=0] - Whether to perform normalization.
+     * @param {string} [normalize='0'] - Whether to perform normalization.
      * @param {string} [execution_code=null] - If this process should be tracked so it can be
      * terminated via terminate() method, execution_code should be provided to reference this pipeline call.
      * @returns {Promise<object>}
@@ -80,7 +69,7 @@ class FileIngestPipeline extends Pipeline {
      *     response1.textContent = JSON.stringify(response, null, 2);
      * }
      */
-    async call(user, file, normalize=0, execution_code=null) {
+    async call(user, file, normalize='0', execution_code=null) {
         let payload = {
             "user": user,
             "file": file,

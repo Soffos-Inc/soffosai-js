@@ -1,5 +1,5 @@
 import { Pipeline } from "./../pipeline.mjs";
-import { DocumentsSearchNode, QuestionAnsweringNode } from "./../../nodes/index.mjs";
+import { DocumentsSearchService, QuestionAnsweringService, InputConfig, create_input_config } from "./../../services/index.mjs";
 
 /**
  * The document search service provides "passages" which is a list of contents plus some more description.
@@ -28,17 +28,20 @@ class AskADocumentPipeline extends Pipeline {
      * @param {Object} kwargs - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}){
-        let d_node = new DocumentsSearchNode(
-                "search", null, null, {source: "user_input", field: "doc_ids"}
-            );
-            let qa_node = new QuestionAnsweringNode(
+        let d_node = new DocumentsSearchService();
+        d_node.setInputConfigs(
+                "search", null, null, create_input_config("user_input", "doc_ids")
+        );
+        
+        let qa_node = new QuestionAnsweringService();
+        qa_node.setInputConfigs(
                 "qa",
-                {source: "user_input", field: "question"},
-                {source: "search", field: "passages", pre_process: getContent}
-            );
+                create_input_config("user_input", "question"),
+                create_input_config("search", "passages", getContent)
+        );
                 
-        let nodes = [d_node, qa_node];
-        return super(nodes, false, name, kwargs);
+        let services = [d_node, qa_node];
+        return super(services, false, name, kwargs);
     }
 
     /**

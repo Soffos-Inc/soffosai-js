@@ -48,7 +48,7 @@ class SoffosAIService {
       this.headers = {
         "x-api-key": apikey,
       };
-      this._apikey = this.headers["x-api-key"];
+      this._apikey = apikey;
       this._service = service;
       // In a pipeline, some payload properties are constants and should be related to the Service's instance
       this._payload = {};
@@ -126,7 +126,7 @@ class SoffosAIService {
         const inputStructure = this._serviceio.input_structure;
         const valueErrors = [];
         for (const [key, value] of Object.entries(payload)) {
-          if (key in inputStructure && key != 'file') {
+          if (key in inputStructure) {
             const serviceioType = get_serviceio_datatype(inputStructure[key]);
             const inputType = get_userinput_datatype(value);
             if (inputType !== serviceioType) {
@@ -201,7 +201,6 @@ class SoffosAIService {
             console.log('Will not dispatch an Event outside of a DOM.');
           }
         }
-          
 
         // Call the API
         let response;
@@ -284,14 +283,39 @@ class SoffosAIService {
         return response_data;
 
     }
+
+
+    cleanPayload(rawPayload) {
+      let payload = {};
+  
+      if (Object.keys(rawPayload).length === 0) {
+          throw new Error("There is no payload");
+      }
+  
+      for (let k in rawPayload) {
+          if (rawPayload[k] != null) { // if the value is null, we don't pass it to the payload
+              payload[k] = rawPayload[k];
+  
+              if (k === "document_name") {
+                  payload["name"] = rawPayload[k];
+              } else if (k === "question") {
+                  payload["message"] = rawPayload[k];
+              }
+          }
+      }
+  
+      return payload;
+    }
     
+
     /**
      * Call the service
      * @param {object} kwargs 
      * @returns {object}
      */
     call(payload, kwargs = {}) {
-        return this.getResponse(payload, kwargs);
+      let cleaned_payload = this.cleanPayload(payload);
+      return this.getResponse(cleaned_payload, kwargs);
     }
       
     toString() {
@@ -308,6 +332,16 @@ class SoffosAIService {
     
     getDefaultOutputKey() {
         throw new Error('Abstract method getDefaultOutputKey must be implemented');
+    }
+
+    /** 
+     * Prepare this Service for Pipeline use. Set the input configurations.
+     * Define here where would this Service get its input, it can be a constant,
+     * from user input, or from other Service inside the Pipeline.
+     */
+    setInputConfigs(name, input_configs){
+      this.name = name
+      this.source = input_configs
     }
       
 }

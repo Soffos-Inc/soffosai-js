@@ -8,6 +8,7 @@ exports.LetsDiscussService = exports.LetsDiscussRetrieveService = exports.LetsDi
 var _service = require("./service.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -80,6 +81,20 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
         "context": context
       };
       return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} context - The content to discuss about.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, context) {
+      var source = {
+        context: context
+      };
+      return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return LetsDiscussCreateService;
@@ -175,6 +190,23 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
       };
       return _get(_getPrototypeOf(LetsDiscussService.prototype), "call", this).call(this, payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} session_id - The ID of the session provided by the /create/ endpoint.
+     * @param {string|InputConfig} query - User's message.
+     * @returns {Promise<Object>} 
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, session_id, query) {
+      var source = {
+        session_id: session_id,
+        query: query
+      };
+      return _get(_getPrototypeOf(LetsDiscussService.prototype), "setInputConfigs", this).call(this, name, source);
+    }
   }]);
   return LetsDiscussService;
 }(_service.SoffosAIService);
@@ -252,6 +284,22 @@ var LetsDiscussRetrieveService = /*#__PURE__*/function (_SoffosAIService3) {
       };
       return _get(_getPrototypeOf(LetsDiscussRetrieveService.prototype), "call", this).call(this, payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {boolean|InputConfig} [return_messages=true] - When set to true, in addition to returning 
+     * all the session records, it will also return all the messages associated with each session.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name) {
+      var return_messages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var source = {
+        return_messages: return_messages
+      };
+      return _get(_getPrototypeOf(LetsDiscussRetrieveService.prototype), "setInputConfigs", this).call(this, name, source);
+    }
   }]);
   return LetsDiscussRetrieveService;
 }(_service.SoffosAIService);
@@ -306,6 +354,20 @@ var LetsDiscussDeleteService = /*#__PURE__*/function (_SoffosAIService4) {
         "session_ids": session_ids
       };
       return _get(_getPrototypeOf(LetsDiscussDeleteService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string[]|InputConfig} session_ids - A list with the IDs of the sessions to be deleted.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, session_ids) {
+      var source = {
+        session_ids: session_ids
+      };
+      return _get(_getPrototypeOf(LetsDiscussDeleteService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return LetsDiscussDeleteService;

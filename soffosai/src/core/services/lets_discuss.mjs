@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {LetsDiscussCreateIO, LetsDiscussIO, LetsDiscussRetrieveIO, LetsDiscussDeleteIO} from '../../common/serviceio_fields/index.mjs';
+import {InputConfig} from './input_config.mjs';
 
 
 /**
@@ -54,6 +55,18 @@ class LetsDiscussCreateService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} context - The content to discuss about.
+     */
+    setInputConfigs(name, context) {
+      let source = {
+        context: context
+      };
+      return super.setInputConfigs(name, source);
+  }
 }
 
 
@@ -139,6 +152,21 @@ class LetsDiscussService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} session_id - The ID of the session provided by the /create/ endpoint.
+     * @param {string|InputConfig} query - User's message.
+     * @returns {Promise<Object>} 
+     */
+    setInputConfigs(name, session_id, query) {
+      let source = {
+        session_id: session_id,
+        query: query
+      };
+      return super.setInputConfigs(name, source);
+    }
 }
 
 
@@ -207,6 +235,19 @@ class LetsDiscussRetrieveService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {boolean|InputConfig} [return_messages=true] - When set to true, in addition to returning 
+     * all the session records, it will also return all the messages associated with each session.
+     */
+    setInputConfigs(name, return_messages=true) {
+      let source = {
+        return_messages: return_messages
+      };
+      return super.setInputConfigs(name, source);
+  }
 }
 
 
@@ -253,6 +294,18 @@ class LetsDiscussDeleteService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string[]|InputConfig} session_ids - A list with the IDs of the sessions to be deleted.
+     */
+    setInputConfigs(name, session_ids) {
+      let source = {
+        session_ids: session_ids
+      };
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export {

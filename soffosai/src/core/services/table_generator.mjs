@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {TableGeneratorIO} from '../../common/serviceio_fields/index.mjs';
+import { InputConfig } from './input_config.mjs';
 
 
 const TABLE_FORMATS = ['markdown', 'CSV'];
@@ -75,6 +76,22 @@ class TableGeneratorService extends SoffosAIService {
         "table_format": table_format
       };
       return super.call(payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to extract tables from.
+     * @param {string|InputConfig} [table_format='markdown'] - A string indicating the table output format.
+     * Formats supported: "CSV", 'markdown'
+     */
+    setInputConfigs(name, text, table_format='markdown') {
+      let source = {
+        text: text,
+        table_format: table_format
+      };
+      
+      return super.setInputConfigs(name, source);
     }
 }
 

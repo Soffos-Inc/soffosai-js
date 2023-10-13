@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {FileConverterIO} from '../../common/serviceio_fields/index.mjs';
+import {InputConfig} from './input_config.mjs';
 
 
 /**
@@ -52,9 +53,9 @@ class FileConverterService extends SoffosAIService {
      * document.querySelector('#sendFileBtn').addEventListener('click', sendFile);
      * 
      */
-    call(user, file, normalize=0) {
-        if ( ![ 0, 1 ].includes(normalize)) {
-            throw new Error(`${this._service}: normalize can only accept a value of 0 or 1;`);
+    call(user, file, normalize="0") {
+        if ( ![ "0", "1" ].includes(normalize)) {
+            throw new Error(`${this._service}: normalize can only accept a value of '0' or '1';`);
         }
 
         let payload = {
@@ -63,6 +64,20 @@ class FileConverterService extends SoffosAIService {
           normalize:normalize
         };
         return super.call(payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {Blob|InputConfig} file - The byte stream of the file. The file should not exceed 50Mb in size.
+     * @param {string|InputConfig} [normalize] - Whether to perform normalization.
+     */
+    setInputConfigs(name, file, normalize='0') {
+      let source = {
+        file: file,
+        normalize: normalize
+      };
+      return super.setInputConfigs(name, source);
     }
 }
 

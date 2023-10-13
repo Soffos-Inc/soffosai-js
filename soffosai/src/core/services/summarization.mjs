@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {SummarizationIO} from '../../common/serviceio_fields/index.mjs';
+import { InputConfig } from './input_config.mjs';
 
 
 /**
@@ -63,6 +64,21 @@ class SummarizationService extends SoffosAIService {
         "sent_length": sent_length
       };
       return super.call(payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to be summarized.
+     * @param {number|InputConfig} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+     */
+    setInputConfigs(name, text, sent_length) {
+      let source = {
+        text: text,
+        sent_length: sent_length
+      };
+      
+      return super.setInputConfigs(name, source);
     }
 }
 

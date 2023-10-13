@@ -1,7 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {AnswerScoringIO} from '../../common/serviceio_fields/index.mjs';
-
+import {InputConfig} from './input_config.mjs';
 
 /** 
  * This module will mark the user's answer based on the provided context, the question and, 
@@ -78,6 +78,25 @@ class AnswerScoringService extends SoffosAIService {
       if (answer) payload.answer = answer
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} context - This should be the passage with the information that is related to the question and answer.
+     * @param {string|InputConfig} question - The question to answer.
+     * @param {string|InputConfig} user_answer - The user's answer which will be marked.
+     * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+     */
+    setInputConfigs(name, context, question, user_answer, answer=null) {
+      let source = {
+          context: context,
+          question: question,
+          user_answer: user_answer
+      }
+      if(answer) source.answer = answer;
+      
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export default AnswerScoringService

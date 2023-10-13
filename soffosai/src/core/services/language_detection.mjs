@@ -1,6 +1,8 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {LanguageDetectionIO} from '../../common/serviceio_fields/index.mjs';
+import {InputConfig} from './input_config.mjs';
+
 
 /**
  * The Language Detection module detects the dominant language in the provided text.
@@ -48,6 +50,18 @@ class LanguageDetectionService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to be classified under a language.
+     */
+    setInputConfigs(name, text) {
+      let source = {
+        text: text
+      };
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export default LanguageDetectionService

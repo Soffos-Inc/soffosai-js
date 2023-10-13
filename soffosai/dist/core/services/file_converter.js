@@ -8,6 +8,7 @@ exports["default"] = void 0;
 var _service = require("./service.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -80,9 +81,9 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(FileConverterService, [{
     key: "call",
     value: function call(user, file) {
-      var normalize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-      if (![0, 1].includes(normalize)) {
-        throw new Error("".concat(this._service, ": normalize can only accept a value of 0 or 1;"));
+      var normalize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "0";
+      if (!["0", "1"].includes(normalize)) {
+        throw new Error("".concat(this._service, ": normalize can only accept a value of '0' or '1';"));
       }
       var payload = {
         user: user,
@@ -90,6 +91,23 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
         normalize: normalize
       };
       return _get(_getPrototypeOf(FileConverterService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {Blob|InputConfig} file - The byte stream of the file. The file should not exceed 50Mb in size.
+     * @param {string|InputConfig} [normalize] - Whether to perform normalization.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, file) {
+      var normalize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '0';
+      var source = {
+        file: file,
+        normalize: normalize
+      };
+      return _get(_getPrototypeOf(FileConverterService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return FileConverterService;

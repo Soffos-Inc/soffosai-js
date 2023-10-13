@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { Pipeline } from "../pipeline.mjs";
-import { FileConverterNode, DocumentsIngestNode } from "../../nodes/index.mjs";
+import { FileConverterService, DocumentsIngestService, InputConfig } from "../../services/index.mjs";
 
 
 /**
@@ -49,33 +49,22 @@ function get_filename(file) {
  */
 class FileIngestPipeline extends Pipeline {
     /**
-     * @param {string} name - The name of this pipeline. Will be used to reference this pipeline
+     * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
      *  if this pipeline is used as a Node inside another pipeline.
-     * @param {Object} kwargs - Include other needed properties like apiKey
+     * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
-        const file_converter = new FileConverterNode(
+        const file_converter = new FileConverterService();
+        file_converter.setInputConfigs(
             "file_converter",
-            {
-                source: "user_input",
-                field: "file"
-            },
-            {
-                source: "user_input",
-                field: "normalize"
-            }
+            new InputConfig("user_input", "file"),
+            new InputConfig("user_input", "normalize")
         );
-        const document_ingest = new DocumentsIngestNode(
+        const document_ingest = new DocumentsIngestService();
+        document_ingest.setInputConfigs(
             "doc_ingest",
-            {
-                source: "user_input",
-                field: "file",
-                pre_process: get_filename
-            },
-            {
-                source: "file_converter",
-                field: "text"
-            }
+            new InputConfig("user_input", "file", get_filename),
+            new InputConfig("file_converter", "text")
         );
         return super([file_converter, document_ingest], false, name, kwargs);
     }
@@ -85,7 +74,7 @@ class FileIngestPipeline extends Pipeline {
      * @param {string} user - The ID of the user accessing the Soffos API. Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
-     * @param {number} [normalize=0] - Whether to perform normalization.
+     * @param {string} [normalize='0'] - Whether to perform normalization.
      * @param {string} [execution_code=null] - If this process should be tracked so it can be
      * terminated via terminate() method, execution_code should be provided to reference this pipeline call.
      * @returns {Promise&lt;object>}
@@ -108,7 +97,7 @@ class FileIngestPipeline extends Pipeline {
      *     response1.textContent = JSON.stringify(response, null, 2);
      * }
      */
-    async call(user, file, normalize=0, execution_code=null) {
+    async call(user, file, normalize='0', execution_code=null) {
         let payload = {
             "user": user,
             "file": file,
@@ -131,13 +120,13 @@ export default FileIngestPipeline;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AmbiguityDetectionService.html">AmbiguityDetectionService</a></li><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.ContradictionDetectionService.html">ContradictionDetectionService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_SoffosNodes.AmbiguityDetectionNode.html">AmbiguityDetectionNode</a></li><li><a href="-_SoffosNodes.AnswerScoringNode.html">AnswerScoringNode</a></li><li><a href="-_SoffosNodes.ContradictionDetectionNode.html">ContradictionDetectionNode</a></li><li><a href="-_SoffosNodes.DocumentsDeleteNode.html">DocumentsDeleteNode</a></li><li><a href="-_SoffosNodes.DocumentsIngestNode.html">DocumentsIngestNode</a></li><li><a href="-_SoffosNodes.DocumentsSearchNode.html">DocumentsSearchNode</a></li><li><a href="-_SoffosNodes.EmailAnalysisNode.html">EmailAnalysisNode</a></li><li><a href="-_SoffosNodes.EmotionDetectionNode.html">EmotionDetectionNode</a></li><li><a href="-_SoffosNodes.FileConverterNode.html">FileConverterNode</a></li><li><a href="-_SoffosNodes.LanguageDetectionNode.html">LanguageDetectionNode</a></li><li><a href="-_SoffosNodes.LetsDiscussCreateNode.html">LetsDiscussCreateNode</a></li><li><a href="-_SoffosNodes.LetsDiscussDeleteNode.html">LetsDiscussDeleteNode</a></li><li><a href="-_SoffosNodes.LetsDiscussNode.html">LetsDiscussNode</a></li><li><a href="-_SoffosNodes.LetsDiscussRetrieveNode.html">LetsDiscussRetrieveNode</a></li><li><a href="-_SoffosNodes.LogicalErrorDetectionNode.html">LogicalErrorDetectionNode</a></li><li><a href="-_SoffosNodes.MicrolessonNode.html">MicrolessonNode</a></li><li><a href="-_SoffosNodes.NamedEntityRecognitionNode.html">NamedEntityRecognitionNode</a></li><li><a href="-_SoffosNodes.ParaphraseNode.html">ParaphraseNode</a></li><li><a href="-_SoffosNodes.ProfanityNode.html">ProfanityNode</a></li><li><a href="-_SoffosNodes.QuestionAndAnswerGenerationNode.html">QuestionAndAnswerGenerationNode</a></li><li><a href="-_SoffosNodes.QuestionAnsweringNode.html">QuestionAnsweringNode</a></li><li><a href="-_SoffosNodes.ReviewTaggerNode.html">ReviewTaggerNode</a></li><li><a href="-_SoffosNodes.SentimentAnalysisNode.html">SentimentAnalysisNode</a></li><li><a href="-_SoffosNodes.SimplifyNode.html">SimplifyNode</a></li><li><a href="-_SoffosNodes.SummarizationNode.html">SummarizationNode</a></li><li><a href="-_SoffosNodes.TableGeneratorNode.html">TableGeneratorNode</a></li><li><a href="-_SoffosNodes.TagGenerationNode.html">TagGenerationNode</a></li><li><a href="-_SoffosNodes.TranscriptCorrectionNode.html">TranscriptCorrectionNode</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InputConfig.html">InputConfig</a></li><li><a href="SoffosServices.AmbiguityDetectionService.html">AmbiguityDetectionService</a></li><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.ContradictionDetectionService.html">ContradictionDetectionService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Oct 04 2023 21:34:02 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Oct 13 2023 17:27:44 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

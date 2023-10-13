@@ -8,6 +8,7 @@ exports["default"] = void 0;
 var _service = require("./service.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -105,6 +106,27 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
       };
       if (answer) payload.answer = answer;
       return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} context - This should be the passage with the information that is related to the question and answer.
+     * @param {string|InputConfig} question - The question to answer.
+     * @param {string|InputConfig} user_answer - The user's answer which will be marked.
+     * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, context, question, user_answer) {
+      var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+      var source = {
+        context: context,
+        question: question,
+        user_answer: user_answer
+      };
+      if (answer) source.answer = answer;
+      return _get(_getPrototypeOf(AnswerScoringService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return AnswerScoringService;

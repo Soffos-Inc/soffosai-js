@@ -70,7 +70,7 @@ var SoffosAIService = /*#__PURE__*/function () {
     this.headers = {
       "x-api-key": apikey
     };
-    this._apikey = this.headers["x-api-key"];
+    this._apikey = apikey;
     this._service = service;
     // In a pipeline, some payload properties are constants and should be related to the Service's instance
     this._payload = {};
@@ -167,7 +167,7 @@ var SoffosAIService = /*#__PURE__*/function () {
               valueErrors = [];
               for (_i = 0, _Object$entries = Object.entries(payload); _i < _Object$entries.length; _i++) {
                 _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
-                if (key in inputStructure && key != 'file') {
+                if (key in inputStructure) {
                   serviceioType = (0, _type_classifications.get_serviceio_datatype)(inputStructure[key]);
                   inputType = (0, _type_classifications.get_userinput_datatype)(value);
                   if (inputType !== serviceioType) {
@@ -426,6 +426,27 @@ var SoffosAIService = /*#__PURE__*/function () {
       }
       return getResponse;
     }()
+  }, {
+    key: "cleanPayload",
+    value: function cleanPayload(rawPayload) {
+      var payload = {};
+      if (Object.keys(rawPayload).length === 0) {
+        throw new Error("There is no payload");
+      }
+      for (var k in rawPayload) {
+        if (rawPayload[k] != null) {
+          // if the value is null, we don't pass it to the payload
+          payload[k] = rawPayload[k];
+          if (k === "document_name") {
+            payload["name"] = rawPayload[k];
+          } else if (k === "question") {
+            payload["message"] = rawPayload[k];
+          }
+        }
+      }
+      return payload;
+    }
+
     /**
      * Call the service
      * @param {object} kwargs 
@@ -435,7 +456,8 @@ var SoffosAIService = /*#__PURE__*/function () {
     key: "call",
     value: function call(payload) {
       var kwargs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return this.getResponse(payload, kwargs);
+      var cleaned_payload = this.cleanPayload(payload);
+      return this.getResponse(cleaned_payload, kwargs);
     }
   }, {
     key: "toString",
@@ -456,6 +478,18 @@ var SoffosAIService = /*#__PURE__*/function () {
     key: "getDefaultOutputKey",
     value: function getDefaultOutputKey() {
       throw new Error('Abstract method getDefaultOutputKey must be implemented');
+    }
+
+    /** 
+     * Prepare this Service for Pipeline use. Set the input configurations.
+     * Define here where would this Service get its input, it can be a constant,
+     * from user input, or from other Service inside the Pipeline.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, input_configs) {
+      this.name = name;
+      this.source = input_configs;
     }
   }]);
   return SoffosAIService;

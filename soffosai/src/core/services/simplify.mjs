@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {SimplifyIO} from '../../common/serviceio_fields/index.mjs';
+import { InputConfig } from './input_config.mjs';
 
 
 /**
@@ -54,6 +55,19 @@ class SimplifyService extends SoffosAIService {
         "text": text,
       };
       return super.call(payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to be paraphrased/simplified.
+     */
+    setInputConfigs(name, text) {
+      let source = {
+        text: text
+      };
+      
+      return super.setInputConfigs(name, source);
     }
 }
 

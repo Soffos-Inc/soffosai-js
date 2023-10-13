@@ -4,7 +4,8 @@ To all who installed soffosai package lower than 0.0.4, please reinstall/update 
 
 
 ## 0.2.3 (unpublished)
-- removed 'text' field creation from 'passage' field on document search
+- Removed 'text' field creation from 'passage' field on document search
+- Removed the Node superclass. Service must call the setInpugConfigs method before it can be used in a Pipeline.
 
 ## 0.2.2
 - Readme updates

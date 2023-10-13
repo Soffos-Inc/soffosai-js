@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {TagGenerationIO} from '../../common/serviceio_fields/index.mjs';
+import { InputConfig } from './input_config.mjs';
 
 
 /**
@@ -139,6 +140,27 @@ class TagGenerationService extends SoffosAIService {
       };
       return super.call(payload);
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to extract keywords from.
+     * @param {string[]|InputConfig} [types=["topic"]] - List of types of keywords to extract. Supported types:
+     * topic: Tags relating to the subject matter of the text.
+     * domain: Tags relating to the domain of the text. For example, "AI", or "Science fiction". In some cases, domain tags might be similar to topic tags.
+     * audience: Tags relating to the type of audience the text is intended for.
+     * entity: Entities such as people, places, products, etc. mentioned in the text.
+     * @param {number|InputConfig} n - The number of tags to be generated for each of the specified tag types.
+     */
+    setInputConfigs(name, text, types=["topic"], n=10) {
+      let source = {
+        text: text,
+        types: types,
+        n: n
+      };
+      
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export default TagGenerationService

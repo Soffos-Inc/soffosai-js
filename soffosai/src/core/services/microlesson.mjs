@@ -1,6 +1,7 @@
 import { SoffosAIService } from './service.mjs';
 import { ServiceString } from '../../common/constants.mjs';
 import {MicrolessonIO} from '../../common/serviceio_fields/index.mjs';
+import {InputConfig} from './input_config.mjs';
 
 
 /**
@@ -109,6 +110,21 @@ class MicrolessonService extends SoffosAIService {
             }
         );
     }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {object[]|InputConfig} content - A list of dictionaries. Each dictionary should 
+     * contain the source and text fields, where source is the name of the
+     * document/article/website/etc. and text is the actual content. Providing the source names 
+     * enables the microlesson to include the source for the key points extracted from the content.
+     */
+    setInputConfigs(name, content) {
+      let source = {
+        content: content
+      };
+      return super.setInputConfigs(name, source);
+  }
 }
 
 export default MicrolessonService
