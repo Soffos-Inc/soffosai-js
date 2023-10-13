@@ -1,7 +1,7 @@
 import {InputConfig, SoffosAIService} from "../services/index.mjs";
 import {isDictObject, isNodeInput, get_serviceio_datatype, get_userinput_datatype} from "../../utils/type_classifications.mjs";
 import {put_doc_id_to_array} from "../../utils/pipeline_preprocesses.mjs";
-
+import {SoffosConfig} from "../../common/config.mjs";
 
 function is_service_input(value){
     if (typeof value != 'object'){
@@ -30,8 +30,16 @@ class Pipeline {
      * @param {Object} [ kwargs={} ]
      */
     constructor (services, use_defaults=false, name=null, kwargs={}) {
-        const api_key = kwargs.apiKey;
-        this.apiKey = api_key;
+        if (kwargs.apiKey){
+            const apiKey = kwargs.apiKey;
+          } else {
+            const apiKey = SoffosConfig.apiKey
+          }
+    
+          if (!apiKey){
+            throw TypeError("API key not provided.")
+          }
+        this.apiKey = apiKey;
         this._stages = services;
 
         this._input = {};

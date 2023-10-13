@@ -1,6 +1,6 @@
 import { SOFFOS_SERVICE_URL, FORM_DATA_REQUIRED } from "../../common/index.mjs";
 import {get_serviceio_datatype, get_userinput_datatype, isDictObject} from "./../../utils/type_classifications.mjs"
-
+import { SoffosConfig } from "../../common/config.mjs";
 const visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 const input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
 
@@ -44,11 +44,21 @@ class SoffosAIService {
    * @param {Object} kwargs  - holds additional properties for the Service like apiKey.
    */
     constructor(service, kwargs = {}) {
-      const apikey = kwargs.apiKey;
+      var apiKey;
+      if (kwargs.apiKey){
+        apiKey = kwargs.apiKey;
+      } else {
+        apiKey = SoffosConfig.apiKey;
+      }
+
+      if (!apiKey){
+        throw TypeError("API key not provided.")
+      }
+      
       this.headers = {
-        "x-api-key": apikey,
+        "x-api-key": apiKey,
       };
-      this._apikey = apikey;
+      this._apikey = apiKey;
       this._service = service;
       // In a pipeline, some payload properties are constants and should be related to the Service's instance
       this._payload = {};

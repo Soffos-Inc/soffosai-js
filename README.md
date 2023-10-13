@@ -26,6 +26,10 @@ Join our Discord channel: [SoffosAI](https://discord.gg/q9ehK4BH)
 - To set your api key:
     When you initialize a service, include it on key word arguments:
     ```
+    import { SoffosServices, SoffosConfig } from "./soffosai/src/app.mjs";
+    SoffosConfig.apiKey = "<your API key>";
+    
+    // or put it in the service instantiation:
     let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
     ```
 
@@ -111,29 +115,37 @@ if you are using a javascript library like React.js or Framework like Angular.
 ```
 if you are using the soffosai package directly into an html file.
 
+- If you are going to use multiple services and does not want to provide the API Key to each one of them, you can put your API key on SoffosConfig.apiKey.
+```
+import { SoffosConfig, SoffosServices } from "soffosai";
+SoffosConfig.apiKey = "<Your API Key>";
+
+// Then you don't have to supply the API Key on a Soffos Service:
+let service = new SoffosServices.TagGenerationService();
+```
 
 ## Pipeline
 - A Soffos Pipeline is a series of Soffos Services working together.
 In order to create a Pipeline, a service should call .setInputConfig then supply it to the pipeline's constructor:
 ```
-import { SoffosPipeline, SoffosNodes } from "soffosai";
+import { SoffosPipeline, SoffosServices, SoffosConfig } from "soffosai";
 
 
-const file_converter = new FileConverterService();
+const file_converter = new SoffosServices.FileConverterService();
 file_converter.setInputConfigs(
     "file_converter",
     new InputConfig("user_input", "file"), // get the value of "file" property of the user input.
     new InputConfig("user_input", "normalize") // get the value of "normalize" property of the user input.
 );
 
-const document_ingest = new DocumentsIngestService();
+const document_ingest = new SoffosServices.DocumentsIngestService();
 document_ingest.setInputConfigs(
     "doc_ingest",
     new InputConfig("user_input", "file", get_filename),
     new InputConfig("file_converter", "text") // get the ouput of the service named "fileconverter", get "text" property of it.
 );
 const services = [file_converter, ingestor];
-const pipe = new SoffosPipeline(services, false, "my_pipeline", {apiKey: my_apiKey});
+const pipe = new SoffosPipeline(services, false, "my_pipeline");
 ```
 This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content then save it as a document. The required input is clearly stated in the setInputConfigs because it has "user_input" in them. Thus to run this Pipeline:
 ```
@@ -152,7 +164,7 @@ console.log(JSON.stringify(response, null, 2));
 const pipe = new soffosai.SoffosPipeline(services, false, "my_pipeline", {apiKey: my_apiKey});
 ```
 
-### Best way to declare a Pipeline
+### More Flexible way to declare a Pipeline
 To make your Pipeline more maintainable and easy to use, create a subclass:
 ```
 import { SoffosPipeline, InputConfig } from "soffosai";
