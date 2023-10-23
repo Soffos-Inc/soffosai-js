@@ -1,7 +1,5 @@
 import ServiceIO from './service_io.mjs';
-import AmbiguityDetectionIO from './ambiguity_detection_io.mjs';
 import AnswerScoringIO from './answer_scoring_io.mjs';
-import ContradictionDetectionIO from './contradiction_detection_io.mjs';
 import { DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO } from './documents_io.mjs';
 import EmailAnalysisIO from './email_analysis_io.mjs';
 import EmotionDetectionIO from './emotion_detection_io.mjs';
@@ -25,9 +23,7 @@ import TranscriptCorrectionIO from './transcript_correction_io.mjs';
 
 export {
   ServiceIO,
-  AmbiguityDetectionIO,
   AnswerScoringIO,
-  ContradictionDetectionIO,
   DocumentsIngestIO,
   DocumentSearchIO,
   DocumentDeleteIO,

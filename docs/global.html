@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: services/paraphrase.mjs</title>
+    <title>JSDoc: Global</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,91 +17,295 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: services/paraphrase.mjs</h1>
+    <h1 class="page-title">Global</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import { SoffosAIService } from './service.mjs';
-import { ServiceString } from '../../common/constants.mjs';
-import { ParaphraseIO } from '../../common/serviceio_fields/index.mjs';
-import { InputConfig } from './input_config.mjs';
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
 
 
-/**
- * Paraphrase and Simplify are available as two different flavors of the same module. 
- * While the Paraphrase module attempts to change the wording while keeping the same level of complexity, 
- * the Simplify module outputs more commonly used words without altering the meaning of the original text.
- * @class
- * @alias SoffosServices.ParaphraseService 
- */
-class ParaphraseService extends SoffosAIService {
-    constructor(kwargs = {}) {
-      const service = ServiceString.PARAPHRASE;
-      super(service, kwargs);
-      this._serviceio = new ParaphraseIO();
-    }
-  
-    /**
-     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-     * the api is an application (app) and that app has users. Soffos API will accept any string.
-     * @param {string} text - Text to be paraphrased/simplified.
-     * @returns {Promise&lt;Object>} 
-     * paraphrase
-     * @example
-     * import { SoffosServices } from "soffosai";
-     * 
-     * const my_apiKey = "Token &lt;put your api key here>";
-     * const service = new SoffosServices.ParaphraseService({apiKey:my_apiKey});
-     * let response = await service.call(
-     *     "sample client id", 
-     *     "Soffosai provides a very easy and economical way to integrate AI into your systems"
-     * );
-     * console.log(JSON.stringify(response, null, 2));
-     *     
-     * // returns
-     * // {
-     * //     "paraphrase": "Soffosai offers a simple and cost-effective method for incorporating AI into your systems",
-     * //     "simplify": false,
-     * //     "cost": {
-     * //       "api_call_cost": 0.005,
-     * //       "character_volume_cost": 0.005,
-     * //       "total_cost": 0.01
-     * //     },
-     * //     "charged_character_count": 100,
-     * //     "unit_price": "0.000050"
-     * // }
-     */
-    call(user, text) {
-      let payload = {
-        "user": user,
-        "text": text,
-      };
-      return super.call(payload);
-    }
+<dl class="details">
 
-    /**
-     * @param {string} name - Reference name of this Service.
-     *  It will be used by the Pipeline to reference this Service.
-     * @param {string|InputConfig} text - Text to be paraphrased/simplified.
-     */
-    setInputConfigs(name, text) {
-      let source = {
-        text: text
-      };
-      
-      return super.setInputConfigs(name, source);
-    }
-}
+    
 
-export default ParaphraseService
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="_createInputConfig"><span class="type-signature"></span>_createInputConfig<span class="signature">(source, field, pre_process)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create Configuration for Pipeline Services.When sequencing Services within a Pipeline this helps configure which Node's output is used aswhich Node's input.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the SoffosAIService or SoffosPipeline from                  where the input of the current SoffosAIService should be taken from.                 It can also be "user_input" if the input will come from the user and                  not from a Service/SoffosPipeline.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the output field of the "source".</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pre_process</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">(optional) A function to preprocess the data from source[field].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_input_config.mjs.html">services/input_config.mjs</a>, <a href="services_input_config.mjs.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

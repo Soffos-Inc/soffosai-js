@@ -9,7 +9,7 @@ Our solution provides you with the ‘building blocks’ and core technologies r
 
 Sign up for a [Free Trial](https://platform.soffos.ai) and start building your first generative AI application today!
 
-Join our Discord channel: [SoffosAI](https://discord.gg/q9ehK4BH)
+Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
 
 # Soffosai JS
 - Javascript SDK for Soffos.ai API
@@ -30,7 +30,7 @@ Join our Discord channel: [SoffosAI](https://discord.gg/q9ehK4BH)
     SoffosConfig.apiKey = "<your API key>";
     
     // or put it in the service instantiation:
-    let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+    let service = new SoffosServices.SummarizationService({apiKey: my_apiKey});
     ```
 
 ## Installation
@@ -47,9 +47,7 @@ The SoffosAIService class handles validation and execution of specified endpoint
 Here is the list of SoffosAIService Subclasses:
 ```
 [
-    "AmbiguityDetectionService",
     "AnswerScoringService",
-    "ContradictionDetectionService",
     "DocumentsService",
     "DocumentsIngestService", 
     "DocumentsSearchService", 
@@ -95,7 +93,7 @@ console.log(JSON.stringify(response, null, 2));
 - For the web package:
 ```
 // The only difference is the declaration of the service. You must append soffosai.
-let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+let service = new soffosai.SoffosServices.SummarizationService({apiKey: my_apiKey});
 ```
 
 ## Important
@@ -110,7 +108,7 @@ if you are using a javascript library like React.js or Framework like Angular.
 ```
 <script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>
 <script>
-    let service = new soffosai.SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+    let service = new soffosai.SoffosServices.SummarizationService({apiKey: my_apiKey});
 </script>
 ```
 if you are using the soffosai package directly into an html file.

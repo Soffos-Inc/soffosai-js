@@ -56,6 +56,22 @@ declare module 'soffosai' {
         setDefaults(stages:SoffosAIService[], user_input:object): SoffosAIService[];
     }
 
+    /**
+     * Create Configuration for Pipeline Services.
+     * When sequencing Services within a Pipeline this helps configure which Node's output is used as
+     * which Node's input. 
+     * @function
+     * @alias _createInputConfig
+     * @param {string} source The name of the SoffosAIService or SoffosPipeline from 
+     *                  where the input of the current SoffosAIService should be taken from.
+     *                  It can also be "user_input" if the input will come from the user and 
+     *                  not from a Service/SoffosPipeline.
+     * @param {string} field The name of the output field of the "source".
+     * @param {function} pre_process (optional) A function to preprocess the data from source[field].
+     */ 
+    export function createInputConfig(source:string, field:string, pre_process:CallableFunction): object;
+
+
     export class InputConfig {
         /**
          * Input Configuration for Pipeline Nodes.
@@ -78,64 +94,6 @@ declare module 'soffosai' {
 //////////////////////////////////////////////////////////////////////////////////////////////// */
 
     export namespace SoffosServices {
-        /**
-         *  A SoffosAIService that finds statements or sentences in text that are not coherent,
-         *  or can be interpreted in multiple ways while also taking in account the surrounding context.
-         */
-        export class AmbiguityDetectionService {
-            constructor(kwargs?: {});
-            /**
-             * @param {string} user                     - The ID of the user accessing the Soffos API.  
-             *                                            Soffos assumes that the owner of
-             *                                            the api is an application (app) and that app has users. 
-             *                                            Soffos API will accept any string.
-             * @param {string} text                     - Text to be analyzed for ambiguitites.
-             * @param {number} [sentence_split=4]       - The number of sentences of each chunk when splitting the input text.
-             * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence. 
-             *                                            For example, with sentence_split=3 and sentence_overlap=true : <br>
-             *                                            [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
-             * @returns {Promise<Object>}
-             * @example
-             * import { SoffosServices } from "soffosai";
-             * 
-             * const service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
-             * let output = await service.call("Client1234567","I saw the signs");
-             * console.log(JSON.stringify(output, null, 2));
-             * 
-             * // returns {
-             * // "ambiguities": [
-             * //   {
-             * //     "text": "I saw the signs",
-             * //     "span_start": 0,
-             * //     "spane_end": 15,
-             * //     "reason": "It is unclear if the signs refer to literal signs or figurative signs."
-             * //   }
-             * // ],
-             * // "cost": {
-             * //     "api_call_cost": 0.005,
-             * //     "character_volume_cost": 0.005,
-             * //     "total_cost": 0.01
-             * // },
-             * // "charged_character_count": 100,
-             * // "unit_price": "0.000050"
-             * //}
-             */
-            call(user: string, text: string, sentence_split?: number, sentence_overlap?: boolean): Promise<object>;
-            
-        /**
-         * Prepare this Service for Pipeline use. Set the input configurations.
-         * Define here where would this Service get its input, it can be a constant,
-         * from user input, or from other Service inside the Pipeline.
-         * @param {string} name - Reference name of this Service.
-         *  It will be used by the Pipeline to reference this Service.
-         * @param {string|InputConfig} text - Text to be analyzed for ambiguitites.
-         * @param {number|InputConfig} [sentence_split=4] - The number of sentences of each chunk when splitting the input text.
-         * @param {boolean|InputConfig} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
-         * For example, with sentence_split 3 and sentence_overlap=true :
-         * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
-         */
-        setInputConfigs(name:string, text:string|InputConfig, sentence_split?:number|InputConfig, sentence_overlap?:boolean|InputConfig);
-        }
 
         /** 
          * This module will provide the user an answer based on the provided context, 
@@ -196,69 +154,6 @@ declare module 'soffosai' {
             setInputConfigs(name:string, context:string|InputConfig, question:string|InputConfig, user_answer:string|InputConfig, answer?:string|InputConfig): null;
         }
 
-        /**
-         * This module finds conflicting information in a body of text and returns a 
-         * description of the contradiction along with the relevant sentences and their 
-         * offsets within the original text.
-         */
-        export class ContradictionDetectionService {
-            constructor(kwargs?: {});
-            /**
-             * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-             * the api is an application (app) and that app has users. Soffos API will accept any string.
-             * @param {string} text - Text to be analyzed for contradictions.
-             * @returns {Promise<Object>} 
-             * contradictions - dictionary list<br>
-             * A list of dictionaries representing detected contradictions. Each dictionary contains the following fields: <br>
-             * contradiction: A description of the contradiction.<br>
-             * sentences: A list of sentences related to the contradiction. Each sentence is a dictionary with the sentence's text, starting offset and ending offset within the original text.<br>
-             * @example
-             * import { SoffosServices } from "soffosai";
-             * 
-             * const my_apiKey = "Token <put your api key here>";
-             * const service = new SoffosServices.ContradictionDetectionService({apiKey:my_apiKey});
-             * let response = await service.call(
-             *     "client 1234567",
-             *     "The source noted that the Shaheen-2, with a range of 2400 km, has never been tested by Pakistan.\
-             *     Pakistan has said that it performed several tests of its 2300 km-range Shaheen-2 missile in \
-             *      September 2004."
-             * );
-             * console.log(JSON.stringify(response, null, 2));
-             * 
-             * // returns
-             * // {
-             * //     "contradictions": [
-             * //       {
-             * //         "contradiction": "The source noted that the Shaheen-2 has never been tested by Pakistan, but Pakistan has said that it performed several tests of its Shaheen-2 missile.",
-             * //         "sentences": [
-             * //           {
-             * //             "text": "The source noted that the Shaheen-2, with a range of 2400 km, has never been tested by Pakistan.",      
-             * //             "span_start": 0,
-             * //             "span_end": 96
-             * //           }
-             * //         ]
-             * //       }
-             * //     ],
-             * //     "cost": {
-             * //       "api_call_cost": 0.005,
-             * //       "character_volume_cost": 0.0106,
-             * //       "total_cost": 0.0156
-             * //     },
-             * //     "charged_character_count": 212,
-             * //     "unit_price": "0.000050"
-             * // }
-             */
-            call(user: string, text: string): Promise<object>;
-
-
-            /**
-             * @param {string} name - Reference name of this Service.
-             *  It will be used by the Pipeline to reference this Service.
-             *  It will be used by the Pipeline to reference this Node.
-             * @param {string|InputConfig} text - Text to be analyzed for contradictions.
-             */
-             setInputConfigs(name:string, text:string|InputConfig): null;
-        }
 
         /**
          * The Documents Ingest module enables ingestion of content into Soffos.

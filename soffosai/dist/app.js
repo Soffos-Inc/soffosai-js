@@ -4,6 +4,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "InputConfig", {
+  enumerable: true,
+  get: function get() {
+    return _input_config.InputConfig;
+  }
+});
 Object.defineProperty(exports, "ServiceString", {
   enumerable: true,
   get: function get() {
@@ -29,11 +35,18 @@ Object.defineProperty(exports, "SoffosPipeline", {
   }
 });
 exports.SoffosServices = exports.SoffosPipelines = void 0;
+Object.defineProperty(exports, "createInputConfig", {
+  enumerable: true,
+  get: function get() {
+    return _input_config.createInputConfig;
+  }
+});
 var _constants = require("./common/constants.js");
 var _service = require("./core/services/service.js");
 var SoffosPipelines = _interopRequireWildcard(require("./core/pipelines/index.js"));
 exports.SoffosPipelines = SoffosPipelines;
 var _config = require("./common/config.js");
+var _input_config = require("./core/services/input_config.js");
 var SoffosServices = _interopRequireWildcard(require("./core/services/index.js"));
 exports.SoffosServices = SoffosServices;
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }

@@ -3,22 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "AmbiguityDetectionService", {
-  enumerable: true,
-  get: function get() {
-    return _ambiguity_detection["default"];
-  }
-});
 Object.defineProperty(exports, "AnswerScoringService", {
   enumerable: true,
   get: function get() {
     return _answer_scoring["default"];
-  }
-});
-Object.defineProperty(exports, "ContradictionDetectionService", {
-  enumerable: true,
-  get: function get() {
-    return _contradiction_detection["default"];
   }
 });
 Object.defineProperty(exports, "DocumentsDeleteService", {
@@ -183,15 +171,13 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
     return _transcript_correction["default"];
   }
 });
-Object.defineProperty(exports, "create_input_config", {
+Object.defineProperty(exports, "createInputConfig", {
   enumerable: true,
   get: function get() {
-    return _input_config.create_input_config;
+    return _input_config.createInputConfig;
   }
 });
-var _ambiguity_detection = _interopRequireDefault(require("./ambiguity_detection.js"));
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
-var _contradiction_detection = _interopRequireDefault(require("./contradiction_detection.js"));
 var _documents = require("./documents.js");
 var _email_analysis = _interopRequireDefault(require("./email_analysis.js"));
 var _emotion_detection = _interopRequireDefault(require("./emotion_detection.js"));

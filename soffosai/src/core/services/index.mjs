@@ -1,6 +1,4 @@
-import AmbiguityDetectionService from './ambiguity_detection.mjs';
 import AnswerScoringService from './answer_scoring.mjs';
-import ContradictionDetectionService from './contradiction_detection.mjs';
 import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService } from './documents.mjs';
 import EmailAnalysisService from './email_analysis.mjs';
 import EmotionDetectionService from './emotion_detection.mjs';
@@ -28,12 +26,10 @@ import TagGenerationService from './tag_generation.mjs';
 import TranscriptCorrectionService from './transcript_correction.mjs';
 
 import { SoffosAIService } from './service.mjs';
-import {InputConfig, create_input_config} from './input_config.mjs';
+import {InputConfig, createInputConfig} from './input_config.mjs';
 
 export {
-    AmbiguityDetectionService,
     AnswerScoringService,
-    ContradictionDetectionService,
     DocumentsIngestService, 
     DocumentsSearchService, 
     DocumentsDeleteService,
@@ -62,5 +58,5 @@ export {
 
     SoffosAIService,
     InputConfig,
-    create_input_config
+    createInputConfig
 };
