@@ -13,7 +13,10 @@ Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
 
 # Soffosai JS
 - Javascript SDK for Soffos.ai API
-- [Detailed Documentaton](https://soffos-inc.github.io/soffosai-js/)
+- [Detailed Documentaton](https://soffos-inc.github.io/soffosai-js)
+
+## Installation
+`npm install soffosai` 
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai).
@@ -23,18 +26,21 @@ Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
   - An API key will automatically be provided for you on Project creation but you can still create more when your account is no longer on trial.
 - Protect this API Key as it will incur charges.
 - You can also save your API Key into your environment variables with variable name = SOFFOSAI_API_KEY
-- To set your api key:
+- To set your API key:
     When you initialize a service, include it on key word arguments:
     ```
-    import { SoffosServices, SoffosConfig } from "./soffosai/src/app.mjs";
+    import { SoffosServices } from "soffosai";
+
+    let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+    ```
+    OR set your API key globally:
+    ```
+    import { SoffosServices, SoffosConfig } from "soffosai";
+
     SoffosConfig.apiKey = "<your API key>";
-    
-    // or put it in the service instantiation:
-    let service = new SoffosServices.SummarizationService({apiKey: my_apiKey});
+    let service = new SoffosServices.AmbiguityDetectionService();
     ```
 
-## Installation
-`npm install soffosai` 
 
 ## CDN package:
 `<script src="https://unpkg.com/soffosai@<version here>/dist/soffosai.bundle.js"></script>`
@@ -128,7 +134,7 @@ In order to create a Pipeline, a service should call .setInputConfig then supply
 ```
 import { SoffosPipeline, SoffosServices, SoffosConfig } from "soffosai";
 
-
+SoffosConfig.apiKey = "<api key>";
 const file_converter = new SoffosServices.FileConverterService();
 file_converter.setInputConfigs(
     "file_converter",
@@ -189,7 +195,7 @@ function get_filename(file) {
 class FileIngestPipeline extends Pipeline {
     /**
      * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
-     *  if this pipeline is used as a Node inside another pipeline.
+     *  if this pipeline is used as a Service inside another pipeline.
      * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
@@ -267,7 +273,7 @@ console.log(JSON.stringify(result, null, 2));
 
 
 ### Use Defaults
-When you are well versed by the output of the Nodes, you can create a pipeline without defining all the required arguments of each Node if you know that the previous Nodes or user_input will provide it. If you know this, just put "default" in the argument. Take note that the user_input or previous Nodes' outputs should contain the same property / fieldname. There are special cases where the previous Node's output has "document_id" and the current Node requires "document_ids"; this is already handled and can be defaulted. The same with required "document_text" and available "text". Also required "context" and available "text".
+When you are well versed by the output of the Services, you can create a pipeline without defining all the required arguments of each Service if you know that the previous Services or user_input will provide it. If you know this, just put "default" in the argument. Take note that the user_input or previous Services' outputs should contain the same property / fieldname. There are special cases where the previous Service's output has "document_id" and the current Service requires "document_ids"; this is already handled and can be defaulted. The same with required "document_text" and available "text". Also required "context" and available "text".
 
 Example:
 ```
@@ -288,14 +294,14 @@ docSearch.setInpugConfigs(
     "search",
     null,
     null,
-    "default"// automatically get this value from the output of previous Nodes or user_input with
+    "default"// automatically get this value from the output of previous Services or user_input with
                       // the same property / fieldname.
 );
 
 qa = new SoffosServices.QuestionAnsweringService();
 qa.setInputConfigs(
     "qa",
-    "default",// take the value for this argument from previous Nodes or from the user_input
+    "default",// take the value for this argument from previous Services or from the user_input
     new InputConfig("search", "passage", get_content)
 );
 const AskFromDocument = new SoffosPipeline(
@@ -336,7 +342,7 @@ Take note of the difference in names:
 
 
 ## Events
-- Events are being generated on service, node, and pipeline key operations. These events are:
+- Events are being generated on service, Service, and pipeline key operations. These events are:
 ```
 "soffosai:on-request" - dispatched when a http request is sent to Soffosai API,
 "soffosai:on-response" - dispatched when a http response is received,
