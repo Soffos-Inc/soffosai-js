@@ -55,10 +55,11 @@ var Pipeline = /*#__PURE__*/function () {
     var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     var kwargs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     _classCallCheck(this, Pipeline);
+    var apiKey;
     if (kwargs.apiKey) {
-      var _apiKey = kwargs.apiKey;
+      apiKey = kwargs.apiKey;
     } else {
-      var _apiKey2 = _config.SoffosConfig.apiKey;
+      apiKey = _config.SoffosConfig.apiKey;
     }
     if (!apiKey) {
       throw TypeError("API key not provided.");

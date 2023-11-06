@@ -30,12 +30,13 @@ class Pipeline {
      * @param {Object} [ kwargs={} ]
      */
     constructor (services, use_defaults=false, name=null, kwargs={}) {
+        let apiKey;
         if (kwargs.apiKey){
-            const apiKey = kwargs.apiKey;
+            apiKey = kwargs.apiKey;
           } else {
-            const apiKey = SoffosConfig.apiKey
+            apiKey = SoffosConfig.apiKey
           }
-    
+          
           if (!apiKey){
             throw TypeError("API key not provided.")
           }
