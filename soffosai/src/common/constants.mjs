@@ -3,6 +3,13 @@ const SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 
 const SERVICES_LIST = [
   'answer-scoring',
+  'audio-converter',
+  'chatbot/create',
+  'chatbot',
+  'chatbot/get',
+  'chatbot/delete',
+  'chatbot/sessions/get',
+  'chatbot/sessions/delete',
   'discuss/create',
   'discuss',
   'discuss/count',
@@ -41,6 +48,13 @@ const ServiceString = {
   Contains the list of Soffos services as attributes
   */
    ANSWER_SCORING : 'answer-scoring',
+   AUDIO_CONVERTER: 'audio-converter',
+   CHAT_BOT_CREATE: 'chatbot/create',
+   CHAT_BOT: 'chatbot',
+   CHAT_BOTS_GET: 'chatbot/get',
+   CHAT_BOTS_DELETE: 'chatbot/delete',
+   CHAT_BOT_GET_USER_SESSIONS: 'chatbot/sessions/get',
+   CHAT_BOT_DELETE_USER_SESSIONS: 'chatbot/sessions/delete',
    LETS_DISCUSS_CREATE : 'discuss/create',
    LETS_DISCUSS : 'discuss',
    LETS_DISCUSS_RETRIEVE : 'discuss/count',
@@ -73,7 +87,7 @@ const ServiceString = {
    BATCH_SERVICE : 'batch-service2',
 }
 
-const FORM_DATA_REQUIRED = [ServiceString.FILE_CONVERTER];
+const FORM_DATA_REQUIRED = [ServiceString.FILE_CONVERTER, ServiceString.AUDIO_CONVERTER];
 
 export {
   SOFFOS_SERVICE_URL,

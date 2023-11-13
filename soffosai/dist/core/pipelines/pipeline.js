@@ -299,7 +299,7 @@ var Pipeline = /*#__PURE__*/function () {
               return stage.getResponse(payload);
             case 72:
               response = _context.sent;
-              if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
+              if (!(response.error || !(0, _type_classifications.isDictObject)(response))) {
                 _context.next = 77;
                 break;
               }
@@ -424,7 +424,7 @@ var Pipeline = /*#__PURE__*/function () {
             var required_key = notation.field;
             if (reference_service_name == "user_input") {
               var input_datatype = (0, _type_classifications.get_userinput_datatype)(user_input[required_key]);
-              if (required_data_type != input_datatype) {
+              if (required_data_type != input_datatype && required_data_type != 'null') {
                 error_messages.push("On ".concat(stage.name, " service: ").concat(required_data_type, " required on user_input '").concat(required_key, "' field but ").concat(input_datatype, " is provided."));
               }
             } else {
@@ -443,7 +443,7 @@ var Pipeline = /*#__PURE__*/function () {
                     if (output_datatype == 'null') {
                       error_messages.push("On ".concat(stage.name, " service: the reference service '").concat(reference_service_name, "' does not have ").concat(required_key, " key on its output."));
                     }
-                    if (required_data_type != output_datatype) {
+                    if (required_data_type != output_datatype && required_data_type != 'null') {
                       error_messages.push("On ".concat(stage.name, " service: The input datatype required for field ").concat(key, " is ").concat(required_data_type, ". This does not match the datatype to be given by service ").concat(subservice.name, "'s ").concat(notation.field, " field which is ").concat(output_datatype, "."));
                     }
                     break;
@@ -459,7 +459,7 @@ var Pipeline = /*#__PURE__*/function () {
               }
             }
           } else {
-            if ((0, _type_classifications.get_userinput_datatype)(notation) == required_data_type) {
+            if ((0, _type_classifications.get_userinput_datatype)(notation) == required_data_type || required_data_type == 'null') {
               stage._payload[key] = notation;
             } else {
               error_messages.push("On ".concat(stage.name, " service: ").concat(key, " requires ").concat(required_data_type, " but ").concat(_typeof(notation), " is provided."));

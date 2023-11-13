@@ -55,6 +55,8 @@
 <li>Javascript SDK for Soffos.ai API</li>
 <li><a href="https://soffos-inc.github.io/soffosai-js/">Detailed Documentaton</a></li>
 </ul>
+<h2>Installation</h2>
+<p><code>npm install soffosai</code></p>
 <h2>API Keys</h2>
 <ul>
 <li>Create an account at <a href="https://platform.soffos.ai">Soffos platform</a>.</li>
@@ -67,17 +69,18 @@
 </li>
 <li>Protect this API Key as it will incur charges.</li>
 <li>You can also save your API Key into your environment variables with variable name = SOFFOSAI_API_KEY</li>
-<li>To set your api key:
-When you initialize a service, include it on key word arguments:<pre class="prettyprint source"><code>import { SoffosServices, SoffosConfig } from &quot;./soffosai/src/app.mjs&quot;;
-SoffosConfig.apiKey = &quot;&lt;your API key>&quot;;
+<li>To set your API key:
+When you initialize a service, include it on key word arguments:<pre class="prettyprint source"><code>import { SoffosServices } from &quot;soffosai&quot;;
 
-// or put it in the service instantiation:
-let service = new SoffosServices.SummarizationService({apiKey: my_apiKey});
+let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+</code></pre>
+OR set your API key globally:<pre class="prettyprint source"><code>import { SoffosServices, SoffosConfig } from &quot;soffosai&quot;;
+
+SoffosConfig.apiKey = &quot;&lt;your API key>&quot;;
+let service = new SoffosServices.AmbiguityDetectionService();
 </code></pre>
 </li>
 </ul>
-<h2>Installation</h2>
-<p><code>npm install soffosai</code></p>
 <h2>CDN package:</h2>
 <p><code>&lt;script src=&quot;https://unpkg.com/soffosai@&lt;version here&gt;/dist/soffosai.bundle.js&quot;&gt;&lt;/script&gt;</code></p>
 <h2>Examples/Tests:</h2>
@@ -87,6 +90,13 @@ let service = new SoffosServices.SummarizationService({apiKey: my_apiKey});
 Here is the list of SoffosAIService Subclasses:</p>
 <pre class="prettyprint source"><code>[
     &quot;AnswerScoringService&quot;,
+    &quot;AudioConverterService&quot;,
+    &quot;ChatBotCreateService&quot;,
+    &quot;ChatBotDeleteUserSessionsService&quot;,
+    &quot;ChatBotGetUserSessionsService&quot;,
+    &quot;ChatBotService&quot;,
+    &quot;ChatBotsDeleteService&quot;,
+    &quot;ChatBotsGetService&quot;,
     &quot;DocumentsService&quot;,
     &quot;DocumentsIngestService&quot;, 
     &quot;DocumentsSearchService&quot;, 
@@ -168,7 +178,7 @@ In order to create a Pipeline, a service should call .setInputConfig then supply
 </ul>
 <pre class="prettyprint source"><code>import { SoffosPipeline, SoffosServices, SoffosConfig } from &quot;soffosai&quot;;
 
-
+SoffosConfig.apiKey = &quot;&lt;api key>&quot;;
 const file_converter = new SoffosServices.FileConverterService();
 file_converter.setInputConfigs(
     &quot;file_converter&quot;,
@@ -226,17 +236,17 @@ function get_filename(file) {
 class FileIngestPipeline extends Pipeline {
     /**
      * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
-     *  if this pipeline is used as a Node inside another pipeline.
+     *  if this pipeline is used as a Service inside another pipeline.
      * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
-        const file_converter = new FileConverterService();
+        const file_converter = new FileConverterService(kwargs);
         file_converter.setInputConfigs(
             &quot;file_converter&quot;,
             new InputConfig(&quot;user_input&quot;, &quot;file&quot;),
             new InputConfig(&quot;user_input&quot;, &quot;normalize&quot;)
         );
-        const document_ingest = new DocumentsIngestService();
+        const document_ingest = new DocumentsIngestService(kwargs);
         document_ingest.setInputConfigs(
             &quot;doc_ingest&quot;,
             new InputConfig(&quot;user_input&quot;, &quot;file&quot;, get_filename),
@@ -301,7 +311,7 @@ result = await pipe.call(&quot;client2&quot;, other_file, 0);
 console.log(JSON.stringify(result, null, 2));
 </code></pre>
 <h3>Use Defaults</h3>
-<p>When you are well versed by the output of the Nodes, you can create a pipeline without defining all the required arguments of each Node if you know that the previous Nodes or user_input will provide it. If you know this, just put &quot;default&quot; in the argument. Take note that the user_input or previous Nodes' outputs should contain the same property / fieldname. There are special cases where the previous Node's output has &quot;document_id&quot; and the current Node requires &quot;document_ids&quot;; this is already handled and can be defaulted. The same with required &quot;document_text&quot; and available &quot;text&quot;. Also required &quot;context&quot; and available &quot;text&quot;.</p>
+<p>When you are well versed by the output of the Services, you can create a pipeline without defining all the required arguments of each Service if you know that the previous Services or user_input will provide it. If you know this, just put &quot;default&quot; in the argument. Take note that the user_input or previous Services' outputs should contain the same property / fieldname. There are special cases where the previous Service's output has &quot;document_id&quot; and the current Service requires &quot;document_ids&quot;; this is already handled and can be defaulted. The same with required &quot;document_text&quot; and available &quot;text&quot;. Also required &quot;context&quot; and available &quot;text&quot;.</p>
 <p>Example:</p>
 <pre class="prettyprint source"><code>import { SoffosPipeline, InputConfig } from &quot;soffosai&quot;; 
 import { SoffosServices } from &quot;soffosai&quot;;
@@ -315,19 +325,19 @@ function get_content(value) {
     return combined_text
 }
 
-docSearch = new SoffosServices.DocumentsSearchService();
+docSearch = new SoffosServices.DocumentsSearchService({apiKey: my_apiKey});
 docSearch.setInpugConfigs(
     &quot;search&quot;,
     null,
     null,
-    &quot;default&quot;// automatically get this value from the output of previous Nodes or user_input with
+    &quot;default&quot;// automatically get this value from the output of previous Services or user_input with
                       // the same property / fieldname.
 );
 
-qa = new SoffosServices.QuestionAnsweringService();
+qa = new SoffosServices.QuestionAnsweringService({apiKey: my_apiKey});
 qa.setInputConfigs(
     &quot;qa&quot;,
-    &quot;default&quot;,// take the value for this argument from previous Nodes or from the user_input
+    &quot;default&quot;,// take the value for this argument from previous Services or from the user_input
     new InputConfig(&quot;search&quot;, &quot;passage&quot;, get_content)
 );
 const AskFromDocument = new SoffosPipeline(
@@ -368,7 +378,7 @@ console.log(JSON.stringify(result, null, 2));
 </ul>
 <h2>Events</h2>
 <ul>
-<li>Events are being generated on service, node, and pipeline key operations. These events are:</li>
+<li>Events are being generated on service, Service, and pipeline key operations. These events are:</li>
 </ul>
 <pre class="prettyprint source"><code>&quot;soffosai:on-request&quot; - dispatched when a http request is sent to Soffosai API,
 &quot;soffosai:on-response&quot; - dispatched when a http response is received,
@@ -400,13 +410,13 @@ window.addEventListener(&quot;soffosai:on-request&quot;, captureOnRequest);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Oct 24 2023 12:59:23 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Nov 13 2023 20:49:39 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

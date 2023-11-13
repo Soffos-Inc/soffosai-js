@@ -54,6 +54,13 @@ Here is the list of SoffosAIService Subclasses:
 ```
 [
     "AnswerScoringService",
+    "AudioConverterService",
+    "ChatBotCreateService",
+    "ChatBotDeleteUserSessionsService",
+    "ChatBotGetUserSessionsService",
+    "ChatBotService",
+    "ChatBotsDeleteService",
+    "ChatBotsGetService",
     "DocumentsService",
     "DocumentsIngestService", 
     "DocumentsSearchService", 
