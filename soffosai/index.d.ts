@@ -4,7 +4,9 @@ declare module 'soffosai' {
     export var apiKey: string;
     export const ServiceString: string;
 
-    
+    export var SoffosConfig: {
+        apiKey: string | undefined;
+    };
     /**
      * A controller for consuming multiple Services called stages.
      * It validates all inputs of all stages before sending the first Soffos API request to ensure

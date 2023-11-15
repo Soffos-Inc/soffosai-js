@@ -2,6 +2,9 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.2.8
+- added website converter service
+
 ## 0.2.7
 - added audio converter service
 - added chatbot service
