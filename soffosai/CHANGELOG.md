@@ -2,6 +2,10 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+
+## 0.2.9
+- bugfix: TypeScript declaration for website converter was missing. Now fixed.
+
 ## 0.2.8
 - added website converter service
 
