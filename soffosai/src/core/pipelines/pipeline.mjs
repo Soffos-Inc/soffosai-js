@@ -82,14 +82,14 @@ class Pipeline {
     async run(user_input) {
         // dispatch soffosai:pipeline-start event
         const original_user_input = user_input;
-        const pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {detail: user_input});
         try{
+            const pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {detail: user_input});
             window.dispatchEvent(pipelineStartEvent);
-          }catch (error) {
+        } catch (error) {
             if (error instanceof ReferenceError) {
               console.log('Will not dispatch an Event outside of a DOM.');
             }
-          }
+        }
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -227,10 +227,10 @@ class Pipeline {
             this._executionCodes.splice(exec_code_index,1);
         }
         // dispatch soffosai:pipeline-end event
-        const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: infos});
         try{
+            const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: infos});
             window.dispatchEvent(pipelineEndEvent);
-          }catch (error) {
+        } catch (error) {
             if (error instanceof ReferenceError) {
               console.log('Will not dispatch an Event outside of a DOM.');
             }

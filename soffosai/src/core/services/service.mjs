@@ -203,8 +203,8 @@ class SoffosAIService {
         
         const data = this.getData(payload);
         // dispatch soffosai:on-request event
-        const onRequestEvent = new CustomEvent("soffosai:on-request", {detail: data});
-        try{
+        try {
+          const onRequestEvent = new CustomEvent("soffosai:on-request", {detail: data});
           window.dispatchEvent(onRequestEvent);
         }catch (error) {
           if (error instanceof ReferenceError) {
@@ -233,10 +233,10 @@ class SoffosAIService {
             );
           } catch (error){
             // dispatch soffosai:on-service-error event
-            const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
-            try{
+            try {
+              const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
               window.dispatchEvent(onServiceErorrEvent);
-            }catch (error) {
+            } catch (error) {
               if (error instanceof ReferenceError) {
                 console.log('Will not dispatch an Event outside of a DOM.');
               }
@@ -266,8 +266,8 @@ class SoffosAIService {
             );
           } catch (error) {
             // dispatch soffosai:on-service-error event
-            const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
-            try{
+            try {
+              const onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {detail: error});
               window.dispatchEvent(onServiceErorrEvent);
             }catch (error) {
               if (error instanceof ReferenceError) {
@@ -282,8 +282,8 @@ class SoffosAIService {
         }
         response_data = await response.json();
         // dispatch soffosai:on-response event
-        const responseEvent = new CustomEvent("soffosai:on-response", {detail: response_data});
         try{
+          const responseEvent = new CustomEvent("soffosai:on-response", {detail: response_data});
           window.dispatchEvent(responseEvent);
         }catch (error) {
           if (error instanceof ReferenceError) {

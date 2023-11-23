@@ -2,6 +2,10 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.2.10
+- ref: catch reference error for Events. Just in case soffosai is used on backend.
+    note: soffosai can be used on backend if there is no file handling needed.
+    It is still best to use soffosai-node on backend (npm install soffosai-node)
 
 ## 0.2.9
 - bugfix: TypeScript declaration for website converter was missing. Now fixed.
