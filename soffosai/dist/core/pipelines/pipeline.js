@@ -124,10 +124,10 @@ var Pipeline = /*#__PURE__*/function () {
             case 0:
               // dispatch soffosai:pipeline-start event
               original_user_input = user_input;
-              pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {
-                detail: user_input
-              });
               try {
+                pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {
+                  detail: user_input
+                });
                 window.dispatchEvent(pipelineStartEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -135,17 +135,17 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               if ((0, _type_classifications.isDictObject)(user_input)) {
-                _context.next = 5;
+                _context.next = 4;
                 break;
               }
               throw new Error("Invalid user input.");
-            case 5:
+            case 4:
               if ("user" in user_input) {
-                _context.next = 7;
+                _context.next = 6;
                 break;
               }
               throw new ReferenceError("'user' is not defined in user_input.");
-            case 7:
+            case 6:
               if ("text" in user_input) {
                 user_input.document_text = this._input.text;
               }
@@ -159,32 +159,32 @@ var Pipeline = /*#__PURE__*/function () {
               }
               executionCode = user_input.executionCode;
               if (!(executionCode != null && executionCode != undefined)) {
-                _context.next = 18;
+                _context.next = 17;
                 break;
               }
               executionCode = this.apiKey + executionCode;
               if (!this._executionCodes.includes(executionCode)) {
-                _context.next = 17;
+                _context.next = 16;
                 break;
               }
               return _context.abrupt("return", {
                 "error": "You are still using this execution code in a current pipeline run."
               });
-            case 17:
+            case 16:
               this._executionCodes.push(executionCode);
-            case 18:
+            case 17:
               infos = {};
               this.validate_pipeline(stages, user_input);
               infos.user_input = user_input;
               total_cost = 0.00; // Execute per stage:
               i = 0;
-            case 23:
+            case 22:
               if (!(i < stages.length)) {
-                _context.next = 83;
+                _context.next = 82;
                 break;
               }
               if (!this._termination_codes.includes(executionCode)) {
-                _context.next = 33;
+                _context.next = 32;
                 break;
               }
               // remove the execution code from both termination codes and execution codes
@@ -202,16 +202,16 @@ var Pipeline = /*#__PURE__*/function () {
               infos.warning = "This Soffos Pipeline run is prematurely terminated.";
               infos.user_input = original_user_input;
               return _context.abrupt("return", infos);
-            case 33:
+            case 32:
               stage = stages[i];
               console.log("Running ".concat(stage.name));
               if (!(stage instanceof Pipeline)) {
-                _context.next = 45;
+                _context.next = 44;
                 break;
               }
-              _context.next = 38;
+              _context.next = 37;
               return stage.run(user_input);
-            case 38:
+            case 37:
               _response = _context.sent;
               console.log("Response ready for ".concat(stage.name, "."));
               pipeOutput = {};
@@ -234,14 +234,14 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               infos[stage.name] = pipeOutput;
-              return _context.abrupt("continue", 80);
-            case 45:
+              return _context.abrupt("continue", 79);
+            case 44:
               temp_payload = stage.source;
               payload = {};
               _i = 0, _Object$entries = Object.entries(temp_payload);
-            case 48:
+            case 47:
               if (!(_i < _Object$entries.length)) {
-                _context.next = 68;
+                _context.next = 67;
                 break;
               }
               _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), _key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
@@ -256,65 +256,65 @@ var Pipeline = /*#__PURE__*/function () {
                 notation = input_dict;
               }
               if (!is_service_input(notation)) {
-                _context.next = 64;
+                _context.next = 63;
                 break;
               }
               // value is a reference to a service or user input
               value = infos[notation.source][notation.field];
               if (!("pre_process" in notation)) {
-                _context.next = 61;
+                _context.next = 60;
                 break;
               }
               if (!(notation.pre_process instanceof Function)) {
-                _context.next = 58;
+                _context.next = 57;
                 break;
               }
               payload[_key] = notation.pre_process(value);
-              _context.next = 59;
+              _context.next = 58;
               break;
-            case 58:
+            case 57:
               throw new Error("pre_process value should be a function");
-            case 59:
-              _context.next = 62;
+            case 58:
+              _context.next = 61;
               break;
-            case 61:
+            case 60:
               // no pre-processing required
               payload[_key] = value;
-            case 62:
-              _context.next = 65;
+            case 61:
+              _context.next = 64;
               break;
-            case 64:
+            case 63:
               // notation is a constant
               payload[_key] = notation;
-            case 65:
+            case 64:
               _i++;
-              _context.next = 48;
+              _context.next = 47;
               break;
-            case 68:
+            case 67:
               if (!('user' in payload)) {
                 payload.user = user_input.user;
               }
               payload.apiKey = this.apiKey;
-              _context.next = 72;
+              _context.next = 71;
               return stage.getResponse(payload);
-            case 72:
+            case 71:
               response = _context.sent;
               if (!(response.error || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 77;
+                _context.next = 76;
                 break;
               }
               infos[stage.name] = response;
               console.log(response);
               return _context.abrupt("return", infos);
-            case 77:
+            case 76:
               console.log("Response ready for ".concat(stage.name));
               infos[stage.name] = response;
               total_cost += response.cost.total_cost;
-            case 80:
+            case 79:
               i++;
-              _context.next = 23;
+              _context.next = 22;
               break;
-            case 83:
+            case 82:
               infos.total_call_cost = total_cost;
 
               // remove the execution code from the executionCodes in effect Array.
@@ -323,10 +323,10 @@ var Pipeline = /*#__PURE__*/function () {
                 this._executionCodes.splice(exec_code_index, 1);
               }
               // dispatch soffosai:pipeline-end event
-              pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
-                detail: infos
-              });
               try {
+                pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
+                  detail: infos
+                });
                 window.dispatchEvent(pipelineEndEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -334,7 +334,7 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               return _context.abrupt("return", infos);
-            case 89:
+            case 87:
             case "end":
               return _context.stop();
           }

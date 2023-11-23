@@ -317,10 +317,10 @@ var SoffosAIService = /*#__PURE__*/function () {
               throw new Error("Please provide the service you need from Soffos AI.");
             case 14:
               data = this.getData(payload); // dispatch soffosai:on-request event
-              onRequestEvent = new CustomEvent("soffosai:on-request", {
-                detail: data
-              });
               try {
+                onRequestEvent = new CustomEvent("soffosai:on-request", {
+                  detail: data
+                });
                 window.dispatchEvent(onRequestEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -331,32 +331,32 @@ var SoffosAIService = /*#__PURE__*/function () {
               // Call the API
               url = _index.SOFFOS_SERVICE_URL + this._service + "/";
               if (_index.FORM_DATA_REQUIRED.includes(this._service)) {
-                _context2.next = 33;
+                _context2.next = 31;
                 break;
               }
               headers = {
                 "content-type": "application/json",
                 "x-api-key": this._apikey
               };
-              _context2.prev = 20;
-              _context2.next = 23;
+              _context2.prev = 19;
+              _context2.next = 22;
               return fetch(url, {
                 headers: headers,
                 method: 'POST',
                 body: JSON.stringify(data)
               });
-            case 23:
+            case 22:
               response = _context2.sent;
-              _context2.next = 31;
+              _context2.next = 29;
               break;
-            case 26:
-              _context2.prev = 26;
-              _context2.t0 = _context2["catch"](20);
+            case 25:
+              _context2.prev = 25;
+              _context2.t0 = _context2["catch"](19);
               // dispatch soffosai:on-service-error event
-              onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
-                detail: _context2.t0
-              });
               try {
+                onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
+                  detail: _context2.t0
+                });
                 window.dispatchEvent(onServiceErorrEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -367,10 +367,10 @@ var SoffosAIService = /*#__PURE__*/function () {
                 error: _context2.t0,
                 response: response
               });
-            case 31:
-              _context2.next = 48;
+            case 29:
+              _context2.next = 45;
               break;
-            case 33:
+            case 31:
               formData = new FormData();
               Object.keys(data).forEach(function (key) {
                 formData.append(key, data[key]);
@@ -378,25 +378,25 @@ var SoffosAIService = /*#__PURE__*/function () {
               // let headers = formData.getHeaders();
               headers = {};
               headers["x-api-key"] = this._apikey;
-              _context2.prev = 37;
-              _context2.next = 40;
+              _context2.prev = 35;
+              _context2.next = 38;
               return fetch(url, {
                 headers: headers,
                 method: 'POST',
                 body: formData
               });
-            case 40:
+            case 38:
               response = _context2.sent;
-              _context2.next = 48;
+              _context2.next = 45;
               break;
-            case 43:
-              _context2.prev = 43;
-              _context2.t1 = _context2["catch"](37);
+            case 41:
+              _context2.prev = 41;
+              _context2.t1 = _context2["catch"](35);
               // dispatch soffosai:on-service-error event
-              _onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
-                detail: _context2.t1
-              });
               try {
+                _onServiceErorrEvent = new CustomEvent("soffosai:on-service-error", {
+                  detail: _context2.t1
+                });
                 window.dispatchEvent(_onServiceErorrEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -407,16 +407,16 @@ var SoffosAIService = /*#__PURE__*/function () {
                 error: _context2.t1,
                 response: response
               });
-            case 48:
-              _context2.next = 50;
+            case 45:
+              _context2.next = 47;
               return response.json();
-            case 50:
+            case 47:
               response_data = _context2.sent;
               // dispatch soffosai:on-response event
-              responseEvent = new CustomEvent("soffosai:on-response", {
-                detail: response_data
-              });
               try {
+                responseEvent = new CustomEvent("soffosai:on-response", {
+                  detail: response_data
+                });
                 window.dispatchEvent(responseEvent);
               } catch (error) {
                 if (error instanceof ReferenceError) {
@@ -424,11 +424,11 @@ var SoffosAIService = /*#__PURE__*/function () {
                 }
               }
               return _context2.abrupt("return", response_data);
-            case 54:
+            case 50:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, this, [[20, 26], [37, 43]]);
+        }, _callee2, this, [[19, 25], [35, 41]]);
       }));
       function getResponse() {
         return _getResponse.apply(this, arguments);
