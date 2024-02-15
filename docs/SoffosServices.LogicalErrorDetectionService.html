@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: LogicalErrorDetectionService</h1>
+    <h1 class="page-title">Class: LogicalErrorDetectionService (deprecated)</h1>
 
     
 
@@ -30,7 +30,8 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>LogicalErrorDetectionService<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Identifies illogical statements in text and explains why they are illogical.* @class</div>
+            <div class="class-description">Identifies illogical statements in text and explains why they are illogical.
+* @class</div>
         
     
 </header>
@@ -205,7 +206,8 @@
 
             
 
-            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner ofthe api is an application (app) and that app has users. Soffos API will accept any string.</td>
+            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+the api is an application (app) and that app has users. Soffos API will accept any string.</td>
         </tr>
 
     
@@ -298,7 +300,12 @@
 
         
 <div class="param-desc">
-    logical_errors - dictionary list<br>A list of dictionaries representing detected logical errors. Each dictionary contains the following fields: <br>text: The illogical text.<br>start: Starting character index in the original text.<br>end: Ending chracter index in the original text.<br>explanation: The reasoning behind why the text span is illogical.<br>
+    logical_errors - dictionary list<br>
+A list of dictionaries representing detected logical errors. Each dictionary contains the following fields: <br>
+text: The illogical text.<br>
+start: Starting character index in the original text.<br>
+end: Ending chracter index in the original text.<br>
+explanation: The reasoning behind why the text span is illogical.<br>
 </div>
 
 
@@ -322,7 +329,41 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.LogicalErrorDetectionService({apiKey:my_apiKey});let response = await service.call(    "client12345",    "Nobody has found evidence that UFOs don't exist, therefore they must exist. \    Many people are saying that voter fraud is real, therefore it must be real.")console.log(JSON.stringify(response, null, 2));// returns// {//     "logical_errors": [//       {//         "text": "Nobody has found evidence that UFOs don't exist, therefore they must exist.",//         "start": 0,//         "end": 75,//         "explanation": "This sentence is not logical because the lack of evidence does not necessarily mean that something must exist. The absence of evidence does not prove the existence of something."//       },//       {//         "text": "Many people are saying that voter fraud is real, therefore it must be real.",//         "start": 80,//         "end": 155,//         "explanation": "This sentence is not logical because it assumes that the truth of a statement is determined by the number of people who believe it, which is not necessarily the case."//       }//     ],//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.01715,//       "total_cost": 0.02215//     },//     "charged_character_count": 343,//     "unit_price": "0.000050"// }</code></pre>
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";
+
+const my_apiKey = "Token &lt;put your api key here>";
+const service = new SoffosServices.LogicalErrorDetectionService({apiKey:my_apiKey});
+let response = await service.call(
+    "client12345",
+    "Nobody has found evidence that UFOs don't exist, therefore they must exist. \
+    Many people are saying that voter fraud is real, therefore it must be real."
+)
+console.log(JSON.stringify(response, null, 2));
+
+// returns
+// {
+//     "logical_errors": [
+//       {
+//         "text": "Nobody has found evidence that UFOs don't exist, therefore they must exist.",
+//         "start": 0,
+//         "end": 75,
+//         "explanation": "This sentence is not logical because the lack of evidence does not necessarily mean that something must exist. The absence of evidence does not prove the existence of something."
+//       },
+//       {
+//         "text": "Many people are saying that voter fraud is real, therefore it must be real.",
+//         "start": 80,
+//         "end": 155,
+//         "explanation": "This sentence is not logical because it assumes that the truth of a statement is determined by the number of people who believe it, which is not necessarily the case."
+//       }
+//     ],
+//     "cost": {
+//       "api_call_cost": 0.005,
+//       "character_volume_cost": 0.01715,
+//       "total_cost": 0.02215
+//     },
+//     "charged_character_count": 343,
+//     "unit_price": "0.000050"
+// }</code></pre>
 
 
 
@@ -388,7 +429,8 @@
 
             
 
-            <td class="description last">Reference name of this Service. It will be used by the Pipeline to reference this Service.</td>
+            <td class="description last">Reference name of this Service.
+ It will be used by the Pipeline to reference this Service.</td>
         </tr>
 
     

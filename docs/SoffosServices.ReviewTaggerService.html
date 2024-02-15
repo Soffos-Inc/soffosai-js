@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ReviewTaggerService</h1>
+    <h1 class="page-title">Class: ReviewTaggerService (deprecated)</h1>
 
     
 
@@ -30,7 +30,10 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>ReviewTaggerService<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">This module extracts key information from negative product reviews. It attempts to findthe referred object, it's fault and an action/verb that is associated with it. If any of the information is not present, it returns "n/a". This is useful for organizations who want to analyze product reviews in order to identify and prioritize the most important issues.</div>
+            <div class="class-description">This module extracts key information from negative product reviews. It attempts to find
+the referred object, it's fault and an action/verb that is associated with it. If any 
+of the information is not present, it returns "n/a". This is useful for organizations who 
+want to analyze product reviews in order to identify and prioritize the most important issues.</div>
         
     
 </header>
@@ -205,7 +208,8 @@
 
             
 
-            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner ofthe api is an application (app) and that app has users. Soffos API will accept any string.</td>
+            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+the api is an application (app) and that app has users. Soffos API will accept any string.</td>
         </tr>
 
     
@@ -298,7 +302,12 @@
 
         
 <div class="param-desc">
-    object - string<br>The faulty object. This could be the product itself, or a component, e.g. "door handle". If 'n/a' is returned, it's assumed that the object is the product itself. <br>action - string <br>The action/verb associated with that object, e.g. "squeaks" <br>fault - string <br>The fault (or strength) of the object, e.g. "loose" or "broken". <br>
+    object - string<br>
+The faulty object. This could be the product itself, or a component, e.g. "door handle". If 'n/a' is returned, it's assumed that the object is the product itself. <br>
+action - string <br>
+The action/verb associated with that object, e.g. "squeaks" <br>
+fault - string <br>
+The fault (or strength) of the object, e.g. "loose" or "broken". <br>
 </div>
 
 
@@ -322,7 +331,31 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.ReviewTaggerService({apiKey:my_apiKey});let response = await service.call(    "client 12345",    "This oven has been a complete disaster from the start. After about 2 weeks of use, \    the oven and broiler burners would turn off suddenly after being on for only 5 seconds. \    This has been an ongoing issue for months, and it still does not work.");console.log(JSON.stringify(response, null, 2));    // returns// {//     "object": "oven and broiler burners",//     "action": "turn off suddenly",//     "fault": "not working",//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.01245,//       "total_cost": 0.01745//     },//     "charged_character_count": 249,//     "unit_price": "0.000050"// }</code></pre>
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";
+
+const my_apiKey = "Token &lt;put your api key here>";
+const service = new SoffosServices.ReviewTaggerService({apiKey:my_apiKey});
+let response = await service.call(
+    "client 12345",
+    "This oven has been a complete disaster from the start. After about 2 weeks of use, \
+    the oven and broiler burners would turn off suddenly after being on for only 5 seconds. \
+    This has been an ongoing issue for months, and it still does not work."
+);
+console.log(JSON.stringify(response, null, 2));
+    
+// returns
+// {
+//     "object": "oven and broiler burners",
+//     "action": "turn off suddenly",
+//     "fault": "not working",
+//     "cost": {
+//       "api_call_cost": 0.005,
+//       "character_volume_cost": 0.01245,
+//       "total_cost": 0.01745
+//     },
+//     "charged_character_count": 249,
+//     "unit_price": "0.000050"
+// }</code></pre>
 
 
 
@@ -388,7 +421,8 @@
 
             
 
-            <td class="description last">Reference name of this Service. It will be used by the Pipeline to reference this Service.</td>
+            <td class="description last">Reference name of this Service.
+ It will be used by the Pipeline to reference this Service.</td>
         </tr>
 
     

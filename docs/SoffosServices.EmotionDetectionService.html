@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: EmotionDetectionService</h1>
+    <h1 class="page-title">Class: EmotionDetectionService (deprecated)</h1>
 
     
 
@@ -30,7 +30,8 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>EmotionDetectionService<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Detect selected emotions within the provided text. The original text is chunked topassages of a specified sentence length. Smaller chunks yield better accuracy.</div>
+            <div class="class-description">Detect selected emotions within the provided text. The original text is chunked to
+passages of a specified sentence length. Smaller chunks yield better accuracy.</div>
         
     
 </header>
@@ -221,7 +222,8 @@
                 </td>
             
 
-            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner ofthe api is an application (app) and that app has users. Soffos API will accept any string.</td>
+            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+the api is an application (app) and that app has users. Soffos API will accept any string.</td>
         </tr>
 
     
@@ -334,7 +336,9 @@
                 </td>
             
 
-            <td class="description last">Whether to overlap adjacent chunks by 1 sentence.For example, with sentence_split 3 and sentence_overlap=true :[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]</td>
+            <td class="description last">Whether to overlap adjacent chunks by 1 sentence.
+For example, with sentence_split 3 and sentence_overlap=true :
+[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]</td>
         </tr>
 
     
@@ -441,7 +445,12 @@
 
         
 <div class="param-desc">
-    spans - dictionary list<br>A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>text: The text of the span.<br>detected_emotions: A list of the emotions detected for the specific span.<br>span_start: The starting character index of the span in the original input text.<br>span_end: The ending character index of the span in the original input text.<br>
+    spans - dictionary list<br>
+A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>
+text: The text of the span.<br>
+detected_emotions: A list of the emotions detected for the specific span.<br>
+span_start: The starting character index of the span in the original input text.<br>
+span_end: The ending character index of the span in the original input text.<br>
 </div>
 
 
@@ -465,7 +474,33 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.EmotionDetectionService({apiKey:my_apiKey});let response = await service.call("client_a_happy_one", "I am excited about my birthday!");console.log(JSON.stringify(response, null, 2));// returns// {//     "spans": [//       {//         "detected_emotions": [//           "joy"//         ],//         "text": "I am excited about my birthday!",//         "span_start": 0,//         "span_end": 31//       }//     ],//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.005,//       "total_cost": 0.01//     },//     "charged_character_count": 100,//     "unit_price": "0.000050"// }</code></pre>
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";
+
+const my_apiKey = "Token &lt;put your api key here>";
+const service = new SoffosServices.EmotionDetectionService({apiKey:my_apiKey});
+let response = await service.call("client_a_happy_one", "I am excited about my birthday!");
+console.log(JSON.stringify(response, null, 2));
+
+// returns
+// {
+//     "spans": [
+//       {
+//         "detected_emotions": [
+//           "joy"
+//         ],
+//         "text": "I am excited about my birthday!",
+//         "span_start": 0,
+//         "span_end": 31
+//       }
+//     ],
+//     "cost": {
+//       "api_call_cost": 0.005,
+//       "character_volume_cost": 0.005,
+//       "total_cost": 0.01
+//     },
+//     "charged_character_count": 100,
+//     "unit_price": "0.000050"
+// }</code></pre>
 
 
 
@@ -547,7 +582,8 @@
                 </td>
             
 
-            <td class="description last">Reference name of this Service. It will be used by the Pipeline to reference this Service.</td>
+            <td class="description last">Reference name of this Service.
+ It will be used by the Pipeline to reference this Service.</td>
         </tr>
 
     
@@ -669,7 +705,9 @@
                 </td>
             
 
-            <td class="description last">Whether to overlap adjacent chunks by 1 sentence.For example, with sentence_split 3 and sentence_overlap=true :[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]</td>
+            <td class="description last">Whether to overlap adjacent chunks by 1 sentence.
+For example, with sentence_split 3 and sentence_overlap=true :
+[[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]</td>
         </tr>
 
     
