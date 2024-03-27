@@ -17,6 +17,7 @@ import LanguageDetectionIO from './language_detection_io.mjs';
 import { LetsDiscussCreateIO, LetsDiscussDeleteIO, LetsDiscussIO, LetsDiscussRetrieveIO } from './lets_discuss_io.mjs';
 import LogicalErrorDetectionIO from './logical_error_detection_io.mjs';
 import MicrolessonIO from './microlesson_io.mjs';
+import MultipleChoiceQnAGeneratorIO from './multiple_choice_qn_a_generator.mjs';
 import NamedEntityRecognitionIO from './named_entity_recognition_io.mjs';
 import ParaphraseIO from './paraphrase_io.mjs';
 import SimplifyIO from './simplify_io.mjs';
@@ -56,6 +57,7 @@ export {
   LetsDiscussRetrieveIO,
   LogicalErrorDetectionIO,
   MicrolessonIO,
+  MultipleChoiceQnAGeneratorIO,
   NamedEntityRecognitionIO,
   ParaphraseIO,
   SimplifyIO,

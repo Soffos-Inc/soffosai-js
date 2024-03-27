@@ -21,6 +21,7 @@ import {
 } from './lets_discuss.mjs';
 import LogicalErrorDetectionService from './logical_error_detection.mjs';
 import MicrolessonService from './microlesson.mjs';
+import MultipleChoiceQnAGeneratorService from './multiple_choice_qn_a_generator.mjs';
 import NamedEntityRecognitionService from './named_entity_recognition.mjs';
 import ParaphraseService from './paraphrase.mjs';
 import ProfanityService from './profanity.mjs';
@@ -62,6 +63,7 @@ export {
     LetsDiscussDeleteService,
     LogicalErrorDetectionService,
     MicrolessonService,
+    MultipleChoiceQnAGeneratorService,
     NamedEntityRecognitionService,
     ParaphraseService,
     ProfanityService,
