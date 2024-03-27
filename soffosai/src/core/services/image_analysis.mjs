@@ -24,8 +24,7 @@ class ImageAnalysisService extends SoffosAIService {
      * Soffos API will accept any string."
      * @param {string} prompt - the prompt to be sent to the LLM
      * @param {string} image_url - the location of the image to be processed
-     * @param {string} [engine=null] - The LLM engine to be used. Currently supports:
-     * ['gpt-4-1106-preview', 'gpt-3.5-turbo-1106', 'gemini-1.0-pro']
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * analysis - the analysis of the image
      * @example
@@ -48,8 +47,7 @@ class ImageAnalysisService extends SoffosAIService {
      *  It will be used by the Pipeline to reference this Service.
      * @param {(string|InputConfig)} prompt - the prompt to be sent to the LLM
      * @param {(string|InputConfig)} image_url - the location of the image to be processed
-     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used. Currently supports:
-     * ['gpt-4-1106-preview', 'gpt-3.5-turbo-1106', 'gemini-1.0-pro']
+     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
      */
     setInputConfigs(name, prompt, image_url, engine=null) {
       let source = {

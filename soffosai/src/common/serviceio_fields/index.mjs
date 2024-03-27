@@ -11,6 +11,7 @@ import { DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO } from './documen
 import EmailAnalysisIO from './email_analysis_io.mjs';
 import EmotionDetectionIO from './emotion_detection_io.mjs';
 import ImageAnalysisIO from './image_analysis.mjs';
+import ImageGenerationIO from './image_generation.mjs';
 import FileConverterIO from './file_converter_io.mjs';
 import LanguageDetectionIO from './language_detection_io.mjs';
 import { LetsDiscussCreateIO, LetsDiscussDeleteIO, LetsDiscussIO, LetsDiscussRetrieveIO } from './lets_discuss_io.mjs';
@@ -46,6 +47,7 @@ export {
   EmailAnalysisIO,
   EmotionDetectionIO,
   ImageAnalysisIO,
+  ImageGenerationIO,
   FileConverterIO,
   LanguageDetectionIO,
   LetsDiscussCreateIO,

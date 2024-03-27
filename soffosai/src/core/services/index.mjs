@@ -9,8 +9,9 @@ import ChatBotsDeleteService from './chat_bots_delete.mjs';
 import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService } from './documents.mjs';
 import EmailAnalysisService from './email_analysis.mjs';
 import EmotionDetectionService from './emotion_detection.mjs';
-import ImageAnalysisService from './image_analysis.mjs';
 import FileConverterService from './file_converter.mjs';
+import ImageAnalysisService from './image_analysis.mjs';
+import ImageGenerationService from './image_generation.mjs';
 import LanguageDetectionService from './language_detection.mjs';
 import {
     LetsDiscussCreateService,
@@ -52,6 +53,7 @@ export {
     EmailAnalysisService,
     EmotionDetectionService,
     ImageAnalysisService,
+    ImageGenerationService,
     FileConverterService,
     LanguageDetectionService,
     LetsDiscussCreateService,
