@@ -25,16 +25,16 @@ class ImageGenerationService extends SoffosAIService {
      * Soffos assumes that the owner of the API Key is an application (app) and that app has users.
      * Soffos API will accept any string."
      * @param {string} prompt - the prompt to be sent to the LLM.
-     * @param {string} [engine=null] - The LLM engine to be used.
      * @param {string} [size="1024x1024"] - the required size of the image.
      * @param {string} [quality="standard"] - the quality of the image
-     * @param {number} [quantity=1] - how many images should be created
+     * @param {number} [quantity=1] - how many images should be created.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * image_urls - list of image URLs
      * @example
      * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
      */
-    call(user, prompt, engine=null, size="1024x1024", quality="standard", quantity=1) {
+    call(user, prompt, size="1024x1024", quality="standard", quantity=1, engine=null) {
       let payload = {
         "user": user,
         "prompt": prompt
@@ -52,12 +52,12 @@ class ImageGenerationService extends SoffosAIService {
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
      * @param {(string|InputConfig)} prompt - the prompt to be sent to the LLM.
-     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
      * @param {(string|InputConfig)} [size="1024x1024"] - the required size of the image.
      * @param {(string|InputConfig)} [quality="standard"] - the quality of the image
      * @param {(number|InputConfig)} [quantity=1] - how many images should be created
+     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, prompt, engine=null, size="1024x1024", quality="standard", quantity=1) {
+    setInputConfigs(name, prompt, size="1024x1024", quality="standard", quantity=1, engine=null) {
       let source = {
         "prompt": prompt
       };

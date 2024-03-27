@@ -24,8 +24,7 @@ class MultipleChoiceQnAGeneratorService extends SoffosAIService {
      * @param {string} context - the prompt to be sent to the LLM
      * @param {number} num_questions - the location of the image to be processed
      * @param {number} num_choices - the location of the image to be processed
-     * @param {string} [engine=null] - The LLM engine to be used. Currently supports:
-     * ['gpt-4-1106-preview', 'gpt-3.5-turbo-1106', 'gemini-1.0-pro']
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * qna_sets - The question and answer sets
      * @example
@@ -50,8 +49,7 @@ class MultipleChoiceQnAGeneratorService extends SoffosAIService {
      * @param {(string|InputConfig)} context - the prompt to be sent to the LLM
      * @param {(number|InputConfig)} num_questions - the location of the image to be processed
      * @param {(number|InputConfig)} num_choices - the location of the image to be processed
-     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used. Currently supports:
-     * ['gpt-4-1106-preview', 'gpt-3.5-turbo-1106', 'gemini-1.0-pro']
+     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
      */
     setInputConfigs(name, context, num_questions, num_choices, engine=null) {
       let source = {
