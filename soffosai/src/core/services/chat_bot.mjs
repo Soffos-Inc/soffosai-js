@@ -41,6 +41,7 @@ class ChatBotService extends SoffosAIService {
      * @param {Array} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
      * with for the specific user/session. Applicable for closed and
      * hybrid modes as described above.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * response - The agent's response
      * session_name - The session's name which is generated after 3 interactions.
@@ -50,7 +51,7 @@ class ChatBotService extends SoffosAIService {
      * @example
      * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
      */
-    call(user, message, chatbot_id, user_id, mode, session_id=null, previous_messages=null, bot_document_ids=null, context_document_ids=null) {
+    call(user, message, chatbot_id, user_id, mode, session_id=null, previous_messages=null, bot_document_ids=null, context_document_ids=null, engine=null) {
       let payload = {
         "user": user,
         "message": message,
@@ -62,6 +63,7 @@ class ChatBotService extends SoffosAIService {
       if (previous_messages) payload.previous_messages = previous_messages;
       if (bot_document_ids) payload.bot_document_ids = bot_document_ids;
       if (context_document_ids) payload.context_document_ids = context_document_ids;
+      if (engine) payload.engine = engine;
 
       return super.call(payload);
     }
@@ -88,18 +90,20 @@ class ChatBotService extends SoffosAIService {
      * @param {(Array|InputConfig)} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
      * with for the specific user/session. Applicable for closed and
      * hybrid modes as described above.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, message, chatbot_id, user_id, mode, session_id=null, previous_messages=null, bot_document_ids=null, context_document_ids=null) {
+    setInputConfigs(name, message, chatbot_id, user_id, mode, session_id=null, previous_messages=null, bot_document_ids=null, context_document_ids=null, engine=null) {
       let source = {
         "message": message,
         "chatbot_id": chatbot_id,
         "user_id": user_id,
         "mode": mode
       };
-      if (session_id) payload.session_id = session_id;
-      if (previous_messages) payload.previous_messages = previous_messages;
-      if (bot_document_ids) payload.bot_document_ids = bot_document_ids;
-      if (context_document_ids) payload.context_document_ids = context_document_ids;
+      if (session_id) source.session_id = session_id;
+      if (previous_messages) source.previous_messages = previous_messages;
+      if (bot_document_ids) source.bot_document_ids = bot_document_ids;
+      if (context_document_ids) source.context_document_ids = context_document_ids;
+      if (engine) source.engine = engine;
       return super.setInputConfigs(name, source);
     }
 }

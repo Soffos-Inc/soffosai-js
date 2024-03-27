@@ -63,9 +63,9 @@ class AudioConverterService extends SoffosAIService {
       let source = {
 
       };
-      if (file) payload.file = file;
-      if (url) payload.url = url;
-      if (model) payload.model = model;
+      if (file) source.file = file;
+      if (url) source.url = url;
+      if (model) source.model = model;
       return super.setInputConfigs(name, source);
     }
 }
