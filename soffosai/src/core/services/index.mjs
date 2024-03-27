@@ -1,4 +1,5 @@
 import AnswerScoringService from './answer_scoring.mjs';
+import AssessmentGeneratorService from './assessment_generator.mjs';
 import AudioConverterService from './audio_converter.mjs';
 import ChatBotCreateService from './chat_bot_create.mjs';
 import ChatBotDeleteUserSessionsService from './chat_bot_delete_user_sessions.mjs';
@@ -41,6 +42,7 @@ import {InputConfig, createInputConfig} from './input_config.mjs';
 
 export {
     AnswerScoringService,
+    AssessmentGeneratorService,
     AudioConverterService,
     ChatBotCreateService,
     ChatBotDeleteUserSessionsService,

@@ -3,6 +3,7 @@ const SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 
 const SERVICES_LIST = [
   'answer-scoring',
+  'assessment',
   'audio-converter',
   'chatbot/create',
   'chatbot',
@@ -52,6 +53,7 @@ const ServiceString = {
   Contains the list of Soffos services as attributes
   */
   ANSWER_SCORING : 'answer-scoring',
+  ASSESSMENT_GENERATOR: 'assessment',
   AUDIO_CONVERTER: 'audio-converter',
   CHAT_BOT_CREATE: 'chatbot/create',
   CHAT_BOT: 'chatbot',

@@ -1,5 +1,6 @@
 import ServiceIO from './service_io.mjs';
 import AnswerScoringIO from './answer_scoring_io.mjs';
+import AssessmentGeneratorIO from './assessment_generator.mjs';
 import AudioConverterIO from './audio_converter.mjs';
 import ChatBotCreateIO from './chat_bot_create.mjs';
 import ChatBotDeleteUserSessionsIO from './chat_bot_delete_user_sessions.mjs';
@@ -35,6 +36,7 @@ import WebsiteConverterIO from './website_converter.mjs';
 export {
   ServiceIO,
   AnswerScoringIO,
+  AssessmentGeneratorIO,
   AudioConverterIO,
   ChatBotCreateIO,
   ChatBotDeleteUserSessionsIO,
