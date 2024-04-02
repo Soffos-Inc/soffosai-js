@@ -6,7 +6,8 @@ import { InputConfig } from './input_config.mjs';
 
 /**
  * Generates Assesments from a given context
- * ----------------------------------------------------- Accepts a context and
+ * ----------------------------------------------------- 
+ * Accepts a context and
  * generates Assessments of types/modes: * Multiple Choice, * True or False, *
  * Fill in the Blanks * Short Answer
  * @class

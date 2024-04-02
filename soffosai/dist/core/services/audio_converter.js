@@ -94,9 +94,9 @@ var AudioConverterService = /*#__PURE__*/function (_SoffosAIService) {
       var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var model = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var source = {};
-      if (file) payload.file = file;
-      if (url) payload.url = url;
-      if (model) payload.model = model;
+      if (file) source.file = file;
+      if (url) source.url = url;
+      if (model) source.model = model;
       return _get(_getPrototypeOf(AudioConverterService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

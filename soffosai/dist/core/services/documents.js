@@ -144,7 +144,6 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
       var source = {
         name: document_name // special handling. document ingest needs "name" as document_name
       };
-
       if (text) source.text = text;
       if (tagged_elements) source.tagged_elements = tagged_elements;
       if (meta) source.meta = meta;

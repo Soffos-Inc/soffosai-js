@@ -66,6 +66,7 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {Array} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
    * with for the specific user/session. Applicable for closed and
    * hybrid modes as described above.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * response - The agent's response
    * session_name - The session's name which is generated after 3 interactions.
@@ -82,6 +83,7 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
       var previous_messages = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var bot_document_ids = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
       var context_document_ids = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : null;
+      var engine = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : null;
       var payload = {
         "user": user,
         "message": message,
@@ -93,6 +95,7 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
       if (previous_messages) payload.previous_messages = previous_messages;
       if (bot_document_ids) payload.bot_document_ids = bot_document_ids;
       if (context_document_ids) payload.context_document_ids = context_document_ids;
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(ChatBotService.prototype), "call", this).call(this, payload);
     }
 
@@ -117,6 +120,7 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
      * @param {(Array|InputConfig)} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
      * with for the specific user/session. Applicable for closed and
      * hybrid modes as described above.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
@@ -125,16 +129,18 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
       var previous_messages = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var bot_document_ids = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
       var context_document_ids = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : null;
+      var engine = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : null;
       var source = {
         "message": message,
         "chatbot_id": chatbot_id,
         "user_id": user_id,
         "mode": mode
       };
-      if (session_id) payload.session_id = session_id;
-      if (previous_messages) payload.previous_messages = previous_messages;
-      if (bot_document_ids) payload.bot_document_ids = bot_document_ids;
-      if (context_document_ids) payload.context_document_ids = context_document_ids;
+      if (session_id) source.session_id = session_id;
+      if (previous_messages) source.previous_messages = previous_messages;
+      if (bot_document_ids) source.bot_document_ids = bot_document_ids;
+      if (context_document_ids) source.context_document_ids = context_document_ids;
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(ChatBotService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

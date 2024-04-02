@@ -103,7 +103,7 @@ var SoffosAIService = /*#__PURE__*/function () {
      */
   }, {
     key: "validatePayload",
-    value: function () {
+    value: (function () {
       var _validatePayload = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(payload) {
         var userFromSrc, missingRequirements, groupErrors, special_validation, special_validation_passed, special_validation_error_message, _iterator, _step, group, foundChoices, inputStructure, valueErrors, _i, _Object$entries, _Object$entries$_i, key, value, serviceioType, inputType, documentIds, _iterator2, _step2, _id, validUuid;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -245,6 +245,7 @@ var SoffosAIService = /*#__PURE__*/function () {
      * Prepare the JSON or form data input of the service
      * Will be used when there is a special handling needed for an element of the payload
      */
+    )
   }, {
     key: "getData",
     value: function getData(payload) {
@@ -264,7 +265,7 @@ var SoffosAIService = /*#__PURE__*/function () {
      */
   }, {
     key: "getResponse",
-    value: function () {
+    value: (function () {
       var _getResponse = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var payload,
           kwargs,
@@ -434,7 +435,7 @@ var SoffosAIService = /*#__PURE__*/function () {
         return _getResponse.apply(this, arguments);
       }
       return getResponse;
-    }()
+    }())
   }, {
     key: "cleanPayload",
     value: function cleanPayload(rawPayload) {

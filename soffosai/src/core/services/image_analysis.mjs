@@ -6,7 +6,8 @@ import { InputConfig } from './input_config.mjs';
 
 /**
  * The base service for all Image Analyzation Services
- * ----------------------------------------------------------- Describes an image
+ * ----------------------------------------------------------- 
+ * Describes an image
  * @class
  * @alias SoffosServices.ImageAnalysisService
  */

@@ -24,98 +24,87 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
- * The summarization module utilizes Natural Language Generation (NLG) to generate an 
- * abstractive summary of a specified length. In contrast to extractive summarization methods, 
- * which simply calculate the centrality of sentences or passages in the original text and 
- * concatenate the highest rated ones, abstractive summaries are often more concise and accurate. 
- * The end result isn't necessarily a sum of word-for-word copies of passages from the original text, 
- * but a combination of all key points formulated as a new text.
+ * The base service for all Image Generation Services
+ * ----------------------------------------------------------- 
+ * Create an image
+ * from a prompt. Can also specify size, engine to be used, quality and quantity
+ * of images to be generated.
  * @class
- * @alias SoffosServices.SummarizationService
+ * @alias SoffosServices.ImageGenerationService
  */
-var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
-  _inherits(SummarizationService, _SoffosAIService);
-  var _super = _createSuper(SummarizationService);
-  function SummarizationService() {
+var ImageGenerationService = /*#__PURE__*/function (_SoffosAIService) {
+  _inherits(ImageGenerationService, _SoffosAIService);
+  var _super = _createSuper(ImageGenerationService);
+  function ImageGenerationService() {
     var _this;
     var kwargs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    _classCallCheck(this, SummarizationService);
-    var service = _constants.ServiceString.SUMMARIZATION;
+    _classCallCheck(this, ImageGenerationService);
+    var service = _constants.ServiceString.IMAGE_GENERATION;
     _this = _super.call(this, service, kwargs);
-    _this._serviceio = new _index.SummarizationIO();
+    _this._serviceio = new _index.ImageGenerationIO();
     return _this;
   }
 
   /**
-   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
-   * the api is an application (app) and that app has users. Soffos API will accept any string.
-   * @param {string} text - Text to be summarized.
-   * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+   * @param {string} user - The ID of the user accessing the Soffos API.
+   * This string will be used for throttling and profanity tracking.
+   * Soffos assumes that the owner of the API Key is an application (app) and that app has users.
+   * Soffos API will accept any string."
+   * @param {string} prompt - the prompt to be sent to the LLM.
+   * @param {string} [size="1024x1024"] - the required size of the image.
+   * @param {string} [quality="standard"] - the quality of the image
+   * @param {number} [quantity=1] - how many images should be created.
    * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
-   * summary - string<br>
-   * The summary. <br>
-   * error - string <br>
-   * When the specified sent_length is larger than the number of sentences, the service will return a 403 error along with a json with the error field and the error message.
+   * image_urls - list of image URLs
    * @example
-   * import { SoffosServices } from "soffosai";
-   * 
-   * const my_apiKey = "Token <put your api key here>";
-   * const service = new SoffosServices.SummarizationService({apiKey:my_apiKey});
-   * let response = await service.call(
-   *     "client 23456",
-   *     "Ludwig van Beethoven (baptised 17 December 1770 – 26 March 1827) was a German \
-   *     composer and pianist. ... After some months of bedridden illness, he died in 1827. \
-   *     Beethoven's works remain mainstays of the classical music repertoire.",
-   *     3
-   * );
-   * console.log(JSON.stringify(response, null, 2));
-   *     
-   * // returns
-   * // {
-   * //     "summary": "Ludwig van Beethoven was a German composer and pianist. He composed many works that remain mainstays of the classical music repertoire. After a period of illness, he died in 1827.",
-   * //     "cost": {
-   * //       "api_call_cost": 0.005,
-   * //       "character_volume_cost": 0.0119,
-   * //       "total_cost": 0.0169
-   * //     },
-   * //     "charged_character_count": 238,
-   * //     "unit_price": "0.000050"
-   * // }
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
    */
-  _createClass(SummarizationService, [{
+  _createClass(ImageGenerationService, [{
     key: "call",
-    value: function call(user, text, sent_length) {
-      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    value: function call(user, prompt) {
+      var size = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "1024x1024";
+      var quality = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "standard";
+      var quantity = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var payload = {
         "user": user,
-        "text": text,
-        "sent_length": sent_length
+        "prompt": prompt
       };
       if (engine) payload.engine = engine;
-      return _get(_getPrototypeOf(SummarizationService.prototype), "call", this).call(this, payload);
+      if (size) payload.size = size;
+      if (quality) payload.quality = quality;
+      if (quantity) payload.quantity = quantity;
+      return _get(_getPrototypeOf(ImageGenerationService.prototype), "call", this).call(this, payload);
     }
 
     /**
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
-     * @param {string|InputConfig} text - Text to be summarized.
-     * @param {number|InputConfig} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
-     * @param {string} [engine=null] - The LLM engine to be used.
+     * @param {(string|InputConfig)} prompt - the prompt to be sent to the LLM.
+     * @param {(string|InputConfig)} [size="1024x1024"] - the required size of the image.
+     * @param {(string|InputConfig)} [quality="standard"] - the quality of the image
+     * @param {(number|InputConfig)} [quantity=1] - how many images should be created
+     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
-    value: function setInputConfigs(name, text, sent_length) {
-      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    value: function setInputConfigs(name, prompt) {
+      var size = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "1024x1024";
+      var quality = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "standard";
+      var quantity = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var source = {
-        text: text,
-        sent_length: sent_length
+        "prompt": prompt
       };
-      if (engine) source.engine = engine;
-      return _get(_getPrototypeOf(SummarizationService.prototype), "setInputConfigs", this).call(this, name, source);
+      if (engine) payload.engine = engine;
+      if (size) payload.size = size;
+      if (quality) payload.quality = quality;
+      if (quantity) payload.quantity = quantity;
+      return _get(_getPrototypeOf(ImageGenerationService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
-  return SummarizationService;
+  return ImageGenerationService;
 }(_service.SoffosAIService);
-var _default = SummarizationService;
+var _default = ImageGenerationService;
 exports["default"] = _default;

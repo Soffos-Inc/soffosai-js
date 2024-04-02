@@ -20,44 +20,27 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-var TagGenerationIO = /*#__PURE__*/function (_ServiceIO) {
-  _inherits(TagGenerationIO, _ServiceIO);
-  var _super = _createSuper(TagGenerationIO);
-  function TagGenerationIO() {
+var ImageAnalysisIO = /*#__PURE__*/function (_ServiceIO) {
+  _inherits(ImageAnalysisIO, _ServiceIO);
+  var _super = _createSuper(ImageAnalysisIO);
+  function ImageAnalysisIO() {
     var _this;
-    _classCallCheck(this, TagGenerationIO);
+    _classCallCheck(this, ImageAnalysisIO);
     _this = _super.call(this);
-    _this.service = _constants.ServiceString.TAG_GENERATION;
-    _this.required_input_fields = ["text"];
-    _this.optional_input_fields = ["types", "n", "engine"];
+    _this.service = _constants.ServiceString.IMAGE_ANALYSIS;
+    _this.required_input_fields = ["prompt", "image_url"];
+    _this.optional_input_fields = ["engine"];
     _this.input_structure = {
-      "text": "string",
-      "types": ["string", "string", "string"],
-      // can only take a subset of ["topic", "domain", "audience", "entity"]
-      "n": "number",
+      "prompt": "string",
+      "image_url": "string",
       "engine": "string"
     };
     _this.output_structure = {
-      "tags": {
-        "label1": [{
-          "tag": "string",
-          "score": "number"
-        }, {
-          "tag": "string",
-          "score": "number"
-        }],
-        "label2": [{
-          "tag": "string",
-          "score": "number"
-        }, {
-          "tag": "string",
-          "score": "number"
-        }]
-      }
+      "analysis": "string"
     };
     return _this;
   }
-  return _createClass(TagGenerationIO);
+  return _createClass(ImageAnalysisIO);
 }(_service_io["default"]);
-var _default = TagGenerationIO;
+var _default = ImageAnalysisIO;
 exports["default"] = _default;

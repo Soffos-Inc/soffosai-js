@@ -2,6 +2,13 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.2.11
+- Strict LLM Selection Feature
+- AssessmentGeneratorService
+- ImageGenerationService
+- ImageAnalysisService
+- MultipleChoiceQnAGeneratorService
+
 ## 0.2.10
 - ref: catch reference error for Events. Just in case soffosai is used on backend.
     note: soffosai can be used on backend if there is no file handling needed.

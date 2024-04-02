@@ -113,6 +113,7 @@ declare module 'soffosai' {
              * @param {string} question - The question to answer.
              * @param {string} user_answer - The user's answer which will be marked.
              * @param {string} [answer] - Optionally provide the expected answer.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>}
              * score - float <br>
              * A value between 0 and 1 indicating the correctness of the answer.<br>
@@ -141,7 +142,7 @@ declare module 'soffosai' {
              * // "unit_price": "0.000050"
              * //}
              */
-            call(user: string, context:string, question:string, user_answer:string, answer?:string): Promise<object>;
+            call(user: string, context:string, question:string, user_answer:string, answer?:string, engine?:string): Promise<object>;
         
             /**
              * Prepare this Service for Pipeline use. Set the input configurations.
@@ -153,10 +154,50 @@ declare module 'soffosai' {
              * @param {string|InputConfig} question - The question to answer.
              * @param {string|InputConfig} user_answer - The user's answer which will be marked.
              * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, context:string|InputConfig, question:string|InputConfig, user_answer:string|InputConfig, answer?:string|InputConfig): null;
+            setInputConfigs(name:string, context:string|InputConfig, question:string|InputConfig, user_answer:string|InputConfig, answer?:string|InputConfig, engine?:string): null;
         }
 
+
+        /**
+         * Generates Assesments from a given context
+         * ----------------------------------------------------- 
+         * Accepts a context and
+         * generates Assessments of types/modes: * Multiple Choice, * True or False, *
+         * Fill in the Blanks * Short Answer
+         */
+        export class AssessmentGeneratorService extends SoffosAIService {
+            constructor(kwargs?:{});
+        
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} context - the prompt to be sent to the LLM
+             * @param {string} [mode="short answer"] - The type/mode of assessment.
+             * @param {number} [num_questions=10] - the location of the image to be processed
+             * @param {number} [num_choices=3] - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             * @returns {Promise<Object>} 
+             * qna_sets - The question and answer sets
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, context:string, mode?:string, num_questions?:number, num_choices?:number, engine?:string): Promise<object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {string|InputConfig} context - the prompt to be sent to the LLM
+             * @param {string|InputConfig} [mode="short answer"] - The type/mode of assessment.
+             * @param {number|InputConfig} [num_questions=10] - the location of the image to be processed
+             * @param {number|InputConfig} [num_choices=3] - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             */
+            setInputConfigs(name:string, context:string|InputConfig, mode?:string|InputConfig, num_questions?:number|InputConfig, num_choices?:number|InputConfig, engine?:string): null;
+        }
 
         /**
          * Transcribes the given audio. It also detects the language, detects number of
@@ -285,6 +326,7 @@ declare module 'soffosai' {
              * @param {Array} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
              * with for the specific user/session. Applicable for closed and
              * hybrid modes as described above.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * response - The agent's response
              * session_name - The session's name which is generated after 3 interactions.
@@ -294,7 +336,7 @@ declare module 'soffosai' {
              * @example
              * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
              */
-            call(user: string, message:string, chatbot_id:string, user_id:string, mode:string, session_id?:string, previous_messages?:string[], bot_document_ids?:string[], context_document_ids?:string[]): Promise<Object>;
+            call(user: string, message:string, chatbot_id:string, user_id:string, mode:string, session_id?:string, previous_messages?:string[], bot_document_ids?:string[], context_document_ids?:string[], engine?:string): Promise<Object>;
 
             /**
              * @param {string} name - Reference name of this Service.
@@ -315,8 +357,9 @@ declare module 'soffosai' {
              * @param {(Array|InputConfig)} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
              * with for the specific user/session. Applicable for closed and
              * hybrid modes as described above.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, message:string|InputConfig, chatbot_id:string|InputConfig, user_id:string|InputConfig, mode:string|InputConfig, session_id?:string|InputConfig, previous_messages?:string[]|InputConfig, bot_document_ids?:string[]|InputConfig, context_document_ids?:string[]|InputConfig): null;
+            setInputConfigs(name:string, message:string|InputConfig, chatbot_id:string|InputConfig, user_id:string|InputConfig, mode:string|InputConfig, session_id?:string|InputConfig, previous_messages?:string[]|InputConfig, bot_document_ids?:string[]|InputConfig, context_document_ids?:string[]|InputConfig, engine?:string): null;
         }
 
 
@@ -710,7 +753,7 @@ declare module 'soffosai' {
          */
         export class EmailAnalysisService {
             constructor(kwargs?: {});
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
         
 
             /**
@@ -719,7 +762,7 @@ declare module 'soffosai' {
              *  It will be used by the Pipeline to reference this Node.
              * @param {string|InputConfig} text - The e-mail body text.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -737,6 +780,7 @@ declare module 'soffosai' {
              * For example, with sentence_split 3 and sentence_overlap=true :
              * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
              * @param {Array.<string>} [emotion_choices] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * spans - dictionary list<br>
              * A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>
@@ -773,7 +817,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text:string, sentence_split?:number, sentence_overlap?:boolean, emotion_choices?:string[]): Promise<object>;
+            call(user: string, text:string, sentence_split?:number, sentence_overlap?:boolean, emotion_choices?:string[], engine?:string): Promise<object>;
 
 
             /**
@@ -785,8 +829,9 @@ declare module 'soffosai' {
              * For example, with sentence_split 3 and sentence_overlap=true :
              * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
              * @param {Array.<string>|InputConfig} [emotion_choices=_EMOTION_LIST] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, sentence_split?:number|InputConfig, sentence_overlap?:boolean|InputConfig, emotion_choices?:string[]|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, sentence_split?:number|InputConfig, sentence_overlap?:boolean|InputConfig, emotion_choices?:string[]|InputConfig, engine?:string): null;
         }
 
         /**
@@ -830,6 +875,82 @@ declare module 'soffosai' {
              */
             setInputConfigs(name:string, file:Blob|InputConfig, normalize?:string|InputConfig): null;
         }
+
+        /**
+         * The base service for all Image Analyzation Services
+         * -----------------------------------------------------------
+         * Describes an image
+         */
+        export class ImageAnalysisService extends SoffosAIService {
+            constructor(kwargs?:{});
+        
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} prompt - the prompt to be sent to the LLM
+             * @param {string} image_url - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             * @returns {Promise<Object>} 
+             * analysis - the analysis of the image
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, prompt:string, image_url:string, engine?:string): Promise<object>;
+
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {string|InputConfig} prompt - the prompt to be sent to the LLM
+             * @param {string|InputConfig} image_url - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             */
+            setInputConfigs(name:string, prompt:string|InputConfig, image_url:string|InputConfig, engine?:string): null;
+        }
+
+
+        /**
+         * The base service for all Image Generation Services
+         * ----------------------------------------------------------- 
+         * Create an image
+         * from a prompt. Can also specify size, engine to be used, quality and quantity
+         * of images to be generated.
+         */
+        export class ImageGenerationService extends SoffosAIService {
+            constructor(kwargs?:{});
+        
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the API Key is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} prompt - the prompt to be sent to the LLM.
+             * @param {string} [size="1024x1024"] - the required size of the image.
+             * @param {string} [quality="standard"] - the quality of the image
+             * @param {number} [quantity=1] - how many images should be created.
+             * @param {string} [engine=null] - The LLM engine to be used.
+             * @returns {Promise<Object>} 
+             * image_urls - list of image URLs
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, prompt:string, size?:string, quality?:string, quantity?:number, engine?:string): Promise<object>;
+
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {string|InputConfig} prompt - the prompt to be sent to the LLM.
+             * @param {string|InputConfig} [size="1024x1024"] - the required size of the image.
+             * @param {string|InputConfig} [quality="standard"] - the quality of the image
+             * @param {number|InputConfig} [quantity=1] - how many images should be created
+             * @param {string} [engine=null] - The LLM engine to be used.
+             */
+            setInputConfigs(name:string, prompt:string|InputConfig, size?:string|InputConfig, quality?:string|InputConfig, quantity?:number|InputConfig, engine?:string): null;
+        }
+
 
         /**
          * The Language Detection module detects the dominant language in the provided text.
@@ -934,6 +1055,7 @@ declare module 'soffosai' {
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
              * @param {string} query - User's message.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * response - string <br>
              * Module's response to the user's query. <br>
@@ -987,16 +1109,17 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, session_id:string, query:string): Promise<object>;
+            call(user: string, session_id:string, query:string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} session_id - The ID of the session provided by the /create/ endpoint.
              * @param {string|InputConfig} query - User's message.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              */
-            setInputConfigs(name:string, session_id:string|InputConfig, query:string|InputConfig): null;
+            setInputConfigs(name:string, session_id:string|InputConfig, query:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1109,6 +1232,7 @@ declare module 'soffosai' {
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Input text to analyze for logical errors.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * logical_errors - dictionary list<br>
              * A list of dictionaries representing detected logical errors. Each dictionary contains the following fields: <br>
@@ -1153,14 +1277,15 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Input text to analyze for logical errors.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1171,7 +1296,10 @@ declare module 'soffosai' {
             /**
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
-             * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
+             * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, 
+             * where source is the name of the document/article/website/etc. and text is the actual content. 
+             * Providing the source names enables the microlesson to include the source for the key points extracted from the content.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * microlesson - string<br>
              * A concise, structured microlesson containing a summary, key points, learning objectives and tasks. <br>
@@ -1238,7 +1366,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, content: object[]): Promise<object>;
+            call(user: string, content: object[], engine?:string): Promise<object>;
 
             /**
              * @param {string} source 
@@ -1253,9 +1381,46 @@ declare module 'soffosai' {
              * contain the source and text fields, where source is the name of the
              * document/article/website/etc. and text is the actual content. Providing the source names 
              * enables the microlesson to include the source for the key points extracted from the content.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, content:object[]|InputConfig): null;
+            setInputConfigs(name:string, content:object[]|InputConfig, engine?:string): null;
         }
+
+
+        /**
+         * Accepts a context and generates Multiple-Choice Question and Answer sets
+         */
+        export class MultipleChoiceQnAGeneratorService extends SoffosAIService {
+            constructor(kwargs?: {});
+        
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} context - the prompt to be sent to the LLM
+             * @param {number} num_questions - the location of the image to be processed
+             * @param {number} num_choices - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             * @returns {Promise<Object>} 
+             * qna_sets - The question and answer sets
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, context:string, num_questions:number, num_choices:number, engine?:string): Promise<object>;
+
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {string|InputConfig} context - the prompt to be sent to the LLM
+             * @param {number|InputConfig} num_questions - the location of the image to be processed
+             * @param {number|InputConfig} num_choices - the location of the image to be processed
+             * @param {string} [engine=null] - The LLM engine to be used.
+             */
+            setInputConfigs(name:string, context:string|InputConfig, num_questions:number|InputConfig, num_choices:number|InputConfig, engine?:string): null;
+        }
+
 
         /**
          * Identifies named entities in text. It supports custom labels.
@@ -1268,6 +1433,7 @@ declare module 'soffosai' {
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Input text to be analyzed for named entities.
              * @param {Object.<string, string>} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>}
              * named_entities - dictionary list<br>
              * A list of dictionaries representing identified named entities. Each dictionary contains the following fields: <br>
@@ -1350,7 +1516,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string, labels:object): Promise<object>;
+            call(user: string, text: string, labels:object, engine?:string): Promise<object>;
             
             /**
              * Adds a TAG label and its description so that Soffos AI can identify the entities matching the tag
@@ -1364,8 +1530,9 @@ declare module 'soffosai' {
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Input text to be analyzed for named entities.
              * @param {Object.<string, string>|InputConfig} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, labels?:object|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, labels?:object|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1379,6 +1546,7 @@ declare module 'soffosai' {
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Text to be paraphrased/simplified.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * paraphrase
              * @example
@@ -1405,14 +1573,15 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Text to be paraphrased/simplified.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1621,6 +1790,7 @@ declare module 'soffosai' {
              * @param {string} [generic_responses=false] - In addition to checking for ambiguity or query type, this module performs other checks such as profanity, language, etc.. If the input query fails in one of these checks, it will reject the query by responding with a message that points out the issue.
              * When true, the module will respond with a generic message without giving the reason as to why the message was rejected, which is the same behavior as when it cannot find an answer to the query in the provided context.
              * @param {Object.<string, string>} meta
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * answer - string<br>
              * The answer to the query. In cases where the query failed a check, and depending on the above explained parameters, this will be a message that indicates that an answer could not be retrieved. <br>
@@ -1681,7 +1851,7 @@ declare module 'soffosai' {
              *   
              */
             call(user: string, question:string, document_text?:string, document_ids?:string[], 
-                check_ambiguity?:boolean, check_query_type?:boolean, generic_response?:boolean, meta?:object): Promise<object>;
+                check_ambiguity?:boolean, check_query_type?:boolean, generic_response?:boolean, meta?:object, engine?:string): Promise<object>;
             
             /**
              * @param {string} name - Reference name of this Service.
@@ -1699,9 +1869,10 @@ declare module 'soffosai' {
              * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
              * @param {boolean|InputConfig} generic_responses
              * @param {object|InputConfig} meta
+             * @param {string} [engine] - The LLM engine to be used.
              */
             setInputConfigs(name:string, question:string|InputConfig, document_text?:string|InputConfig, document_ids?:string[]|InputConfig, 
-                check_ambiguity?:boolean|InputConfig, check_query_type?:boolean|InputConfig, generic_responses?:boolean|InputConfig, meta?:object|InputConfig): null;
+                check_ambiguity?:boolean|InputConfig, check_query_type?:boolean|InputConfig, generic_responses?:boolean|InputConfig, meta?:object|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1716,6 +1887,7 @@ declare module 'soffosai' {
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - The review text.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * object - string<br>
              * The faulty object. This could be the product itself, or a component, e.g. "door handle". If 'n/a' is returned, it's assumed that the object is the product itself. <br>
@@ -1750,14 +1922,15 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - The review text.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1775,6 +1948,7 @@ declare module 'soffosai' {
              * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
              * For example, with sentence_split 3 and sentence_overlap=true :
              * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * sentiment_breakdown - dictionary list <br>
              * A list of dictionaries representing the score of each segment of text. Each dictionary contains the following fields: <br>
@@ -1824,7 +1998,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string, sentence_split?:number, sentence_overlap?:boolean): Promise<object>;
+            call(user: string, text: string, sentence_split?:number, sentence_overlap?:boolean, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
@@ -1834,8 +2008,9 @@ declare module 'soffosai' {
              * @param {boolean|InputConfig} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
              * For example, with sentence_split 3 and sentence_overlap=true :
              * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, sentence_split?:number|InputConfig, sentence_overlap?:boolean|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, sentence_split?:number|InputConfig, sentence_overlap?:boolean|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1849,6 +2024,7 @@ declare module 'soffosai' {
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Text to be paraphrased/simplified.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * paraphrase - the paraphrased text <br>
              * "simplify": true
@@ -1876,14 +2052,15 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Text to be paraphrased/simplified.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1901,6 +2078,7 @@ declare module 'soffosai' {
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Text to be summarized.
              * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * summary - string<br>
              * The summary. <br>
@@ -1932,15 +2110,16 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string, sent_length:number): Promise<object>;
+            call(user: string, text: string, sent_length:number, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Text to be summarized.
              * @param {number|InputConfig} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, sent_length:number|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, sent_length:number|InputConfig, engine?:string): null;
         }
 
         /**
@@ -1955,7 +2134,8 @@ declare module 'soffosai' {
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Text to extract tables from.
              * @param {string} [table_format="markdown"] - A string indicating the table output format.
-             * Formats supported:
+             * Formats supported: "csv", "markdown"
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * tables - dictionary list<br>
              * A list of dictionaries representing tables. Each dictionary contains the following fields: <br>
@@ -1996,7 +2176,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string, table_format?:string): Promise<object>;
+            call(user: string, text: string, table_format?:string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
@@ -2004,8 +2184,9 @@ declare module 'soffosai' {
              * @param {string|InputConfig} text - Text to extract tables from.
              * @param {string|InputConfig} [table_format='markdown'] - A string indicating the table output format.
              * Formats supported: "CSV", 'markdown'
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, table_format?:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, table_format?:string|InputConfig, engine?:string): null;
         }
 
         /**
@@ -2025,6 +2206,7 @@ declare module 'soffosai' {
              * audience: Tags relating to the type of audience the text is intended for.
              * entity: Entities such as people, places, products, etc. mentioned in the text.
              * @param {number} [n=10] - The number of tags to be generated for each of the specified tag types.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * tags - dictionary dictionary<br>
              * A dictionary containing the tags grouped by the type of tag. A confidence score is provided also for each tag. <br>
@@ -2113,7 +2295,7 @@ declare module 'soffosai' {
              * //     "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string, types?:string[], n?:number): Promise<object>;
+            call(user: string, text: string, types?:string[], n?:number, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
@@ -2125,8 +2307,9 @@ declare module 'soffosai' {
              * audience: Tags relating to the type of audience the text is intended for.
              * entity: Entities such as people, places, products, etc. mentioned in the text.
              * @param {number|InputConfig} n - The number of tags to be generated for each of the specified tag types.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig, types?:string[]|InputConfig, n?:number|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, types?:string[]|InputConfig, n?:number|InputConfig, engine?:string): null;
         }
 
         /**
@@ -2141,6 +2324,7 @@ declare module 'soffosai' {
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
              * @param {string} text - Text to be corrected.
+             * @param {string} [engine] - The LLM engine to be used.
              * @returns {Promise<Object>} 
              * correction - string<br>
              * Corrected text. <br>
@@ -2167,14 +2351,15 @@ declare module 'soffosai' {
              * //       "unit_price": "0.000050"
              * // }
              */
-            call(user: string, text: string): Promise<object>;
+            call(user: string, text: string, engine?:string): Promise<object>;
 
             /**
              * @param {string} name - Reference name of this Service.
              *  It will be used by the Pipeline to reference this Service.
              * @param {string|InputConfig} text - Text to be corrected.
+             * @param {string} [engine] - The LLM engine to be used.
              */
-            setInputConfigs(name:string, text:string|InputConfig): null;
+            setInputConfigs(name:string, text:string|InputConfig, engine?:string): null;
         }
 
 

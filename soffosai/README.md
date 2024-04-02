@@ -54,6 +54,7 @@ Here is the list of SoffosAIService Subclasses:
 ```
 [
     "AnswerScoringService",
+    "AssessmentGeneratorService",
     "AudioConverterService",
     "ChatBotCreateService",
     "ChatBotDeleteUserSessionsService",
@@ -71,8 +72,11 @@ Here is the list of SoffosAIService Subclasses:
     "DocumentsDeleteService", 
     "EmailAnalysisService",
     "FileConverterService",
+    "ImageAnalysisService",
+    "ImageGenerationService",
     "LetsDiscussService",
     "MicrolessonService",
+    "MultipleChoiceQnAGeneratorService",
     "NERService",
     "NaturalSQLGenerationService",
     "ParaphraseService",

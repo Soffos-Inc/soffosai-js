@@ -116,7 +116,7 @@ var Pipeline = /*#__PURE__*/function () {
    */
   _createClass(Pipeline, [{
     key: "run",
-    value: function () {
+    value: (function () {
       var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user_input) {
         var original_user_input, pipelineStartEvent, stages, executionCode, infos, total_cost, i, index_from_execution, index_from_termination, stage, _response, pipeOutput, key, subkey, temp_payload, payload, _i, _Object$entries, _Object$entries$_i, _key, notation, input_dict, value, response, exec_code_index, pipelineEndEvent;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -352,6 +352,7 @@ var Pipeline = /*#__PURE__*/function () {
      * @param {SoffosAIService[]} stages 
      * @returns 
      */
+    )
   }, {
     key: "validate_pipeline",
     value: function validate_pipeline(stages, user_input) {
@@ -593,7 +594,7 @@ var Pipeline = /*#__PURE__*/function () {
      */
   }, {
     key: "terminate",
-    value: function () {
+    value: (function () {
       var _terminate = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(termination_code) {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
@@ -620,7 +621,7 @@ var Pipeline = /*#__PURE__*/function () {
         return _terminate.apply(this, arguments);
       }
       return terminate;
-    }()
+    }())
   }]);
   return Pipeline;
 }();

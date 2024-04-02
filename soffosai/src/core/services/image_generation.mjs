@@ -6,7 +6,8 @@ import { InputConfig } from './input_config.mjs';
 
 /**
  * The base service for all Image Generation Services
- * ----------------------------------------------------------- Create an image
+ * ----------------------------------------------------------- 
+ * Create an image
  * from a prompt. Can also specify size, engine to be used, quality and quantity
  * of images to be generated.
  * @class

@@ -101,7 +101,7 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
    */
   _createClass(AskADocumentPipeline, [{
     key: "call",
-    value: function () {
+    value: (function () {
       var _call = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user, doc_ids, question) {
         var execution_code,
           payload,
@@ -130,7 +130,7 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
         return _call.apply(this, arguments);
       }
       return call;
-    }()
+    }())
   }]);
   return AskADocumentPipeline;
 }(_pipeline.Pipeline);
