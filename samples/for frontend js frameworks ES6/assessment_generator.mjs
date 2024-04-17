@@ -1,7 +1,7 @@
-import { SoffosServices } from "soffosai";
+import { SoffosServices, SoffosConfig } from "soffosai";
 
 const my_apiKey = "Token <put your api key here>";
-
+SoffosConfig.apiKey = my_apiKey;
 let service = new SoffosServices.AssessmentGeneratorService();
 let output = await service.call(
     "user123",
