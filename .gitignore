@@ -18,3 +18,5 @@ html_source_code.html
 .venv
 iframeSoffosAI.html
 archives/
+ingest_soffos_chat_docs.py
+.venv/
